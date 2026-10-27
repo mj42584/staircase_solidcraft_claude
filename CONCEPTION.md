@@ -127,6 +127,8 @@ Nombre de marches : chaque volée a une marche de moins que de contremarches (la
 - Le connecteur MCP SolidCraft ne lit/écrit que dans `~/.var/app/ai.storyteller.solidcraft/data/solidcraft/recovery`. Flux : enregistrer là, puis copier dans `cad/` (avec accord), puis commit/push.
 - Lister les commandes de liaison (`list_commands` filtre `joint`) a semblé faire planter l'app : à éviter.
 - FreeCAD est disponible en flatpak (`org.freecad.FreeCAD`, FreeCADCmd) ; l'import direct d'un `.FCStd` dans SolidCraft est incomplet, passer par un export STEP depuis FreeCAD.
+- **Version SolidCraft de référence : 0.24.1** (Flatpak utilisateur, installé depuis les releases GitHub de `tangency-labs/solidcraft`, pas sur Flathub). Chaque version change le format de fichier : un fichier enregistré en 0.24.1 ne s'ouvre pas en 0.24.0 ou avant.
+- **État des lieux à chaque mise à jour de SolidCraft** (demande de l'utilisateur) : en début de session, comparer `flatpak info --user ai.storyteller.solidcraft` à la version de référence. Si elle a changé, lire les notes de version intermédiaires (releases GitHub), les croiser avec ce fichier (contournements de D3, D5, D10, §4, règles du §6) et noter dans la section « État des lieux SolidCraft » (§7) ce qui peut changer, puis mettre à jour la version de référence. Tester dans l'app seulement avec autorisation.
 
 ## 7. Points ouverts
 
@@ -141,6 +143,15 @@ Nombre de marches : chaque volée a une marche de moins que de contremarches (la
 - **Pieds de limons V1 encastrés** : l'encastrement attire ≈ 6,2 kN·m par limon (ELU), lourd pour une platine chevillée. Une platine articulée (moment repris en travée, voir `predim.py`) serait plus simple ; à trancher avant de dimensionner les chevilles.
 - Noms HG / HD / BD / BG non confirmés ; le modèle utilise `Limon ext/int V1/V2`.
 - Matériaux affectés corps par corps (D13) : un corps nouvellement créé (autre répartition, nouvelle pièce) reste en « Default » et doit être affecté à la main.
+
+**État des lieux SolidCraft 0.22.1 → 0.24.1** (2026-10-27, d'après les notes de version, **rien testé dans l'app**) :
+- D5 : une cote de longueur zéro garde l'esquisse contrainte (0.23.0) ; `debord = 0` pourrait être accepté directement. À tester.
+- Oblongs (§4) : corrections des rainures en esquisse (0.24.0), mais rien n'indique qu'elles acceptent des expressions. Garder les rainures actuelles tant que ce n'est pas testé.
+- `Perçage poutre avant` : les répétitions d'esquisse prennent nombre et espacement dans les paramètres (0.23.1) ; les 8 cercles pourraient devenir une répétition.
+- D10 : symétries et répétitions désignent leurs sources par identifiant (0.24.1), plus robustes aux renommages. Rien à changer.
+- §6, plantage en listant les liaisons : liaisons retravaillées (0.23.1), peut-être corrigé ; garder la règle tant que ce n'est pas vérifié.
+- Garde-corps : onglet Mécano-soudure (structures, 0.24.0) et Pipe avec opération joindre / découper (0.23.1). Vérifier si la bibliothèque de profilés a des tubes et des UPE.
+- Plans et nomenclature : rien de nouveau.
 
 ## 8. Prochaines étapes
 
@@ -182,3 +193,4 @@ Restent aussi en attente : visserie des platines, pieds des limons V1 au sol, co
 | 2026-10-27 | Modèle en barres PyNite | `calc/portique.py` : pieds et limons V1 encastrés, arrivée V2 articulée, défauts de verticalité, sans garde-corps ; tout ≤ 11 %, palier stable grâce à l'arrivée V2 (5,7 kN horizontaux par limon), 6,2 kN·m en pied de limon V1 ; `afficher()` sorti dans `predim.py` ; D15, points ouverts, §8 et README mis à jour | `calc/portique.py`, `calc/predim.py`, `CONCEPTION.md`, `README.md` |
 | 2026-10-27 | Visualisation PyVista | `calc/visu.py` : fenêtre interactive ou PNG (moments ELU_X, déformée ELS_X × 300) ; moment maxi au pied des limons V1 (6,2 kN·m) ; D16 et README mis à jour | `calc/visu.py`, `CONCEPTION.md`, `README.md` |
 | 2026-10-27 | Rapport de calcul | Rapport de synthèse (description, hypothèses, méthode, vérifications, efforts aux appuis, figures, limites) dans un doc Claude (https://claude.ai/artifact/S7D154tdD82mPPB65nKBjT), copie Markdown + figures dans `calc/rapport/` | `calc/rapport/`, `CONCEPTION.md`, `README.md` |
+| 2026-10-27 | Dépôt déplacé, SolidCraft à jour | Clone de `staircase_solidcraft_claude` à la place de l'ancien dossier ; SolidCraft 0.22.1 → 0.24.1 (Flatpak GitHub) ; règle d'état des lieux à chaque mise à jour (§6) et premier état des lieux (§7) | `CONCEPTION.md` |

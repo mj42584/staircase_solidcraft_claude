@@ -1,4 +1,4 @@
-# Escalier gab
+# Projet Escalier avec SolidCraft et Claude
 
 Escalier à demi-tour en acier et chêne, modélisé de façon paramétrique dans **SolidCraft** et vérifié par un calcul de structure en Python.
 

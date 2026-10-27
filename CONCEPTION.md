@@ -10,11 +10,11 @@ Escalier droit **à demi-tour**, deux volées séparées par un **palier interm�
 
 | Donnée | Valeur |
 |---|---|
-| Hauteur totale (sol fini bas → sol fini haut) | 3800 mm dans le modèle ; **mesuré sur site : 3848 mm** (dalle = sol fini bas ; dessus du cadre d'arrivée à 3788 + planche de 60) — modèle pas encore mis à jour, voir §7 |
+| Hauteur totale (sol fini bas → sol fini haut) | **3848 mm**, mesuré sur site (dalle = sol fini bas ; dessus du cadre d'arrivée à 3788 + planche de 60) ; 3800 au départ |
 | Giron | 274 mm |
-| Hauteur de marche | 172,73 mm (= 3800 / 22) |
+| Hauteur de marche | 174,91 mm (= 3848 / 22) |
 | Angle de volée annoncé au départ | 32,4° — voir décision D1 |
-| Répartition | 17 / 5 au départ, puis 16 / 6 (14 / 8 et 15 / 7 essayés un temps), **17 / 5** actuellement (choix de l'utilisateur dans l'app) — voir D2 ; volée 2 décalée d'un giron, voir D6 |
+| Répartition | 17 / 5 au départ, puis 16 / 6 (14 / 8 et 15 / 7 essayés un temps), **16 / 6** actuellement (choix de l'utilisateur dans l'app, 2026-10-27) — voir D2 ; volée 2 décalée d'un giron, voir D6 |
 | Profondeur du palier | 1000 mm |
 | Jour (vide entre volées) | 60 mm au départ, désormais calculé (270 mm avec `jeu_limons` = 100) — voir D9 |
 | Emmarchement (largeur d'une volée) | 1000 mm |
@@ -30,14 +30,14 @@ Escalier droit **à demi-tour**, deux volées séparées par un **palier interm�
 
 | Paramètre | Valeur | Pilote |
 |---|---|---|
-| `hauteur_totale` | 3800 mm | hauteur de marche, arrivée |
+| `hauteur_totale` | 3848 mm | hauteur de marche, arrivée |
 | `nb_contremarches` | 22 | hauteur de marche, nb_volee2 |
 | `nb_volee1` | 17 | contremarches volée basse → hauteur du palier, nombre de marches V1 |
 | `giron` | 274 mm | squelette, profondeur des marches, pas des réseaux |
 | `emmarchement` | 1000 mm | largeur des volées et des marches, plans d'axe |
 | `jeu_limons` | 100 mm | vide entre les deux limons intérieurs → `jour` (passé de 20 à 100 par l'utilisateur) |
 | `palier_profondeur` | 1000 mm | squelette (élévation et plan) |
-| `marche_epaisseur` | 30 mm | marches, position des équerres |
+| `marche_epaisseur` | 60 mm (passé de 30 à 60 par l'utilisateur) | marches, position des équerres, plancher du palier |
 | `equerre_aile` | 30 mm | cornières (ailes égales) |
 | `equerre_ep` | 3 mm | cornières |
 | `equerre_longueur` | 200 mm | cornières, centrées sur le giron |
@@ -60,11 +60,11 @@ Escalier droit **à demi-tour**, deux volées séparées par un **palier interm�
 
 | Paramètre | Expression | Valeur |
 |---|---|---|
-| `hauteur_marche` | `hauteur_totale / nb_contremarches` | 172,73 mm |
+| `hauteur_marche` | `hauteur_totale / nb_contremarches` | 174,91 mm |
 | `nb_volee2` | `nb_contremarches - nb_volee1` | 6 |
-| `angle_volee` | `atan(hauteur_marche / giron)` | 32,23° |
-| `blondel` | `2 * hauteur_marche + giron` | 619 mm (confort 600–640) |
-| `pas_volee` | `sqrt(giron ^ 2 + hauteur_marche ^ 2)` | 323,90 mm |
+| `angle_volee` | `atan(hauteur_marche / giron)` | 32,55° |
+| `blondel` | `2 * hauteur_marche + giron` | 624 mm (confort 600–640) |
+| `pas_volee` | `sqrt(giron ^ 2 + hauteur_marche ^ 2)` | 325,07 mm |
 | `jour` | `2 * limon_b + jeu_limons` | 270 mm |
 
 ## 4. Architecture du modèle
@@ -151,6 +151,8 @@ Nombre de marches : chaque volée a une marche de moins que de contremarches (la
 **`cad/environnement.solidcraft`** (2026-10-27, SolidCraft 0.24.1) : repère **X = 0 sur la face côté escalier de la poutre d'arrivée** (cadre vers −X), **Y = 0 sur la face côté mur du cadre** (cadre vers −Y, mur vers +Y), Z = 0 dessus de dalle. Paramètres : `cadre_longueur` 3788 (croquis, à confirmer), `cadre_largeur` 2570, `cadre_dessus` 3788, `planche_ep` 60, `ipe_h/b/tw/tf` 200/100/5,6/8,5, `poteau_milieu` 820 (axe depuis la face côté mur, déduit des 1450 libres), `poutre_mur_longueur` 5510 (poutre le long du mur prolongée **au-delà** du cadre côté escalier, sens à confirmer), `mur_ecart` 50, `mur_ep` 500, `mur_h` 6000, `dalle_ep` 200. **Modifié par l'utilisateur** : `cadre_largeur` 2670, `poteau_milieu` 1400, `mur_h` 3800, **poteaux avant supprimés** (4 poteaux). Poutres et poteaux en **Frame Member** (onglet Mécano-soudure, profilé `i_beam` piloté par `ipe_*`). **Esquisses cotées** (demande de l'utilisateur : des cotes pilotées par paramètres, pas des points en expressions) : lignes horizontales / verticales, cotes depuis l'origine en expressions (`d16`… `d53`), 0 DDL partout. Pour convertir un point en expression il faut supprimer la ligne et la redessiner avec l'option `ids` (même identifiant, le Frame Member la retrouve) : Fix/UnFix et le déplacement ne libèrent pas un point en expression. Corps : `Poutre mur`, `Poutre avant`, `Poutre arrivée`, `Poutre fond`, `Solive 1`, `Solive 2` (à 1/3 et 2/3), 4 poteaux `Poteau mur/milieu arrivée/fond` (âme suivant Y), `Planche`, `Dalle`, `Mur` (plaques). Contrôles : encombrements OK, 1450 libres entre poteaux, dessus planche à 3848 ; test `cadre_largeur` 2570 → 2700 → 2570 OK. Piège : sur un plan décalé de XZ, l'axe vertical de l'esquisse va vers −Z (Z écrits en négatif). Ni porte, ni matériaux.
 **Insertion dans l'escalier (vérifié 0.24.1)** : `component.insert_design` et `occurrence.move` ne prennent qu'un décalage **chiffré** ; l'environnement ne suivra pas la répartition. Avec les repères ci-dessus, décalage à appliquer : X = `(nb_volee1 - nb_volee2 - 1) * giron` (+ `platine_ep` si on vise la face de la platine), Y = `jour / 2 + emmarchement + limon_b` + jeu entre V2 et le cadre (inconnu), Z = 0. À refaire à la main à chaque changement de répartition.
 
+**`cad/projet_escalier.solidcraft`** (2026-10-27) : assemblage, **composants liés** `Environnement` (à l'origine, fixé / grounded) et `Escalier` (décalé de **[−2466, −1446,6, 0]** : X = −(`nb_volee1` − `nb_volee2` − 1) × `giron`, 16/6 depuis le 2026-10-27 (−3014 en 17/5), platine du haut de V2 plaquée contre `Poutre arrivée` ; Z = 0, pieds sur la dalle ; Y choisi par l'utilisateur, jeu V2 / face du cadre ≈ 227 mm, à revoir ; **escalier fixé (grounded)** comme l'environnement, solution temporaire contre les déplacements accidentels : le libérer avant de le repositionner ; liaisons (joints) à tester plus tard pour qu'il suive la répartition). Liens enregistrés en **chemins relatifs** (noms de fichiers) : les trois fichiers doivent rester ensemble dans `cad/` ; après une modification d'un composant, « Update Links » dans le projet. Décalage chiffré, à refaire à chaque changement de répartition. **Collisions trouvées** (`inspect.interference`) : (1) `Poutre mur` (prolongée au-dessus de V2) avec `Limon ext V2`, `Platine ext V2`, `Équerre ext V2 (5)` sur les ≈ 400 premiers mm depuis l'arrivée : le limon extérieur de V2 est sous la poutre (Y 0 à −100) → il faut un jeu V2 / cadre d'au moins ≈ 100 mm ; (2) `Poteau milieu arrivée` (`poteau_milieu` 1400) dans V1 (`Limon int V1`, `Marche V1 (11)`, `Équerre int V1 (11)`) : V1 occupe Y −1355 à −2440 sous le cadre. Hauteur libre au-dessus de V1 sous la poutre d'arrivée : 3588 − 12 h = **1,49 m** en 17/5 (insuffisant, voir plus haut).
+
 **État des lieux SolidCraft 0.22.1 → 0.24.1** (2026-10-27, d'après les notes de version, **rien testé dans l'app**) :
 - D5 : une cote de longueur zéro garde l'esquisse contrainte (0.23.0) ; `debord = 0` pourrait être accepté directement. À tester.
 - Oblongs (§4) : corrections des rainures en esquisse (0.24.0), mais rien n'indique qu'elles acceptent des expressions. Garder les rainures actuelles tant que ce n'est pas testé.
@@ -204,3 +206,8 @@ Restent aussi en attente : visserie des platines, pieds des limons V1 au sol, co
 | 2026-10-27 | Environnement du site | Photos et croquis : arrivée sur un cadre IPE 200, hauteur mesurée 3848 ; fichier séparé `cad/environnement.solidcraft` (cadre, 6 poteaux, 2 solives, poutre le long du mur, planche, dalle, mur) en Frame Member ; insertion à décalage chiffré seulement (vérifié) ; escalier pas touché | `cad/environnement.solidcraft`, `CONCEPTION.md` |
 | 2026-10-27 | Coter les esquisses de l'environnement | Modifications de l'utilisateur relevées (largeur 2670, poteaux milieu 1400, mur 3800, poteaux avant supprimés) ; 6 esquisses redessinées avec de vraies cotes en paramètres, 0 DDL ; positions inchangées ; test `cadre_largeur` 2900, `cadre_longueur` 4000, `poteau_milieu` 1200 puis retour OK | `cad/environnement.solidcraft`, `CONCEPTION.md` |
 | 2026-10-27 | Retouches de l'utilisateur relevées | Dalle et mur raccourcis : 100 mm au-delà du cadre (X −3888) et de la poutre le long du mur (X 5610), au lieu de 3000 ; dalle prolongée sous le mur (bord à `mur_ecart + mur_ep`) ; rien d'autre de changé, aucune erreur ; enregistré | `cad/environnement.solidcraft`, `CONCEPTION.md` |
+| 2026-10-27 | Hauteur mesurée dans l'escalier | `hauteur_totale` 3800 → 3848 (h = 174,91, Blondel 624) ; répartition 17/5 et `marche_epaisseur` 60 constatés ; palier à 2973,45, haut des platines V2 à 3838,4 (conforme au calcul) ; 82 corps, aucune erreur (avertissement booléen de `Trous poutre avant` déjà présent) ; calculs `calc/` **pas relancés** (leurs paramètres sont à 3800 / 30) | `cad/escalier.solidcraft`, `CONCEPTION.md` |
+| 2026-10-27 | Projet escalier | Assemblage `cad/projet_escalier.solidcraft` : environnement fixé à l'origine, escalier lié décalé de [−3014, −1220, 0] (17/5, jeu V2 / cadre 0 provisoire) ; liens relatifs ; 6 collisions (poutre le long du mur / haut de V2, poteau du milieu / V1) ; hauteur libre 1,49 m au-dessus de V1 | `cad/projet_escalier.solidcraft`, `CONCEPTION.md` |
+| 2026-10-27 | Escalier plaqué dans le projet | L'utilisateur avait déplacé l'escalier (+181 X, −227 Y, +320 Z) ; recalé en X (platine V2 contre la poutre d'arrivée, X = 0) et Z (pieds sur la dalle), Y gardé ; décalage [−3014, −1446,6, 0] ; reste 1 collision : `Poteau milieu arrivée` / `Limon int V1` (3,4 mm) | `cad/projet_escalier.solidcraft`, `CONCEPTION.md` |
+| 2026-10-27 | Fixer l'escalier dans le projet | Occurrence `Escalier` fixée (grounded), position inchangée (platine V2 à X = 0) | `cad/projet_escalier.solidcraft`, `CONCEPTION.md` |
+| 2026-10-27 | Recaler après modification de l'escalier | L'utilisateur est passé en **16/6** (palier à 16 h = 2798,5) et a mis à jour le lien : arrivée à X = −548 dans le cadre ; escalier libéré, décalé de +548 en X (deux girons), refixé ; décalage [−2466, −1446,6, 0], pieds à Z = 0 ; reste 1 collision `Poteau milieu arrivée` / `Limon int V1` (3,4 mm) ; hauteur libre au-dessus de V1 sous la poutre d'arrivée : 3588 − 10 h = **1,84 m** ; `cad/escalier.solidcraft` mis à jour depuis `recovery` | `cad/escalier.solidcraft`, `cad/projet_escalier.solidcraft`, `CONCEPTION.md` |

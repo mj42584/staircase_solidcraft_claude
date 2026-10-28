@@ -249,3 +249,4 @@ Liste fixée par l'utilisateur (2026-10-26) :
 | 2026-10-28 | Arborescence du dépôt | `REGLES_AGENT_3D.md` §7 : arborescence type et création de celle d'un nouveau projet (ce qui manque seulement, squelette de CONCEPTION.md) | `REGLES_AGENT_3D.md`, `CONCEPTION.md` |
 | 2026-10-28 | Arborescence : création retirée | Partie « Créer l'arborescence d'un nouveau projet » supprimée de `REGLES_AGENT_3D.md` §7 (choix de l'utilisateur) | `REGLES_AGENT_3D.md`, `CONCEPTION.md` |
 | 2026-10-28 | Plan du fichier de conception | `REGLES_AGENT_3D.md` §3 : tableau des 9 chapitres de CONCEPTION.md et de leur contenu | `REGLES_AGENT_3D.md`, `CONCEPTION.md` |
+| 2026-10-28 | Corrections de l'audit des règles | `REGLES_AGENT_3D.md` : §1 renommé « Principes », ajout « aucune donnée inventée » et « statut des calculs » ; §2 : rien n'est écrit avant la branche, ordre réaliser → exports → documenter → enregistrer, demande de fusion définie | `REGLES_AGENT_3D.md`, `CONCEPTION.md` |

@@ -2,22 +2,25 @@
 
 Règles génériques, valables pour tout projet de conception 3D : ce fichier se copie tel quel d'un projet à l'autre. Tout ce qui est propre au projet (versions de référence, dossier de travail du connecteur, fichiers liés, pièges) est dans le **fichier de conception** (ici [CONCEPTION.md](CONCEPTION.md), chapitre « Outils et pièges du projet »).
 
-## 1. Autorisations et réponses
+## 1. Principes
 
 - **Libre, sans demander** : lire les fichiers du dépôt, inspecter le modèle (paramètres, corps, erreurs, mesures, interférences), `git status / diff / log`.
 - **Avec accord explicite** : toute modification du modèle 3D, tout enregistrement, la copie d'un fichier vers le dépôt, commit et push, l'installation de logiciels, le lancement des calculs ou simulations. Les calculs ne sont **jamais relancés automatiquement**, même après un changement de paramètre.
 - **Plan validé** : l'agent annonce un plan numéroté ; le « oui » de l'utilisateur couvre tout le plan. Au moindre écart (imprévu, erreur, étape non prévue), l'agent s'arrête et redemande.
+- **Aucune donnée inventée** : une donnée non fournie (cote, matériau, charge, nuance d'acier…) est demandée à l'utilisateur, ou utilisée avec la mention « supposé » dans le fichier de conception, jamais présentée comme acquise.
+- **Statut des calculs** : les calculs de l'agent sont des ordres de grandeur ; ne jamais les présenter comme une note de calcul validée, qui reste l'affaire d'un bureau d'études.
 - **Réponses synthétiques** : le résultat d'abord, puis seulement ce qui demande une décision de l'utilisateur. Phrases et listes courtes, pas de redite du fichier de conception ni d'options qu'on ne retient pas ; le détail va dans le fichier, pas dans la réponse.
 
 ## 2. Déroulé d'une tâche
 
-1. **Constater** : relever les versions des outils et les comparer aux versions de référence (§4) ; relever l'état du modèle (paramètres pilotes, nombre de corps, erreurs) et le comparer au fichier de conception. Les écarts (modifications faites à la main entre deux sessions) sont notés dans l'historique **avant** toute autre action.
-2. **Proposer** le plan, attendre le « oui ».
+1. **Constater** : relever les versions des outils et les comparer aux versions de référence (§4) ; relever l'état du modèle (paramètres pilotes, nombre de corps, erreurs) et le comparer au fichier de conception, pour repérer les modifications faites à la main entre deux sessions. Rien n'est encore écrit.
+2. **Proposer** le plan, avec les écarts constatés, et attendre le « oui ».
    Puis, **avant toute modification**, créer une branche depuis `main` à jour (nom court de la tâche). Jamais de commit direct sur `main` : c'est l'utilisateur qui fusionne (merge), après avoir relu le diff du fichier de conception. Une seule branche ouverte à la fois touchant un fichier binaire (modèle 3D) : Git ne sait pas les fusionner.
+   Première écriture sur la branche : les écarts constatés, dans l'historique.
 3. **Réaliser**, puis **tester** : faire varier un ou deux paramètres concernés puis revenir, 0 erreur. Si une pièce d'un assemblage a changé : mettre à jour les liens, puis contrôler les interférences.
-4. **Enregistrer** (dossier de travail du connecteur → dépôt → commit sur la branche), ou écrire explicitement « non enregistré » dans l'historique.
+4. **Exports** (liste dans le fichier de conception) : si la **géométrie 3D** a changé, les régénérer. Pas pour une modification sans effet sur la géométrie (renommage, matériau, réorganisation de l'arbre) : le noter dans l'historique.
 5. **Documenter** : mettre à jour le fichier de conception (et le README si un chiffre qu'il cite change), ajouter une ligne à l'historique.
-6. **Exports** : avant de proposer la fusion, si la **géométrie 3D** a changé, régénérer sur la branche les exports versionnés (STL, aperçus, plans…) qui la montrent. Pas pour une modification sans effet sur la géométrie (renommage, matériau, réorganisation de l'arbre) : le dire alors dans la demande de fusion. Le fichier de conception dit lesquels.
+6. **Enregistrer** (dossier de travail du connecteur → dépôt → commit sur la branche), ou écrire explicitement « non enregistré » dans l'historique. Puis **proposer la fusion** : un message à l'utilisateur qui résume ce que contient la branche (ou une pull request, s'il la demande).
 
 ## 3. Tenue du fichier de conception
 

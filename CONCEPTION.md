@@ -69,7 +69,7 @@ Escalier droit **à demi-tour**, deux volées séparées par un **palier interm�
 
 ## 4. Architecture du modèle
 
-**Repère** : origine au pied de la première contremarche, **au milieu du jour**. Volée 1 monte vers **+X** côté **Y négatif** ; volée 2 redescend en X (monte vers −X) côté **Y positif**. Z vers le haut. Ce repère **diffère** de celui du FreeCAD d'origine (voir points ouverts).
+**Repère** : origine au pied de la première contremarche, **au milieu du jour**. Volée 1 monte vers **+X** côté **Y négatif** ; volée 2 redescend en X (monte vers −X) côté **Y positif**. Z vers le haut.
 
 **Timeline**
 
@@ -100,11 +100,11 @@ Nombre de marches : chaque volée a une marche de moins que de contremarches (la
 ## 5. Journal des décisions
 
 - **D1 — Angle calculé, non piloté.** 32,4° est incohérent avec giron 274 et hauteur 172,73 (arctan → 32,23°). On pilote hauteur totale + nombre de contremarches + giron ; l'angle en découle.
-- **D2 — Répartition pilotable.** Départ 17/5 (palier à 2936 mm, comme le FreeCAD). L'utilisateur est ensuite passé à **16/6** dans l'app, puis à **14/8** un temps, puis de nouveau à **16/6** ; 16/6 est la valeur actuelle. Le modèle suit ces changements sans erreur.
+- **D2 — Répartition pilotable.** Départ 17/5 (palier à 2936 mm). L'utilisateur est ensuite passé à **16/6** dans l'app, puis à **14/8** un temps, puis de nouveau à **16/6** ; 16/6 est la valeur actuelle. Le modèle suit ces changements sans erreur.
 - **D3 — Ensemble marche intégré au squelette, pas en fichier lié.** SolidCraft permet un composant lié (`component.insert_design`), mais les paramètres ne traversent pas les fichiers et le réseau sur chemin n'accepte pas les composants. Intégré, la marche est pilotée directement par `giron` et `emmarchement`.
 - **D4 — Réseau sur chemin plutôt que rectangulaire.** Le chemin est une courbe du squelette : la direction suit l'angle de volée. Le nombre d'occurrences accepte une expression (vérifié).
 - **D5 — Débord sans cote nulle.** SolidCraft refuse une cote de 0. L'arrière de la marche est coté depuis le nez (`giron`) et la longueur totale vaut `giron + debord`.
-- **D6 — Volée 2 décalée d'un giron.** Au départ, volée 2 à l'aplomb du nez du palier (disposition classique). Changé à la demande de l'utilisateur (2026-10-26) : la première marche de V2 est au niveau du palier et la première contremarche V2 recule d'un giron (`rive − giron`). Cela règle la jonction limon V2 / palier (D12). L'escalier s'allonge d'un giron ; c'est proche de la disposition du FreeCAD d'origine.
+- **D6 — Volée 2 décalée d'un giron.** Au départ, volée 2 à l'aplomb du nez du palier (disposition classique). Changé à la demande de l'utilisateur (2026-10-26) : la première marche de V2 est au niveau du palier et la première contremarche V2 recule d'un giron (`rive − giron`). Cela règle la jonction limon V2 / palier (D12). L'escalier s'allonge d'un giron.
 - **D7 — Pas de Git LFS ni d'exports** : GitHub sert de sauvegarde uniquement, les fichiers sont petits.
 - **D8 — Limons UPE 220, ailes vers l'extérieur.** Comparé : fer plat 300×10 (≈ L/300), UPE 160 (≈ L/120 sur 4,1 m, trop souple, et l'équerre L 200 ne rentre pas entre les ailes), UPE 200 (≈ L/255), UPE 220 (≈ L/345). Avec `limon_dessus = 0`, la zone boulonnable de l'âme (≈ 170 mm) couvre l'équerre (≈ 45 → 177 mm sous la ligne de nez). Ordres de grandeur seulement, pas un calcul de structure.
 - **D9 — Jour calculé depuis les limons.** Les ailes des deux limons intérieurs se font face dans le jour : `jour = 2 * limon_b + jeu_limons`. Le jeu est libre pour l'instant (20 mm).
@@ -128,14 +128,11 @@ Nombre de marches : chaque volée a une marche de moins que de contremarches (la
 - Les photos du site ne sont pas versionnées dans le dépôt.
 - Le connecteur MCP SolidCraft ne lit/écrit que dans `~/.var/app/ai.storyteller.solidcraft/data/solidcraft/recovery`. Flux : enregistrer là, puis copier dans `cad/` (avec accord), puis commit/push.
 - Lister les commandes de liaison (`list_commands` filtre `joint`) a semblé faire planter l'app : à éviter.
-- FreeCAD est disponible en flatpak (`org.freecad.FreeCAD`, FreeCADCmd) ; l'import direct d'un `.FCStd` dans SolidCraft est incomplet, passer par un export STEP depuis FreeCAD.
 - **Version SolidCraft de référence : 0.24.1** (Flatpak utilisateur, installé depuis les releases GitHub de `tangency-labs/solidcraft`, pas sur Flathub). Chaque version change le format de fichier : un fichier enregistré en 0.24.1 ne s'ouvre pas en 0.24.0 ou avant.
 - **État des lieux à chaque mise à jour de SolidCraft** (demande de l'utilisateur) : en début de session, comparer `flatpak info --user ai.storyteller.solidcraft` à la version de référence. Si elle a changé, lire les notes de version intermédiaires (releases GitHub), les croiser avec ce fichier (contournements de D3, D5, D10, §4, règles du §6) et noter dans la section « État des lieux SolidCraft » (§7) ce qui peut changer, puis mettre à jour la version de référence. Tester dans l'app seulement avec autorisation.
 
 ## 7. Points ouverts
 
-- Repère différent du FreeCAD d'origine (`archive/freecad/`) : recaler si on réutilise ses éléments de bâti (sol, terrasse, plateforme).
-- Dans le FreeCAD, la volée haute semblait décalée d'environ un giron : c'est désormais aussi le cas du modèle (D6), à recaler si besoin.
 - L'app ouvre désormais directement `cad/escalier.solidcraft` (verrou `cad/.~escalier.solidcraft.lock`, non suivi). L'utilisateur avait passé `jour` à 100 à la main avant que D9 le rende calculé.
 - **Visserie à faire** (platines et poutre avant déjà percées). **Arrivée en haut de V2 : boulonnée à la structure supérieure** (décision de l'utilisateur) ; la structure elle-même n'est pas modélisée. Pas de cornière d'appui pour l'instant. La platine V2 dépasse de 9,5 mm le dessus du plancher, à côté de la marche V2 au niveau du palier : à araser si gênant. Côté jour, la marche V2 au niveau du palier est contre le limon V2, entre les deux limons intérieurs.
 - **Marches et plancher en chêne de 30 mm** : insuffisants d'après `calc/predim.py` (38 mm minimum sur 1000 mm de portée, D14). Le plancher du palier (30 mm sur 1000 mm) n'est pas vérifié. À trancher : épaisseur, essence ou appui intermédiaire.
@@ -172,7 +169,7 @@ Liste fixée par l'utilisateur (2026-10-26) :
 4. **Nomenclature.**
 5. **Vérification par le calcul** (poutre avant en priorité, stabilité / contreventement). Prédimensionnement fait (`calc/predim.py`, D14), modèle en barres fait (`calc/portique.py`, D15) ; restent les assemblages et chevilles, le garde-corps dans le modèle et la validation par un bureau d'études.
 
-Restent aussi en attente : visserie des platines, pieds des limons V1 au sol, contreventement, recalage avec le bâti du FreeCAD si nécessaire.
+Restent aussi en attente : visserie des platines, pieds des limons V1 au sol, contreventement.
 
 ## 9. Historique
 

@@ -13,10 +13,11 @@ Règles génériques, valables pour tout projet de conception 3D : ce fichier se
 
 1. **Constater** : relever les versions des outils et les comparer aux versions de référence (§4) ; relever l'état du modèle (paramètres pilotes, nombre de corps, erreurs) et le comparer au fichier de conception. Les écarts (modifications faites à la main entre deux sessions) sont notés dans l'historique **avant** toute autre action.
 2. **Proposer** le plan, attendre le « oui ».
-   Puis, **avant toute modification**, créer une branche depuis `main` à jour (nom court de la tâche). Jamais de commit direct sur `main` : c'est l'utilisateur qui fusionne, après avoir relu le diff du fichier de conception. Une seule branche ouverte à la fois touchant un fichier binaire (modèle 3D) : Git ne sait pas les fusionner.
+   Puis, **avant toute modification**, créer une branche depuis `main` à jour (nom court de la tâche). Jamais de commit direct sur `main` : c'est l'utilisateur qui fusionne (merge), après avoir relu le diff du fichier de conception. Une seule branche ouverte à la fois touchant un fichier binaire (modèle 3D) : Git ne sait pas les fusionner.
 3. **Réaliser**, puis **tester** : faire varier un ou deux paramètres concernés puis revenir, 0 erreur. Si une pièce d'un assemblage a changé : mettre à jour les liens, puis contrôler les interférences.
 4. **Enregistrer** (dossier de travail du connecteur → dépôt → commit sur la branche), ou écrire explicitement « non enregistré » dans l'historique.
 5. **Documenter** : mettre à jour le fichier de conception (et le README si un chiffre qu'il cite change), ajouter une ligne à l'historique.
+6. **Exports** : avant de proposer la fusion, régénérer sur la branche les exports versionnés (STL, aperçus, plans…) qui montrent le modèle modifié. Le fichier de conception dit lesquels et où est le contrôle automatique, s'il y en a un.
 
 ## 3. Tenue du fichier de conception
 

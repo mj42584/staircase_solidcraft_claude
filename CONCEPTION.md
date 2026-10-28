@@ -242,3 +242,4 @@ Liste fixée par l'utilisateur (2026-10-26) :
 | 2026-10-28 | README allégé | Chapitres escalier, calcul, modification et contenu retirés (doublons de CONCEPTION.md) ; ajout de « Comment le projet est fait » (SolidCraft, Claude Code, connecteur MCP, travail à deux) | `README.md`, `CONCEPTION.md` |
 | 2026-10-28 | Règle de modélisation | `REGLES_AGENT_3D.md` §6 : toujours préférer une méthode modifiable par un humain (cotes dans les esquisses, paramètres nommés, noms explicites) | `REGLES_AGENT_3D.md`, `CONCEPTION.md` |
 | 2026-10-28 | Règle de nommage | `REGLES_AGENT_3D.md` §6 : renommer tout élément créé avec un nom explicite, jamais le nom par défaut | `REGLES_AGENT_3D.md`, `CONCEPTION.md` |
+| 2026-10-28 | Règles de modélisation | `REGLES_AGENT_3D.md` §6 : squelette, esquisses à 0 DDL, un corps par pièce, réseaux, symétries, matériau à la création, simplifications déclarées | `REGLES_AGENT_3D.md`, `CONCEPTION.md` |

@@ -36,3 +36,8 @@ Règles génériques, valables pour tout projet de conception 3D : ce fichier se
 ## 5. Pièges
 
 Le fichier de conception tient la liste des pièges du projet, une ligne par piège : le symptôme, le contournement, et la version à partir de laquelle il est peut-être corrigé.
+
+## 6. Modélisation
+
+- **Un modèle modifiable par un humain** : toujours préférer la méthode qu'un utilisateur peut reprendre à la main dans le logiciel de CAO, même si une autre est plus rapide pour l'agent. Par exemple : dans les esquisses, des **cotes** pilotées par des paramètres plutôt que des points calculés par expression ; des paramètres nommés plutôt que des valeurs en dur ; des noms explicites pour les esquisses, fonctions et corps.
+- Quand le logiciel impose une méthode moins lisible, la noter comme contournement dans les pièges du projet.

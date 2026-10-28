@@ -134,8 +134,9 @@ Nombre de marches : chaque volée a une marche de moins que de contremarches (la
 
 1. **Constater** : relever les versions des outils (6.4) ; relever paramètres pilotes, répartition, nombre de corps et erreurs ; comparer au §3. Les écarts (modifications faites dans l'app entre deux sessions) sont notés dans l'historique **avant** toute autre action.
 2. **Proposer** le plan, attendre le « oui ».
+   Puis, **avant toute modification**, créer une branche depuis `main` à jour (nom court de la tâche, ex. `garde-corps`). Jamais de commit direct sur `main` : c'est l'utilisateur qui fusionne, après avoir relu le diff de CONCEPTION.md. Une seule branche ouverte à la fois touchant un `.solidcraft` : ces fichiers sont binaires, Git ne sait pas les fusionner.
 3. **Réaliser**, puis **tester** : faire varier un ou deux paramètres concernés puis revenir, 0 erreur. Si l'escalier a changé : « Update Links » dans le projet, puis `inspect.interference`.
-4. **Enregistrer** (`recovery` → `cad/` → commit), ou écrire explicitement « non enregistré » dans l'historique.
+4. **Enregistrer** (`recovery` → `cad/` → commit sur la branche), ou écrire explicitement « non enregistré » dans l'historique.
 5. **Documenter** : mettre à jour les sections 2 à 8 (et le README si un chiffre qu'il cite change), ajouter une ligne au §9.
 
 ### 6.3 Tenue de ce fichier
@@ -260,3 +261,4 @@ Restent aussi en attente : visserie des platines, pieds des limons V1 au sol, co
 | 2026-10-27 | Recaler après modification de l'escalier | L'utilisateur est passé en **16/6** (palier à 16 h = 2798,5) et a mis à jour le lien : arrivée à X = −548 dans le cadre ; escalier libéré, décalé de +548 en X (deux girons), refixé ; décalage [−2466, −1446,6, 0], pieds à Z = 0 ; reste 1 collision `Poteau milieu arrivée` / `Limon int V1` (3,4 mm) ; hauteur libre au-dessus de V1 sous la poutre d'arrivée : 3588 − 10 h = **1,84 m** ; `cad/escalier.solidcraft` mis à jour depuis `recovery` | `cad/escalier.solidcraft`, `cad/projet_escalier.solidcraft`, `CONCEPTION.md` |
 | 2026-10-27 | Export STL du projet et README | `cad/projet_escalier.stl` (binaire, 379 Ko, environnement + escalier) ; nouvel aperçu `cad/apercu.png` (vue côté V1) ; README : lien 3D vers le projet, valeurs 3848 / 16 + 6 / marches 60 mm, mention du calcul non relancé, nouveaux fichiers ; `cad/escalier.stl` réexporté depuis le projet (escalier seul, 16/6, 82 corps, coordonnées du site) | `cad/projet_escalier.stl`, `cad/apercu.png`, `README.md`, `CONCEPTION.md` |
 | 2026-10-28 | Audit de CONCEPTION.md, §6 réécrit | FreeCAD retiré (plus utilisé) ; §6 en 5 sous-parties (autorisations, déroulé, tenue du fichier, outils et versions, pièges) ; valeurs périmées corrigées (16/6, 60 mm, palier 2798,5) ; contradictions levées ; §7 : calculs à relancer, effets probables de `palier_ep` 60 à vérifier, hauteur libre 1,84 m | `CONCEPTION.md` |
+| 2026-10-28 | Règle des branches | 6.2 : une branche par tâche avant toute modification, fusion dans `main` par l'utilisateur, une seule branche à la fois sur un `.solidcraft` | `CONCEPTION.md` |

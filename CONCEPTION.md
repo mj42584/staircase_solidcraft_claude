@@ -247,3 +247,4 @@ Liste fixée par l'utilisateur (2026-10-26) :
 | 2026-10-28 | Exports : géométrie seulement | Étape 6 limitée aux changements de géométrie 3D ; étiquette `geometrie-inchangee` sur la PR pour passer le contrôle | `REGLES_AGENT_3D.md`, `.github/workflows/exports.yml`, `CONCEPTION.md` |
 | 2026-10-28 | Contrôle GitHub abandonné | `.github/workflows/exports.yml` supprimé (choix de l'utilisateur) ; la règle des exports reste ; D7 liste les exports et ce qui les touche | `REGLES_AGENT_3D.md`, `CONCEPTION.md` |
 | 2026-10-28 | Arborescence du dépôt | `REGLES_AGENT_3D.md` §7 : arborescence type et création de celle d'un nouveau projet (ce qui manque seulement, squelette de CONCEPTION.md) | `REGLES_AGENT_3D.md`, `CONCEPTION.md` |
+| 2026-10-28 | Arborescence : création retirée | Partie « Créer l'arborescence d'un nouveau projet » supprimée de `REGLES_AGENT_3D.md` §7 (choix de l'utilisateur) | `REGLES_AGENT_3D.md`, `CONCEPTION.md` |

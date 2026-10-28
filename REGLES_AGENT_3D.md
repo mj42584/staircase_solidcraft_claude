@@ -39,5 +39,6 @@ Le fichier de conception tient la liste des pièges du projet, une ligne par pi�
 
 ## 6. Modélisation
 
-- **Un modèle modifiable par un humain** : toujours préférer la méthode qu'un utilisateur peut reprendre à la main dans le logiciel de CAO, même si une autre est plus rapide pour l'agent. Par exemple : dans les esquisses, des **cotes** pilotées par des paramètres plutôt que des points calculés par expression ; des paramètres nommés plutôt que des valeurs en dur ; des noms explicites pour les esquisses, fonctions et corps.
+- **Un modèle modifiable par un humain** : toujours préférer la méthode qu'un utilisateur peut reprendre à la main dans le logiciel de CAO, même si une autre est plus rapide pour l'agent. Par exemple : dans les esquisses, des **cotes** pilotées par des paramètres plutôt que des points calculés par expression ; des paramètres nommés plutôt que des valeurs en dur.
+- **Tout renommer** : chaque élément créé (esquisse, fonction, corps, plan, paramètre, composant) reçoit tout de suite un nom explicite qui dit ce qu'il est et où il est (ex. `Profil limon V1`, `Limon ext V2`), jamais le nom par défaut du logiciel (`Sketch3`, `Extrude12`). Un humain doit pouvoir s'y retrouver dans l'arbre sans lire le fichier de conception.
 - Quand le logiciel impose une méthode moins lisible, la noter comme contournement dans les pièges du projet.

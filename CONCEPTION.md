@@ -169,6 +169,10 @@ SolidCraft change de format de fichier à chaque version : un fichier enregistr�
 - Garde-corps : onglet Mécano-soudure (structures, 0.24.0) et Pipe avec opération joindre / découper (0.23.1). Vérifier si la bibliothèque de profilés a des tubes et des UPE.
 - Plans et nomenclature : rien de nouveau.
 
+### 6.5 Gestion des versions
+
+Git, dépôt GitHub `mj42584/staircase_solidcraft_claude`. Version de travail = branche (nom court de la tâche) ; enregistrer = commit + push sur la branche ; version de référence = `main` ; valider = fusion (merge) par l'utilisateur. Git ne fusionne pas les `.solidcraft` (binaires).
+
 ## 7. Points ouverts
 
 - **Calculs à relancer** : `hauteur_totale` (3800 → 3848), `nb_volee1` (17 → 16), `marche_epaisseur` / `palier_ep` (30 → 60). Calculs faits en 3800 / 17/5 / 30 mm (D14, D15, `calc/rapport/`).
@@ -250,3 +254,4 @@ Liste fixée par l'utilisateur (2026-10-26) :
 | 2026-10-28 | Arborescence : création retirée | Partie « Créer l'arborescence d'un nouveau projet » supprimée de `REGLES_AGENT_3D.md` §7 (choix de l'utilisateur) | `REGLES_AGENT_3D.md`, `CONCEPTION.md` |
 | 2026-10-28 | Plan du fichier de conception | `REGLES_AGENT_3D.md` §3 : tableau des 9 chapitres de CONCEPTION.md et de leur contenu | `REGLES_AGENT_3D.md`, `CONCEPTION.md` |
 | 2026-10-28 | Corrections de l'audit des règles | `REGLES_AGENT_3D.md` : §1 renommé « Principes », ajout « aucune donnée inventée » et « statut des calculs » ; §2 : rien n'est écrit avant la branche, ordre réaliser → exports → documenter → enregistrer, demande de fusion définie | `REGLES_AGENT_3D.md`, `CONCEPTION.md` |
+| 2026-10-28 | Règles indépendantes de Git | `REGLES_AGENT_3D.md` : quatre notions (version de travail, enregistrer, version de référence, valider) avec leur équivalent Git / PLM / gestionnaire de fichiers ; vocabulaire Git retiré des règles ; « Arborescence du projet » ; CONCEPTION §6.5 : gestion des versions du projet (Git) | `REGLES_AGENT_3D.md`, `CONCEPTION.md` |

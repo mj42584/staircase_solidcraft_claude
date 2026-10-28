@@ -1,11 +1,11 @@
 # Règles de travail avec l'agent — projet de conception 3D
 
-Règles génériques, valables pour tout projet de conception 3D : ce fichier se copie tel quel d'un projet à l'autre. Tout ce qui est propre au projet (versions de référence, dossier de travail du connecteur, fichiers liés, pièges) est dans le **fichier de conception** (ici [CONCEPTION.md](CONCEPTION.md), chapitre « Outils et pièges du projet »).
+Règles génériques, valables pour tout projet de conception 3D : ce fichier se copie tel quel d'un projet à l'autre. Tout ce qui est propre au projet (versions de référence, outil de gestion des versions, dossier de travail du connecteur, fichiers liés, pièges) est dans le **fichier de conception** (ici [CONCEPTION.md](CONCEPTION.md), chapitre « Outils et pièges du projet »).
 
 ## 1. Principes
 
-- **Libre, sans demander** : lire les fichiers du dépôt, inspecter le modèle (paramètres, corps, erreurs, mesures, interférences), `git status / diff / log`.
-- **Avec accord explicite** : toute modification du modèle 3D, tout enregistrement, la copie d'un fichier vers le dépôt, commit et push, l'installation de logiciels, le lancement des calculs ou simulations. Les calculs ne sont **jamais relancés automatiquement**, même après un changement de paramètre.
+- **Libre, sans demander** : lire les fichiers du projet, inspecter le modèle (paramètres, corps, erreurs, mesures, interférences), consulter l'historique des versions.
+- **Avec accord explicite** : toute modification du modèle 3D, tout enregistrement, la copie d'un fichier vers le projet, l'enregistrement d'une version, l'installation de logiciels, le lancement des calculs ou simulations. Les calculs ne sont **jamais relancés automatiquement**, même après un changement de paramètre.
 - **Plan validé** : l'agent annonce un plan numéroté ; le « oui » de l'utilisateur couvre tout le plan. Au moindre écart (imprévu, erreur, étape non prévue), l'agent s'arrête et redemande.
 - **Aucune donnée inventée** : une donnée non fournie (cote, matériau, charge, nuance d'acier…) est demandée à l'utilisateur, ou utilisée avec la mention « supposé » dans le fichier de conception, jamais présentée comme acquise.
 - **Statut des calculs** : les calculs de l'agent sont des ordres de grandeur ; ne jamais les présenter comme une note de calcul validée, qui reste l'affaire d'un bureau d'études.
@@ -13,14 +13,23 @@ Règles génériques, valables pour tout projet de conception 3D : ce fichier se
 
 ## 2. Déroulé d'une tâche
 
+**Gestion des versions** : ces règles valent avec Git, un PLM ou un simple gestionnaire de fichiers. Elles parlent de quatre notions ; le fichier de conception dit quel outil le projet utilise et comment chacune s'y fait.
+
+| Notion | Git | PLM | Gestionnaire de fichiers |
+|---|---|---|---|
+| **Version de travail** : on modifie sans toucher la référence | branche | extraction (*check-out*) | copie dans un dossier de travail |
+| **Enregistrer une version** | commit + push | nouvelle révision (*check-in*) | copie datée ou indicée |
+| **Version de référence** | `main` | révision libérée | dossier « validé » |
+| **Valider** : l'utilisateur relit puis intègre | fusion (merge) | processus d'approbation | copie vers le dossier « validé » par l'utilisateur |
+
 1. **Constater** : relever les versions des outils et les comparer aux versions de référence (§4) ; relever l'état du modèle (paramètres pilotes, nombre de corps, erreurs) et le comparer au fichier de conception, pour repérer les modifications faites à la main entre deux sessions. Rien n'est encore écrit.
 2. **Proposer** le plan, avec les écarts constatés, et attendre le « oui ».
-   Puis, **avant toute modification**, créer une branche depuis `main` à jour (nom court de la tâche). Jamais de commit direct sur `main` : c'est l'utilisateur qui fusionne (merge), après avoir relu le diff du fichier de conception. Une seule branche ouverte à la fois touchant un fichier binaire (modèle 3D) : Git ne sait pas les fusionner.
-   Première écriture sur la branche : les écarts constatés, dans l'historique.
+   Puis, **avant toute modification**, créer une **version de travail** depuis la version de référence à jour (nom court de la tâche). Jamais de modification directe de la version de référence : c'est l'utilisateur qui valide, après avoir relu les modifications du fichier de conception. Une seule version de travail à la fois sur un fichier binaire (modèle 3D) : deux versions modifiées en parallèle ne se fusionnent pas.
+   Première écriture dans la version de travail : les écarts constatés, dans l'historique.
 3. **Réaliser**, puis **tester** : faire varier un ou deux paramètres concernés puis revenir, 0 erreur. Si une pièce d'un assemblage a changé : mettre à jour les liens, puis contrôler les interférences.
 4. **Exports** (liste dans le fichier de conception) : si la **géométrie 3D** a changé, les régénérer. Pas pour une modification sans effet sur la géométrie (renommage, matériau, réorganisation de l'arbre) : le noter dans l'historique.
 5. **Documenter** : mettre à jour le fichier de conception (et le README si un chiffre qu'il cite change), ajouter une ligne à l'historique.
-6. **Enregistrer** (dossier de travail du connecteur → dépôt → commit sur la branche), ou écrire explicitement « non enregistré » dans l'historique. Puis **proposer la fusion** : un message à l'utilisateur qui résume ce que contient la branche (ou une pull request, s'il la demande).
+6. **Enregistrer** (dossier de travail du connecteur → projet → enregistrement d'une version de travail), ou écrire explicitement « non enregistré » dans l'historique. Puis **proposer la validation** : un message à l'utilisateur qui résume ce que contient la version de travail (ou la demande prévue par l'outil : pull request, processus d'approbation…). Si l'agent n'a pas accès à l'outil de gestion des versions, il prépare les fichiers et l'utilisateur enregistre.
 
 ## 3. Tenue du fichier de conception
 
@@ -33,7 +42,7 @@ Règles génériques, valables pour tout projet de conception 3D : ce fichier se
 | 3. Paramètres du modèle | Pilotes (valeur, ce qu'ils pilotent) et calculés (expression, valeur) : seul endroit où les valeurs sont écrites |
 | 4. Architecture du modèle | Repère, arbre de construction, environnement et assemblage |
 | 5. Journal des décisions | D1, D2… : la décision et son pourquoi |
-| 6. Outils et pièges du projet | Versions de référence, fichiers et dossiers, pièges connus, état des lieux des outils |
+| 6. Outils et pièges du projet | Versions de référence, fichiers et dossiers, pièges connus, état des lieux des outils, gestion des versions |
 | 7. Points ouverts | En tête, « Calculs à relancer » s'il y a lieu ; ensuite seulement des questions non tranchées |
 | 8. Prochaines étapes | Liste fixée par l'utilisateur, et ce qui est en attente |
 | 9. Historique | Tableau date / demande / réalisé / fichiers |
@@ -41,7 +50,7 @@ Règles génériques, valables pour tout projet de conception 3D : ce fichier se
 - **Une information, un seul endroit** : la valeur d'un paramètre n'est écrite que dans le tableau des paramètres ; ailleurs, on cite le paramètre par son nom. Une cote dérivée n'est recopiée que si elle est utile, avec la configuration pour laquelle elle vaut. Un piège n'est décrit que dans la liste des pièges ; ailleurs, on y renvoie.
 - Seul l'historique garde des valeurs datées ; il n'est jamais réécrit.
 - **Calculs périmés** : dès qu'un paramètre utilisé par un calcul change, ajouter en tête des points ouverts « Calculs à relancer : <paramètres changés> (calcul fait en <configuration>) ». La ligne est retirée quand l'utilisateur relance les calculs.
-- Le modèle 3D étant binaire, **le fichier de conception tient lieu de diff lisible** : toute modification du modèle doit y être décrite.
+- Le modèle 3D étant binaire, **le fichier de conception tient lieu de description lisible des modifications** : toute modification du modèle doit y être décrite. Sans outil de gestion des versions, il en est la seule trace.
 
 ## 4. Outils et versions
 
@@ -49,7 +58,7 @@ Règles génériques, valables pour tout projet de conception 3D : ce fichier se
 - **État des lieux à chaque mise à jour** : pour chaque outil dont la version a changé, lire les notes de version intermédiaires, les croiser avec les contournements et les pièges du projet, noter ce qui peut changer à côté du tableau des versions, puis mettre à jour la référence. Tester seulement avec accord.
 - Un changement de version du logiciel de CAO peut changer le format de fichier ; un changement des bibliothèques de calcul peut changer les résultats : ajouter alors la ligne « Calculs à relancer ».
 - **Fichiers liés** (assemblages) : les garder ensemble, liens en chemins relatifs.
-- **Session sans accès au logiciel de CAO** (agent dans le cloud, autre poste) : elle a ses propres versions d'outils, on n'y fait pas d'état des lieux ; elle sert à la doc, aux calculs et aux audits. Le 3D se fait sur le poste qui a le logiciel ; le dépôt fait le lien.
+- **Session sans accès au logiciel de CAO** (agent dans le cloud, autre poste) : elle a ses propres versions d'outils, on n'y fait pas d'état des lieux ; elle sert à la doc, aux calculs et aux audits. Le 3D se fait sur le poste qui a le logiciel ; l'outil de gestion des versions fait le lien.
 
 ## 5. Pièges
 
@@ -68,7 +77,7 @@ Le fichier de conception tient la liste des pièges du projet, une ligne par pi�
 - **Simplifications déclarées** : ne modéliser que ce qui sert (pas de visserie détaillée ni de congés sauf demande) ; toute simplification est notée dans le fichier de conception avec son effet (masse, section…).
 - Quand le logiciel impose une méthode moins lisible, la noter comme contournement dans les pièges du projet.
 
-## 7. Arborescence du dépôt
+## 7. Arborescence du projet
 
 | Chemin | Contenu |
 |---|---|
@@ -80,4 +89,4 @@ Le fichier de conception tient la liste des pièges du projet, une ligne par pi�
 | `calc/` | Scripts de calcul ; `calc/rapport/` : rapport de calcul et figures |
 | `archive/` | Anciennes versions et fichiers d'origine, jamais modifiés |
 
-Un nouveau type de fichier va dans le dossier existant qui lui correspond ; créer un dossier seulement si aucun ne convient, et l'ajouter à ce tableau.
+Un nouveau type de fichier va dans le dossier existant qui lui correspond ; créer un dossier seulement si aucun ne convient, et l'ajouter à ce tableau. Si l'outil de gestion des versions (un PLM) impose sa propre structure, le fichier de conception dit où se trouve chaque élément.

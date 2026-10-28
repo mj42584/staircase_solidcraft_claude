@@ -1,6 +1,6 @@
 # Règles de travail avec l'agent — projet de conception 3D
 
-Règles génériques, valables pour tout projet de conception 3D : ce fichier se copie tel quel d'un projet à l'autre. Tout ce qui est propre au projet (versions de référence, outil de gestion des versions, dossier de travail du connecteur, fichiers liés, pièges) est dans le **fichier de conception** (ici [CONCEPTION.md](CONCEPTION.md), chapitre « Outils et pièges du projet »).
+Règles génériques, valables pour tout projet de conception 3D : ce fichier se copie tel quel d'un projet à l'autre. Tout ce qui est propre au projet (versions des logiciels, outil de gestion des versions, dossier de travail du connecteur, fichiers liés, pièges) est dans le **fichier de conception** (ici [CONCEPTION.md](CONCEPTION.md), chapitre « Outils et pièges du projet »).
 
 ## 1. Principes
 
@@ -22,7 +22,7 @@ Règles génériques, valables pour tout projet de conception 3D : ce fichier se
 | **Version de référence** | `main` | révision libérée | dossier « validé » |
 | **Valider** : l'utilisateur relit puis intègre | fusion (merge) | processus d'approbation | copie vers le dossier « validé » par l'utilisateur |
 
-1. **Constater** : relever les versions des outils et les comparer aux versions de référence (§4) ; relever l'état du modèle (paramètres pilotes, nombre de corps, erreurs) et le comparer au fichier de conception, pour repérer les modifications faites à la main entre deux sessions. Rien n'est encore écrit.
+1. **Constater** : relever les versions des logiciels et les comparer à celles du fichier de conception (§4) ; relever l'état du modèle (paramètres pilotes, nombre de corps, erreurs) et le comparer au fichier de conception, pour repérer les modifications faites à la main entre deux sessions. Rien n'est encore écrit.
 2. **Proposer** le plan, avec les écarts constatés, et attendre le « oui ».
    Puis, **avant toute modification**, créer une **version de travail** depuis la version de référence à jour (nom court de la tâche). Jamais de modification directe de la version de référence : c'est l'utilisateur qui valide, après avoir relu les modifications du fichier de conception. Une seule version de travail à la fois sur un fichier binaire (modèle 3D) : deux versions modifiées en parallèle ne se fusionnent pas.
    Première écriture dans la version de travail : les écarts constatés, dans l'historique.
@@ -42,7 +42,7 @@ Règles génériques, valables pour tout projet de conception 3D : ce fichier se
 | 3. Paramètres du modèle | Pilotes (valeur, ce qu'ils pilotent) et calculés (expression, valeur) : seul endroit où les valeurs sont écrites |
 | 4. Architecture du modèle | Repère, arbre de construction, environnement et assemblage |
 | 5. Journal des décisions | D1, D2… : la décision et son pourquoi |
-| 6. Outils et pièges du projet | Versions de référence, fichiers et dossiers, pièges connus, état des lieux des outils, gestion des versions |
+| 6. Outils et pièges du projet | Versions des logiciels, fichiers et dossiers, pièges connus, état des lieux des outils, gestion des versions |
 | 7. Points ouverts | En tête, « Calculs à relancer » s'il y a lieu ; ensuite seulement des questions non tranchées |
 | 8. Prochaines étapes | Liste fixée par l'utilisateur, et ce qui est en attente |
 | 9. Historique | Tableau date / demande / réalisé / fichiers |
@@ -52,13 +52,13 @@ Règles génériques, valables pour tout projet de conception 3D : ce fichier se
 - **Calculs périmés** : dès qu'un paramètre utilisé par un calcul change, ajouter en tête des points ouverts « Calculs à relancer : <paramètres changés> (calcul fait en <configuration>) ». La ligne est retirée quand l'utilisateur relance les calculs.
 - Le modèle 3D étant binaire, **le fichier de conception tient lieu de description lisible des modifications** : toute modification du modèle doit y être décrite. Sans outil de gestion des versions, il en est la seule trace.
 
-## 4. Outils et versions
+## 4. Logiciels et leurs versions
 
-- Le fichier de conception tient le **tableau des versions de référence** : outil, rôle, version, commande pour la vérifier.
-- **État des lieux à chaque mise à jour** : pour chaque outil dont la version a changé, lire les notes de version intermédiaires, les croiser avec les contournements et les pièges du projet, noter ce qui peut changer à côté du tableau des versions, puis mettre à jour la référence. Tester seulement avec accord.
+- Le fichier de conception tient le **tableau des versions des logiciels** : outil, rôle, version, commande pour la vérifier.
+- **État des lieux à chaque mise à jour** : pour chaque logiciel dont la version a changé, lire les notes de version intermédiaires, les croiser avec les contournements et les pièges du projet, noter ce qui peut changer à côté du tableau des versions des logiciels, puis mettre à jour ce tableau. Tester seulement avec accord.
 - Un changement de version du logiciel de CAO peut changer le format de fichier ; un changement des bibliothèques de calcul peut changer les résultats : ajouter alors la ligne « Calculs à relancer ».
 - **Fichiers liés** (assemblages) : les garder ensemble, liens en chemins relatifs.
-- **Session sans accès au logiciel de CAO** (agent dans le cloud, autre poste) : elle a ses propres versions d'outils, on n'y fait pas d'état des lieux ; elle sert à la doc, aux calculs et aux audits. Le 3D se fait sur le poste qui a le logiciel ; l'outil de gestion des versions fait le lien.
+- **Session sans accès au logiciel de CAO** (agent dans le cloud, autre poste) : elle a ses propres versions des logiciels, on n'y fait pas d'état des lieux ; elle sert à la doc, aux calculs et aux audits. Le 3D se fait sur le poste qui a le logiciel ; l'outil de gestion des versions fait le lien.
 
 ## 5. Pièges
 

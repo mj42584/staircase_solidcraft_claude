@@ -131,7 +131,7 @@ Nombre de marches : chaque volée a une marche de moins que de contremarches (la
 
 Les règles de travail sont dans [REGLES_AGENT_3D.md](REGLES_AGENT_3D.md) ; ce chapitre n'en garde que ce qui est propre à ce projet.
 
-### 6.1 Versions de référence (poste local de l'utilisateur)
+### 6.1 Versions des logiciels (poste local de l'utilisateur)
 
 | Outil | Rôle | Référence | Vérifier avec |
 |---|---|---|---|
@@ -255,3 +255,4 @@ Liste fixée par l'utilisateur (2026-10-26) :
 | 2026-10-28 | Plan du fichier de conception | `REGLES_AGENT_3D.md` §3 : tableau des 9 chapitres de CONCEPTION.md et de leur contenu | `REGLES_AGENT_3D.md`, `CONCEPTION.md` |
 | 2026-10-28 | Corrections de l'audit des règles | `REGLES_AGENT_3D.md` : §1 renommé « Principes », ajout « aucune donnée inventée » et « statut des calculs » ; §2 : rien n'est écrit avant la branche, ordre réaliser → exports → documenter → enregistrer, demande de fusion définie | `REGLES_AGENT_3D.md`, `CONCEPTION.md` |
 | 2026-10-28 | Règles indépendantes de Git | `REGLES_AGENT_3D.md` : quatre notions (version de travail, enregistrer, version de référence, valider) avec leur équivalent Git / PLM / gestionnaire de fichiers ; vocabulaire Git retiré des règles ; « Arborescence du projet » ; CONCEPTION §6.5 : gestion des versions du projet (Git) | `REGLES_AGENT_3D.md`, `CONCEPTION.md` |
+| 2026-10-28 | « Versions des logiciels » | Renommage pour ne plus confondre avec la version de référence du projet : `REGLES_AGENT_3D.md` §1, §2, §3, §4 (« Logiciels et leurs versions »), CONCEPTION §6.1 | `REGLES_AGENT_3D.md`, `CONCEPTION.md` |

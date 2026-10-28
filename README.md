@@ -46,5 +46,6 @@ Ouvrir [`cad/escalier.solidcraft`](cad/escalier.solidcraft) dans SolidCraft et c
 | `calc/` | Scripts de calcul et [rapport](calc/rapport/RAPPORT.md) |
 | `archive/` | Modèle FreeCAD d'origine et anciennes versions SolidCraft |
 | `CONCEPTION.md` | Paramètres, décisions et historique de conception |
+| `REGLES_AGENT_3D.md` | Règles de travail avec l'agent, génériques (réutilisables sur d'autres projets 3D) |
 
 Conçu avec l'aide de [Claude Code](https://claude.com/claude-code).

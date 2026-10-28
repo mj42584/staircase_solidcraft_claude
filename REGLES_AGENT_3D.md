@@ -50,3 +50,39 @@ Le fichier de conception tient la liste des pièges du projet, une ligne par pi�
 - **Matériau à la création** : affecter le matériau dès qu'un corps est créé.
 - **Simplifications déclarées** : ne modéliser que ce qui sert (pas de visserie détaillée ni de congés sauf demande) ; toute simplification est notée dans le fichier de conception avec son effet (masse, section…).
 - Quand le logiciel impose une méthode moins lisible, la noter comme contournement dans les pièges du projet.
+
+## 7. Arborescence du dépôt
+
+| Chemin | Contenu |
+|---|---|
+| `README.md` | Vitrine : ce qu'est le projet, image, vue 3D, comment il est fait |
+| `AGENTS.md` | Point d'entrée d'un agent : ordre de lecture |
+| `REGLES_AGENT_3D.md` | Ces règles |
+| `CONCEPTION.md` | Fichier de conception : état du projet, décisions, outils, pièges, historique |
+| `cad/` | Modèles 3D (pièces, environnement, assemblage) et leurs exports (STL, aperçus, plans) |
+| `calc/` | Scripts de calcul ; `calc/rapport/` : rapport de calcul et figures |
+| `archive/` | Anciennes versions et fichiers d'origine, jamais modifiés |
+
+Un nouveau type de fichier va dans le dossier existant qui lui correspond ; créer un dossier seulement si aucun ne convient, et l'ajouter à ce tableau.
+
+### Créer l'arborescence d'un nouveau projet
+
+Au démarrage d'un projet (ou si des éléments manquent), l'agent propose de créer **seulement ce qui manque**, sans jamais écraser un fichier existant, puis attend l'accord :
+
+1. Les dossiers `cad/`, `calc/`, `archive/`, chacun avec un `.gitkeep` (Git ne garde pas les dossiers vides).
+2. `REGLES_AGENT_3D.md` : copie de ce fichier, sans modification.
+3. `AGENTS.md` : « Avant toute action, lire en entier `REGLES_AGENT_3D.md` (règles de travail), puis `CONCEPTION.md` (état du projet, décisions, outils et pièges). »
+4. `CONCEPTION.md`, squelette avec ces chapitres :
+   1. Objectif
+   2. Données d'entrée (origine des données)
+   3. Paramètres du modèle (pilotes et calculés)
+   4. Architecture du modèle (repère, arbre de construction, environnement et assemblage)
+   5. Journal des décisions (D1, D2…)
+   6. Outils et pièges du projet (versions de référence, fichiers et dossiers, pièges connus, état des lieux des outils)
+   7. Points ouverts
+   8. Prochaines étapes
+   9. Historique (tableau : date, demande, réalisé, fichiers)
+5. `README.md` : titre et une phrase de description, le reste viendra avec le projet.
+6. `.gitignore` : fichiers de verrou et temporaires du logiciel de CAO.
+
+Puis remplir avec l'utilisateur les chapitres 1, 2 et le tableau des versions (§6) avant de modéliser.

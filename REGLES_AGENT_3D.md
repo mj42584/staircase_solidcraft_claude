@@ -17,7 +17,7 @@ Règles génériques, valables pour tout projet de conception 3D : ce fichier se
 3. **Réaliser**, puis **tester** : faire varier un ou deux paramètres concernés puis revenir, 0 erreur. Si une pièce d'un assemblage a changé : mettre à jour les liens, puis contrôler les interférences.
 4. **Enregistrer** (dossier de travail du connecteur → dépôt → commit sur la branche), ou écrire explicitement « non enregistré » dans l'historique.
 5. **Documenter** : mettre à jour le fichier de conception (et le README si un chiffre qu'il cite change), ajouter une ligne à l'historique.
-6. **Exports** : avant de proposer la fusion, si la **géométrie 3D** a changé, régénérer sur la branche les exports versionnés (STL, aperçus, plans…) qui la montrent. Pas pour une modification sans effet sur la géométrie (renommage, matériau, réorganisation de l'arbre) : le dire alors dans la demande de fusion. Le fichier de conception dit lesquels et où est le contrôle automatique, s'il y en a un.
+6. **Exports** : avant de proposer la fusion, si la **géométrie 3D** a changé, régénérer sur la branche les exports versionnés (STL, aperçus, plans…) qui la montrent. Pas pour une modification sans effet sur la géométrie (renommage, matériau, réorganisation de l'arbre) : le dire alors dans la demande de fusion. Le fichier de conception dit lesquels.
 
 ## 3. Tenue du fichier de conception
 

@@ -1,11 +1,15 @@
 # Bloque une pull request qui modifie un modèle SolidCraft sans régénérer ses exports
 # (règle « Exports » de REGLES_AGENT_3D.md). Ne régénère rien : SolidCraft ne tourne pas sur GitHub.
+# Modification sans effet sur la géométrie (renommage, matériau…) : étiquette « geometrie-inchangee » sur la PR.
 name: Exports à jour
 
-on: pull_request
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, labeled, unlabeled]
 
 jobs:
   exports:
+    if: ${{ !contains(github.event.pull_request.labels.*.name, 'geometrie-inchangee') }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

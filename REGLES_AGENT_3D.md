@@ -21,6 +21,20 @@ Règles génériques, valables pour tout projet de conception 3D : ce fichier se
 
 ## 3. Tenue du fichier de conception
 
+**Plan du fichier** (`CONCEPTION.md`) :
+
+| Chapitre | Contenu |
+|---|---|
+| 1. Objectif | Ce qu'on conçoit et ce qui doit être paramétrable |
+| 2. Données d'entrée | Origine des données (mesures sur site, valeurs de départ, catalogues) ; les valeurs actuelles sont au chapitre 3 |
+| 3. Paramètres du modèle | Pilotes (valeur, ce qu'ils pilotent) et calculés (expression, valeur) : seul endroit où les valeurs sont écrites |
+| 4. Architecture du modèle | Repère, arbre de construction, environnement et assemblage |
+| 5. Journal des décisions | D1, D2… : la décision et son pourquoi |
+| 6. Outils et pièges du projet | Versions de référence, fichiers et dossiers, pièges connus, état des lieux des outils |
+| 7. Points ouverts | En tête, « Calculs à relancer » s'il y a lieu ; ensuite seulement des questions non tranchées |
+| 8. Prochaines étapes | Liste fixée par l'utilisateur, et ce qui est en attente |
+| 9. Historique | Tableau date / demande / réalisé / fichiers |
+
 - **Une information, un seul endroit** : la valeur d'un paramètre n'est écrite que dans le tableau des paramètres ; ailleurs, on cite le paramètre par son nom. Une cote dérivée n'est recopiée que si elle est utile, avec la configuration pour laquelle elle vaut. Un piège n'est décrit que dans la liste des pièges ; ailleurs, on y renvoie.
 - Seul l'historique garde des valeurs datées ; il n'est jamais réécrit.
 - **Calculs périmés** : dès qu'un paramètre utilisé par un calcul change, ajouter en tête des points ouverts « Calculs à relancer : <paramètres changés> (calcul fait en <configuration>) ». La ligne est retirée quand l'utilisateur relance les calculs.

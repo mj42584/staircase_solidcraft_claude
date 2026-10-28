@@ -125,6 +125,7 @@ Nombre de marches : chaque volée a une marche de moins que de contremarches (la
 
 - **Ne rien exécuter sans autorisation explicite** : ni commande shell, ni génération ou modification 3D dans SolidCraft. Proposer, attendre le « oui », puis agir. Une autorisation vaut pour l'étape annoncée seulement.
 - **Ne jamais relancer automatiquement les calculs** (`calc/predim.py`, `calc/portique.py`, `calc/visu.py`), même après un changement de paramètre : c'est l'utilisateur qui demande.
+- **Réponses synthétiques** : le résultat d'abord, puis seulement ce qui demande une décision de l'utilisateur. Phrases et listes courtes, pas de redite de ce fichier ni d'options qu'on ne retient pas ; le détail va dans CONCEPTION.md, pas dans la réponse.
 - Les photos du site ne sont pas versionnées dans le dépôt.
 - Le connecteur MCP SolidCraft ne lit/écrit que dans `~/.var/app/ai.storyteller.solidcraft/data/solidcraft/recovery`. Flux : enregistrer là, puis copier dans `cad/` (avec accord), puis commit/push.
 - Lister les commandes de liaison (`list_commands` filtre `joint`) a semblé faire planter l'app : à éviter.

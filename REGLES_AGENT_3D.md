@@ -28,7 +28,7 @@ Règles génériques, valables pour tout projet de conception 3D : ce fichier se
 ## 4. Outils et versions
 
 - Le fichier de conception tient le **tableau des versions de référence** : outil, rôle, version, commande pour la vérifier.
-- **État des lieux à chaque mise à jour** : pour chaque outil dont la version a changé, lire les notes de version intermédiaires, les croiser avec les contournements et les pièges du projet, noter ce qui peut changer dans les points ouverts, puis mettre à jour la référence. Tester seulement avec accord.
+- **État des lieux à chaque mise à jour** : pour chaque outil dont la version a changé, lire les notes de version intermédiaires, les croiser avec les contournements et les pièges du projet, noter ce qui peut changer à côté du tableau des versions, puis mettre à jour la référence. Tester seulement avec accord.
 - Un changement de version du logiciel de CAO peut changer le format de fichier ; un changement des bibliothèques de calcul peut changer les résultats : ajouter alors la ligne « Calculs à relancer ».
 - **Fichiers liés** (assemblages) : les garder ensemble, liens en chemins relatifs.
 - **Session sans accès au logiciel de CAO** (agent dans le cloud, autre poste) : elle a ses propres versions d'outils, on n'y fait pas d'état des lieux ; elle sert à la doc, aux calculs et aux audits. Le 3D se fait sur le poste qui a le logiciel ; le dépôt fait le lien.

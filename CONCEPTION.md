@@ -133,7 +133,7 @@ Les règles de travail sont dans [REGLES_AGENT_3D.md](REGLES_AGENT_3D.md) ; ce c
 
 ### 6.1 Versions des logiciels (poste local de l'utilisateur)
 
-| Outil | Rôle | Référence | Vérifier avec |
+| Logiciel | Rôle | Référence | Vérifier avec |
 |---|---|---|---|
 | SolidCraft (Flatpak utilisateur `ai.storyteller.solidcraft`, installé depuis les releases GitHub de `tangency-labs/solidcraft`, pas Flathub) | modèle 3D | **0.24.1** | `flatpak info --user ai.storyteller.solidcraft` |
 | Connecteur MCP SolidCraft | pilotage du 3D par l'agent | à relever | selon son installation |
@@ -159,7 +159,7 @@ SolidCraft change de format de fichier à chaque version : un fichier enregistr�
 - `component.insert_design` et `occurrence.move` ne prennent qu'un décalage chiffré : l'escalier ne suit pas la répartition dans le projet, il faut le recaler à la main.
 - Un corps nouvellement créé reste en matériau « Default » (D13), par exemple une marche au-delà du nombre affecté : l'affecter à la main.
 
-### 6.4 État des lieux des outils
+### 6.4 État des lieux des logiciels
 
 *SolidCraft 0.22.1 → 0.24.1* (2026-10-27, d'après les notes de version, **rien testé dans l'app**) :
 - D5 : une cote de longueur zéro garde l'esquisse contrainte (0.23.0) ; `debord = 0` pourrait être accepté directement. À tester.
@@ -256,3 +256,4 @@ Liste fixée par l'utilisateur (2026-10-26) :
 | 2026-10-28 | Corrections de l'audit des règles | `REGLES_AGENT_3D.md` : §1 renommé « Principes », ajout « aucune donnée inventée » et « statut des calculs » ; §2 : rien n'est écrit avant la branche, ordre réaliser → exports → documenter → enregistrer, demande de fusion définie | `REGLES_AGENT_3D.md`, `CONCEPTION.md` |
 | 2026-10-28 | Règles indépendantes de Git | `REGLES_AGENT_3D.md` : quatre notions (version de travail, enregistrer, version de référence, valider) avec leur équivalent Git / PLM / gestionnaire de fichiers ; vocabulaire Git retiré des règles ; « Arborescence du projet » ; CONCEPTION §6.5 : gestion des versions du projet (Git) | `REGLES_AGENT_3D.md`, `CONCEPTION.md` |
 | 2026-10-28 | « Versions des logiciels » | Renommage pour ne plus confondre avec la version de référence du projet : `REGLES_AGENT_3D.md` §1, §2, §3, §4 (« Logiciels et leurs versions »), CONCEPTION §6.1 | `REGLES_AGENT_3D.md`, `CONCEPTION.md` |
+| 2026-10-28 | Relecture des règles | `REGLES_AGENT_3D.md` : « logiciels » partout au lieu de « outils » pour les versions, « enregistrement du modèle », « enregistrer une version » à l'étape 6, README « si ce qu'il décrit change », noms des chapitres de conception communs aux projets ; CONCEPTION §6.1 et §6.4 alignés | `REGLES_AGENT_3D.md`, `CONCEPTION.md` |

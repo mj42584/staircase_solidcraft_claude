@@ -1,0 +1,7967 @@
+{
+  "format": "solidcraft/40",
+  "name": "Escalier squelette",
+  "units": "mm",
+  "params": [
+    {
+      "name": "hauteur_totale",
+      "expr": "3848 mm",
+      "unit": "mm",
+      "comment": "mesuré sur site : dessus du cadre 3788 + planche 60",
+      "model": false
+    },
+    {
+      "name": "nb_contremarches",
+      "expr": "22",
+      "unit": "",
+      "comment": "total des deux volées",
+      "model": false
+    },
+    {
+      "name": "nb_volee1",
+      "expr": "16",
+      "unit": "",
+      "comment": "contremarches volée basse (jusqu'au palier)",
+      "model": false
+    },
+    {
+      "name": "giron",
+      "expr": "274 mm",
+      "unit": "mm",
+      "model": false
+    },
+    {
+      "name": "emmarchement",
+      "expr": "1000 mm",
+      "unit": "mm",
+      "comment": "largeur d'une volée",
+      "model": false
+    },
+    {
+      "name": "jour",
+      "expr": "2 * limon_b + jeu_limons",
+      "unit": "mm",
+      "comment": "calculé : vide entre les marches des deux volées",
+      "model": false
+    },
+    {
+      "name": "palier_profondeur",
+      "expr": "1000 mm",
+      "unit": "mm",
+      "model": false
+    },
+    {
+      "name": "hauteur_marche",
+      "expr": "hauteur_totale / nb_contremarches",
+      "unit": "mm",
+      "comment": "calculé",
+      "model": false
+    },
+    {
+      "name": "nb_volee2",
+      "expr": "nb_contremarches - nb_volee1",
+      "unit": "",
+      "comment": "calculé : contremarches volée haute",
+      "model": false
+    },
+    {
+      "name": "angle_volee",
+      "expr": "atan(hauteur_marche / giron)",
+      "unit": "deg",
+      "comment": "calculé : pente",
+      "model": false
+    },
+    {
+      "name": "blondel",
+      "expr": "2 * hauteur_marche + giron",
+      "unit": "mm",
+      "comment": "calculé : confort 600–640",
+      "model": false
+    },
+    {
+      "name": "sqe_contremarche_v1",
+      "expr": "hauteur_marche",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "sqe_contremarche_v2",
+      "expr": "hauteur_marche",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "sqe_palier_profondeur",
+      "expr": "palier_profondeur",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "sqe_volee1_x",
+      "expr": "(nb_volee1 - 1) * giron",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "sqe_volee1_z",
+      "expr": "(nb_volee1 - 1) * hauteur_marche",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "sqe_volee2_x",
+      "expr": "(nb_volee2 - 1) * giron",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "sqe_volee2_z",
+      "expr": "(nb_volee2 - 1) * hauteur_marche",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "sqp_demi_jour",
+      "expr": "jour / 2",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "sqp_volee1_longueur",
+      "expr": "(nb_volee1 - 1) * giron",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "sqp_volee1_largeur",
+      "expr": "emmarchement",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "sqp_palier_profondeur",
+      "expr": "palier_profondeur",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "sqp_palier_largeur",
+      "expr": "2 * emmarchement + jour",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "sqp_volee2_longueur",
+      "expr": "nb_volee2 * giron",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "sqp_volee2_largeur",
+      "expr": "emmarchement",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "marche_epaisseur",
+      "expr": "60",
+      "unit": "mm",
+      "model": false
+    },
+    {
+      "name": "equerre_aile",
+      "expr": "30 mm",
+      "unit": "mm",
+      "comment": "cornière à ailes égales",
+      "model": false
+    },
+    {
+      "name": "equerre_ep",
+      "expr": "3 mm",
+      "unit": "mm",
+      "model": false
+    },
+    {
+      "name": "equerre_longueur",
+      "expr": "200 mm",
+      "unit": "mm",
+      "comment": "centrée sur le giron",
+      "model": false
+    },
+    {
+      "name": "debord",
+      "expr": "0 mm",
+      "unit": "mm",
+      "comment": "débord du nez de marche vers l'avant",
+      "model": false
+    },
+    {
+      "name": "pas_volee",
+      "expr": "sqrt(giron ^ 2 + hauteur_marche ^ 2)",
+      "unit": "mm",
+      "comment": "calculé : distance entre deux nez",
+      "model": false
+    },
+    {
+      "name": "marche_v1_nez_x",
+      "expr": "giron",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "marche_v1_profondeur",
+      "expr": "giron + debord",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "marche_v1_epaisseur",
+      "expr": "marche_epaisseur",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "equerre_v1_aile_1",
+      "expr": "equerre_aile",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "equerre_v1_aile_2",
+      "expr": "equerre_aile",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "equerre_v1_ep_1",
+      "expr": "equerre_ep",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "equerre_v1_ep_2",
+      "expr": "equerre_ep",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "equerre_v1_y",
+      "expr": "jour / 2 + emmarchement",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "equerre_v1_z",
+      "expr": "hauteur_marche - marche_epaisseur",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "marche_v2_profondeur",
+      "expr": "giron + debord",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "marche_v2_epaisseur",
+      "expr": "marche_epaisseur",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "equerre_v2_aile_1",
+      "expr": "equerre_aile",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "equerre_v2_aile_2",
+      "expr": "equerre_aile",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "equerre_v2_ep_1",
+      "expr": "equerre_ep",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "equerre_v2_ep_2",
+      "expr": "equerre_ep",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "equerre_v2_y",
+      "expr": "jour / 2 + emmarchement",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "equerre_v2_z",
+      "expr": "nb_volee1 * hauteur_marche - marche_epaisseur",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "limon_h",
+      "expr": "220 mm",
+      "unit": "mm",
+      "comment": "UPE : hauteur",
+      "model": false
+    },
+    {
+      "name": "limon_b",
+      "expr": "85 mm",
+      "unit": "mm",
+      "comment": "UPE : largeur des ailes",
+      "model": false
+    },
+    {
+      "name": "limon_tw",
+      "expr": "6.5 mm",
+      "unit": "mm",
+      "comment": "UPE : épaisseur d'âme",
+      "model": false
+    },
+    {
+      "name": "limon_tf",
+      "expr": "12 mm",
+      "unit": "mm",
+      "comment": "UPE : épaisseur d'aile",
+      "model": false
+    },
+    {
+      "name": "limon_dessus",
+      "expr": "-30 mm * giron / pas_volee",
+      "unit": "mm",
+      "comment": "haut du limon au-dessus de la ligne de nez (perpendiculaire)",
+      "model": false
+    },
+    {
+      "name": "jeu_limons",
+      "expr": "100",
+      "unit": "mm",
+      "comment": "vide entre les deux limons intérieurs",
+      "model": false
+    },
+    {
+      "name": "palier_ep",
+      "expr": "marche_epaisseur",
+      "unit": "mm",
+      "comment": "plancher du palier, même matériau que les marches",
+      "model": false
+    },
+    {
+      "name": "poteau_cote",
+      "expr": "100 mm",
+      "unit": "mm",
+      "comment": "pied : tube carré, côté",
+      "model": false
+    },
+    {
+      "name": "poteau_ep",
+      "expr": "5 mm",
+      "unit": "mm",
+      "comment": "pied : épaisseur du tube",
+      "model": false
+    },
+    {
+      "name": "platine_ep",
+      "expr": "15",
+      "unit": "mm",
+      "comment": "platine d'about en bout de limon",
+      "model": false
+    },
+    {
+      "name": "sqe_giron_palier_v2",
+      "expr": "giron",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "marche_v2_nez_x",
+      "expr": "giron",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "boulon_d",
+      "expr": "12 mm",
+      "unit": "mm",
+      "comment": "diamètre des boulons des platines (M12)",
+      "model": false
+    },
+    {
+      "name": "trou_jeu",
+      "expr": "2 mm",
+      "unit": "mm",
+      "comment": "jeu du trou : largeur oblong = boulon_d + trou_jeu",
+      "model": false
+    },
+    {
+      "name": "oblong_course",
+      "expr": "10 mm",
+      "unit": "mm",
+      "comment": "course verticale des trous oblongs (entre centres d'arcs)",
+      "model": false
+    },
+    {
+      "name": "boulons_entraxe",
+      "expr": "100 mm",
+      "unit": "mm",
+      "comment": "entraxe vertical des 2 trous de platine",
+      "model": false
+    },
+    {
+      "name": "percage_platine_v1_rayon_haut",
+      "expr": "(boulon_d + trou_jeu) / 2",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "percage_platine_v1_course_haut",
+      "expr": "oblong_course",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "percage_platine_v1_y",
+      "expr": "jour / 2 + emmarchement + limon_b / 2",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "percage_platine_v1_z_haut",
+      "expr": "nb_volee1 * hauteur_marche - palier_ep - limon_h / 2 + boulons_entraxe / 2 - oblong_course / 2",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "percage_platine_v1_rayon_bas",
+      "expr": "(boulon_d + trou_jeu) / 2",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "percage_platine_v1_course_bas",
+      "expr": "oblong_course",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "percage_platine_v1_entraxe",
+      "expr": "boulons_entraxe",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "percage_palier_v2_rayon_haut",
+      "expr": "(boulon_d + trou_jeu) / 2",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "percage_palier_v2_course_haut",
+      "expr": "oblong_course",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "percage_platines_v2_y",
+      "expr": "jour / 2 + emmarchement + limon_b / 2",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "percage_palier_v2_z_haut",
+      "expr": "nb_volee1 * hauteur_marche - palier_ep - limon_h / 2 + boulons_entraxe / 2 - oblong_course / 2",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "percage_palier_v2_rayon_bas",
+      "expr": "(boulon_d + trou_jeu) / 2",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "percage_palier_v2_course_bas",
+      "expr": "oblong_course",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "percage_palier_v2_entraxe",
+      "expr": "boulons_entraxe",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "percage_arrivee_v2_rayon_haut",
+      "expr": "(boulon_d + trou_jeu) / 2",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "percage_arrivee_v2_course_haut",
+      "expr": "oblong_course",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "percage_arrivee_v2_z_haut",
+      "expr": "hauteur_totale - platine_ep * hauteur_marche / giron + (limon_dessus - limon_h / 2) * pas_volee / giron + boulons_entraxe / 2 - oblong_course / 2",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "percage_arrivee_v2_rayon_bas",
+      "expr": "(boulon_d + trou_jeu) / 2",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "percage_arrivee_v2_course_bas",
+      "expr": "oblong_course",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "percage_arrivee_v2_entraxe",
+      "expr": "boulons_entraxe",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "trou_poutre_v1_ext_bas_rayon",
+      "expr": "(boulon_d + trou_jeu) / 2",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "trou_poutre_v1_ext_haut_rayon",
+      "expr": "(boulon_d + trou_jeu) / 2",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "trou_poutre_v1_int_bas_rayon",
+      "expr": "(boulon_d + trou_jeu) / 2",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "trou_poutre_v1_int_haut_rayon",
+      "expr": "(boulon_d + trou_jeu) / 2",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "trou_poutre_v2_ext_bas_rayon",
+      "expr": "(boulon_d + trou_jeu) / 2",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "trou_poutre_v2_ext_haut_rayon",
+      "expr": "(boulon_d + trou_jeu) / 2",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "trou_poutre_v2_int_bas_rayon",
+      "expr": "(boulon_d + trou_jeu) / 2",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "trou_poutre_v2_int_haut_rayon",
+      "expr": "(boulon_d + trou_jeu) / 2",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "trou_poutre_v1_ext_bas_y",
+      "expr": "jour / 2 + emmarchement + limon_b / 2",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "trou_poutre_v1_ext_haut_y",
+      "expr": "jour / 2 + emmarchement + limon_b / 2",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "trou_poutre_v1_int_bas_y",
+      "expr": "jour / 2 - limon_b / 2",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "trou_poutre_v1_int_haut_y",
+      "expr": "jour / 2 - limon_b / 2",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "trou_poutre_v2_ext_bas_y",
+      "expr": "jour / 2 + emmarchement + limon_b / 2",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "trou_poutre_v2_ext_haut_y",
+      "expr": "jour / 2 + emmarchement + limon_b / 2",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "trou_poutre_v2_int_bas_y",
+      "expr": "jour / 2 - limon_b / 2",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "trou_poutre_v2_int_haut_y",
+      "expr": "jour / 2 - limon_b / 2",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "trou_poutre_v1_ext_bas_z",
+      "expr": "nb_volee1 * hauteur_marche - palier_ep - limon_h / 2 - boulons_entraxe / 2",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "trou_poutre_v1_ext_haut_z",
+      "expr": "nb_volee1 * hauteur_marche - palier_ep - limon_h / 2 + boulons_entraxe / 2",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "trou_poutre_v1_int_bas_z",
+      "expr": "nb_volee1 * hauteur_marche - palier_ep - limon_h / 2 - boulons_entraxe / 2",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "trou_poutre_v1_int_haut_z",
+      "expr": "nb_volee1 * hauteur_marche - palier_ep - limon_h / 2 + boulons_entraxe / 2",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "trou_poutre_v2_ext_bas_z",
+      "expr": "nb_volee1 * hauteur_marche - palier_ep - limon_h / 2 - boulons_entraxe / 2",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "trou_poutre_v2_ext_haut_z",
+      "expr": "nb_volee1 * hauteur_marche - palier_ep - limon_h / 2 + boulons_entraxe / 2",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "trou_poutre_v2_int_bas_z",
+      "expr": "nb_volee1 * hauteur_marche - palier_ep - limon_h / 2 - boulons_entraxe / 2",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "trou_poutre_v2_int_haut_z",
+      "expr": "nb_volee1 * hauteur_marche - palier_ep - limon_h / 2 + boulons_entraxe / 2",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "rive_x",
+      "expr": "(nb_volee1 - 1) * giron",
+      "unit": "mm",
+      "comment": "X de la rive du palier (nez du palier)",
+      "model": false
+    },
+    {
+      "name": "cadre_y",
+      "expr": "jour / 2 + emmarchement + limon_b",
+      "unit": "mm",
+      "comment": "demi-largeur hors tout du cadre du palier",
+      "model": false
+    },
+    {
+      "name": "plancher_x",
+      "expr": "rive_x",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "plancher_y",
+      "expr": "cadre_y",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "plancher_profondeur",
+      "expr": "palier_profondeur",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "plancher_largeur",
+      "expr": "2 * cadre_y",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "ame_poutre_avant_x",
+      "expr": "rive_x",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "ame_poutre_avant_y_1",
+      "expr": "cadre_y",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "ame_poutre_avant_y_2",
+      "expr": "cadre_y",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "ame_poutre_avant_ep",
+      "expr": "limon_tw",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "ame_poutre_avant_onglet_1",
+      "expr": "45 deg",
+      "unit": "deg",
+      "model": true
+    },
+    {
+      "name": "ame_poutre_avant_onglet_2",
+      "expr": "45 deg",
+      "unit": "deg",
+      "model": true
+    },
+    {
+      "name": "ailes_poutre_avant_x",
+      "expr": "rive_x",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "ailes_poutre_avant_y_1",
+      "expr": "cadre_y",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "ailes_poutre_avant_y_2",
+      "expr": "cadre_y",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "ailes_poutre_avant_largeur",
+      "expr": "limon_b",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "ailes_poutre_avant_onglet_1",
+      "expr": "45 deg",
+      "unit": "deg",
+      "model": true
+    },
+    {
+      "name": "ailes_poutre_avant_onglet_2",
+      "expr": "45 deg",
+      "unit": "deg",
+      "model": true
+    },
+    {
+      "name": "ame_poutre_arriere_x",
+      "expr": "rive_x + palier_profondeur",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "ame_poutre_arriere_y_1",
+      "expr": "cadre_y",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "ame_poutre_arriere_y_2",
+      "expr": "cadre_y",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "ame_poutre_arriere_ep",
+      "expr": "limon_tw",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "ame_poutre_arriere_onglet_1",
+      "expr": "45 deg",
+      "unit": "deg",
+      "model": true
+    },
+    {
+      "name": "ame_poutre_arriere_onglet_2",
+      "expr": "45 deg",
+      "unit": "deg",
+      "model": true
+    },
+    {
+      "name": "ailes_poutre_arriere_x",
+      "expr": "rive_x + palier_profondeur",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "ailes_poutre_arriere_y_1",
+      "expr": "cadre_y",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "ailes_poutre_arriere_y_2",
+      "expr": "cadre_y",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "ailes_poutre_arriere_largeur",
+      "expr": "limon_b",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "ailes_poutre_arriere_onglet_1",
+      "expr": "45 deg",
+      "unit": "deg",
+      "model": true
+    },
+    {
+      "name": "ailes_poutre_arriere_onglet_2",
+      "expr": "45 deg",
+      "unit": "deg",
+      "model": true
+    },
+    {
+      "name": "ame_poutre_laterale_v1_x_1",
+      "expr": "rive_x",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "ame_poutre_laterale_v1_y",
+      "expr": "cadre_y",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "ame_poutre_laterale_v1_x_2",
+      "expr": "rive_x + palier_profondeur",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "ame_poutre_laterale_v1_ep",
+      "expr": "limon_tw",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "ame_poutre_laterale_v1_onglet_1",
+      "expr": "45 deg",
+      "unit": "deg",
+      "model": true
+    },
+    {
+      "name": "ame_poutre_laterale_v1_onglet_2",
+      "expr": "45 deg",
+      "unit": "deg",
+      "model": true
+    },
+    {
+      "name": "ailes_poutre_laterale_v1_x_1",
+      "expr": "rive_x",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "ailes_poutre_laterale_v1_y",
+      "expr": "cadre_y",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "ailes_poutre_laterale_v1_x_2",
+      "expr": "rive_x + palier_profondeur",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "ailes_poutre_laterale_v1_largeur",
+      "expr": "limon_b",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "ailes_poutre_laterale_v1_onglet_1",
+      "expr": "45 deg",
+      "unit": "deg",
+      "model": true
+    },
+    {
+      "name": "ailes_poutre_laterale_v1_onglet_2",
+      "expr": "45 deg",
+      "unit": "deg",
+      "model": true
+    },
+    {
+      "name": "ame_poutre_laterale_v2_x_1",
+      "expr": "rive_x",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "ame_poutre_laterale_v2_y",
+      "expr": "cadre_y",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "ame_poutre_laterale_v2_x_2",
+      "expr": "rive_x + palier_profondeur",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "ame_poutre_laterale_v2_ep",
+      "expr": "limon_tw",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "ame_poutre_laterale_v2_onglet_1",
+      "expr": "45 deg",
+      "unit": "deg",
+      "model": true
+    },
+    {
+      "name": "ame_poutre_laterale_v2_onglet_2",
+      "expr": "45 deg",
+      "unit": "deg",
+      "model": true
+    },
+    {
+      "name": "ailes_poutre_laterale_v2_x_1",
+      "expr": "rive_x",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "ailes_poutre_laterale_v2_y",
+      "expr": "cadre_y",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "ailes_poutre_laterale_v2_x_2",
+      "expr": "rive_x + palier_profondeur",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "ailes_poutre_laterale_v2_largeur",
+      "expr": "limon_b",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "ailes_poutre_laterale_v2_onglet_1",
+      "expr": "45 deg",
+      "unit": "deg",
+      "model": true
+    },
+    {
+      "name": "ailes_poutre_laterale_v2_onglet_2",
+      "expr": "45 deg",
+      "unit": "deg",
+      "model": true
+    },
+    {
+      "name": "limon_hv",
+      "expr": "limon_h * pas_volee / giron",
+      "unit": "mm",
+      "comment": "hauteur verticale d'un limon (coupe verticale)",
+      "model": false
+    },
+    {
+      "name": "platine_v1_x",
+      "expr": "rive_x",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "platine_v1_haut_z",
+      "expr": "nb_volee1 * hauteur_marche - platine_ep * hauteur_marche / giron + limon_dessus * pas_volee / giron",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "platine_v1_ep",
+      "expr": "platine_ep",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "platine_v1_hauteur",
+      "expr": "limon_hv",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "platine_arrivee_v2_x",
+      "expr": "(nb_volee1 - nb_volee2 - 1) * giron",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "platine_arrivee_v2_haut_z",
+      "expr": "hauteur_totale - platine_ep * hauteur_marche / giron + limon_dessus * pas_volee / giron",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "platine_arrivee_v2_ep",
+      "expr": "platine_ep",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "platine_arrivee_v2_hauteur",
+      "expr": "limon_hv",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "platine_palier_v2_x",
+      "expr": "rive_x",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "platine_palier_v2_haut_z",
+      "expr": "nb_volee1 * hauteur_marche + platine_ep * hauteur_marche / giron + limon_dessus * pas_volee / giron",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "platine_palier_v2_ep",
+      "expr": "platine_ep",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "platine_palier_v2_hauteur",
+      "expr": "limon_hv",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "limon_r",
+      "expr": "13 mm",
+      "unit": "mm",
+      "comment": "congé de laminage de l'UPE (catalogue EN 10365)",
+      "model": false
+    },
+    {
+      "name": "axe_limon_v1_bas",
+      "expr": "limon_h - limon_dessus",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "axe_limon_v1_debut_x",
+      "expr": "limon_h",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "axe_limon_v1_fin_x",
+      "expr": "rive_x - platine_ep + limon_h",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "coupes_limon_v1_x",
+      "expr": "rive_x - platine_ep",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "coupes_limon_v1_haut_1",
+      "expr": "hauteur_totale",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "coupes_limon_v1_haut_2",
+      "expr": "hauteur_totale",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "coupes_limon_v1_marge_1",
+      "expr": "2 * limon_h",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "coupes_limon_v1_marge_2",
+      "expr": "2 * limon_h",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "coupes_limon_v1_marge_3",
+      "expr": "2 * limon_h",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "axe_limon_v2_bas",
+      "expr": "limon_h - limon_dessus",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "axe_limon_v2_debut_x",
+      "expr": "(nb_volee1 - nb_volee2 - 1) * giron + platine_ep - limon_h",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "axe_limon_v2_fin_x",
+      "expr": "rive_x - platine_ep + limon_h",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "coupes_limon_v2_arrivee_x",
+      "expr": "(nb_volee1 - nb_volee2 - 1) * giron + platine_ep",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "coupes_limon_v2_arrivee_haut",
+      "expr": "hauteur_totale + 2 * limon_h",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "coupes_limon_v2_arrivee_largeur",
+      "expr": "2 * limon_h",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "coupes_limon_v2_arrivee_hauteur",
+      "expr": "hauteur_totale + 4 * limon_h",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "coupes_limon_v2_palier_x",
+      "expr": "rive_x - platine_ep",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "coupes_limon_v2_palier_haut",
+      "expr": "hauteur_totale + 2 * limon_h",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "coupes_limon_v2_palier_largeur",
+      "expr": "2 * limon_h",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "coupes_limon_v2_palier_hauteur",
+      "expr": "hauteur_totale + 4 * limon_h",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "poteau_r",
+      "expr": "10 mm",
+      "unit": "mm",
+      "comment": "rayon extérieur des tubes des pieds, supposé (défaut SolidCraft), à confirmer",
+      "model": false
+    },
+    {
+      "name": "pied_h",
+      "expr": "nb_volee1 * hauteur_marche - palier_ep - limon_h",
+      "unit": "mm",
+      "comment": "hauteur des pieds : du sol au dessous du cadre",
+      "model": false
+    },
+    {
+      "name": "axe_pied_avant_v1_x",
+      "expr": "rive_x + poteau_cote / 2",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "axe_pied_arriere_v1_x",
+      "expr": "rive_x + palier_profondeur - poteau_cote / 2",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "axe_pied_avant_v1_hauteur",
+      "expr": "pied_h",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "axe_pied_arriere_v1_hauteur",
+      "expr": "pied_h",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "axe_pied_avant_v2_x",
+      "expr": "rive_x + poteau_cote / 2",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "axe_pied_arriere_v2_x",
+      "expr": "rive_x + palier_profondeur - poteau_cote / 2",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "axe_pied_avant_v2_hauteur",
+      "expr": "pied_h",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "axe_pied_arriere_v2_hauteur",
+      "expr": "pied_h",
+      "unit": "mm",
+      "model": true
+    }
+  ],
+  "features": [
+    {
+      "id": 1,
+      "name": "Squelette élévation",
+      "suppressed": false,
+      "type": "sketch",
+      "plane": {
+        "type": "custom",
+        "plane": {
+          "origin": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "x_dir": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "y_dir": [
+            -0.0,
+            0.0,
+            1.0
+          ]
+        }
+      },
+      "sketch": {
+        "points": [
+          {
+            "id": "origin",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": true
+          },
+          {
+            "id": "l1.start",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l1.end",
+            "pos": [
+              0.0,
+              174.9090909090909
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l2.end",
+            "pos": [
+              4110.0,
+              2798.5454545454545
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l3.end",
+            "pos": [
+              5110.0,
+              2798.5454545454545
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l4.start",
+            "pos": [
+              3836.0,
+              2798.5454545454545
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l4.end",
+            "pos": [
+              3836.0,
+              2973.4545454545455
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l5.end",
+            "pos": [
+              2466.0,
+              3848.0
+            ],
+            "fixed": false
+          }
+        ],
+        "curves": [
+          {
+            "id": "l1",
+            "type": "line",
+            "a": 1,
+            "b": 2,
+            "construction": false
+          },
+          {
+            "id": "l2",
+            "type": "line",
+            "a": 2,
+            "b": 3,
+            "construction": false
+          },
+          {
+            "id": "l3",
+            "type": "line",
+            "a": 3,
+            "b": 4,
+            "construction": false
+          },
+          {
+            "id": "l4",
+            "type": "line",
+            "a": 5,
+            "b": 6,
+            "construction": false
+          },
+          {
+            "id": "l5",
+            "type": "line",
+            "a": 6,
+            "b": 7,
+            "construction": false
+          },
+          {
+            "id": "l6",
+            "type": "line",
+            "a": 3,
+            "b": 5,
+            "construction": false
+          }
+        ],
+        "constraints": [
+          {
+            "id": "k1",
+            "type": "coincident",
+            "p": 0,
+            "q": 1
+          },
+          {
+            "id": "k3",
+            "type": "vertical",
+            "l": 0
+          },
+          {
+            "id": "k4",
+            "type": "horizontal",
+            "l": 2
+          },
+          {
+            "id": "k5",
+            "type": "vertical",
+            "l": 3
+          },
+          {
+            "id": "k6",
+            "type": "length",
+            "l": 0,
+            "value": 174.9090909090909,
+            "param": "sqe_contremarche_v1"
+          },
+          {
+            "id": "k7",
+            "type": "length",
+            "l": 3,
+            "value": 174.9090909090909,
+            "param": "sqe_contremarche_v2"
+          },
+          {
+            "id": "k8",
+            "type": "length",
+            "l": 2,
+            "value": 1000.0,
+            "param": "sqe_palier_profondeur"
+          },
+          {
+            "id": "k9",
+            "type": "distance_x",
+            "p": 2,
+            "q": 3,
+            "value": 4110.0,
+            "param": "sqe_volee1_x"
+          },
+          {
+            "id": "k10",
+            "type": "distance_y",
+            "p": 2,
+            "q": 3,
+            "value": 2623.6363636363635,
+            "param": "sqe_volee1_z"
+          },
+          {
+            "id": "k11",
+            "type": "distance_x",
+            "p": 6,
+            "q": 7,
+            "value": 1370.0,
+            "param": "sqe_volee2_x"
+          },
+          {
+            "id": "k12",
+            "type": "distance_y",
+            "p": 6,
+            "q": 7,
+            "value": 874.5454545454545,
+            "param": "sqe_volee2_z"
+          },
+          {
+            "id": "k13",
+            "type": "horizontal",
+            "l": 5
+          },
+          {
+            "id": "k14",
+            "type": "length",
+            "l": 5,
+            "value": 274.0,
+            "param": "sqe_giron_palier_v2"
+          }
+        ],
+        "counters": {
+          "k": 14,
+          "l": 6
+        }
+      }
+    },
+    {
+      "id": 2,
+      "name": "Squelette plan",
+      "suppressed": false,
+      "type": "sketch",
+      "plane": {
+        "type": "origin",
+        "name": "XY"
+      },
+      "sketch": {
+        "points": [
+          {
+            "id": "origin",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": true
+          },
+          {
+            "id": "p1",
+            "pos": [
+              0.0,
+              -1135.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "p2",
+            "pos": [
+              4110.0,
+              -1135.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "p3",
+            "pos": [
+              4110.0,
+              -135.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "p4",
+            "pos": [
+              0.0,
+              -135.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "p5",
+            "pos": [
+              4110.0,
+              -1135.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "p6",
+            "pos": [
+              5110.0,
+              -1135.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "p7",
+            "pos": [
+              5110.0,
+              1135.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "p8",
+            "pos": [
+              4110.0,
+              1135.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "p9",
+            "pos": [
+              2466.0,
+              135.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "p10",
+            "pos": [
+              4110.0,
+              135.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "p11",
+            "pos": [
+              4110.0,
+              1135.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "p12",
+            "pos": [
+              2466.0,
+              1135.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "p13",
+            "pos": [
+              0.0,
+              -100.0
+            ],
+            "fixed": true,
+            "link": "j1"
+          },
+          {
+            "id": "p14",
+            "pos": [
+              0.0,
+              100.0
+            ],
+            "fixed": true,
+            "link": "j1"
+          }
+        ],
+        "curves": [
+          {
+            "id": "l1",
+            "type": "line",
+            "a": 1,
+            "b": 2,
+            "construction": false
+          },
+          {
+            "id": "l2",
+            "type": "line",
+            "a": 2,
+            "b": 3,
+            "construction": false
+          },
+          {
+            "id": "l3",
+            "type": "line",
+            "a": 3,
+            "b": 4,
+            "construction": false
+          },
+          {
+            "id": "l4",
+            "type": "line",
+            "a": 4,
+            "b": 1,
+            "construction": false
+          },
+          {
+            "id": "l5",
+            "type": "line",
+            "a": 5,
+            "b": 6,
+            "construction": false
+          },
+          {
+            "id": "l6",
+            "type": "line",
+            "a": 6,
+            "b": 7,
+            "construction": false
+          },
+          {
+            "id": "l7",
+            "type": "line",
+            "a": 7,
+            "b": 8,
+            "construction": false
+          },
+          {
+            "id": "l8",
+            "type": "line",
+            "a": 8,
+            "b": 5,
+            "construction": false
+          },
+          {
+            "id": "l9",
+            "type": "line",
+            "a": 9,
+            "b": 10,
+            "construction": false
+          },
+          {
+            "id": "l10",
+            "type": "line",
+            "a": 10,
+            "b": 11,
+            "construction": false
+          },
+          {
+            "id": "l11",
+            "type": "line",
+            "a": 11,
+            "b": 12,
+            "construction": false
+          },
+          {
+            "id": "l12",
+            "type": "line",
+            "a": 12,
+            "b": 9,
+            "construction": false
+          },
+          {
+            "id": "l13",
+            "type": "line",
+            "a": 13,
+            "b": 14,
+            "construction": true,
+            "link": "j1"
+          }
+        ],
+        "constraints": [
+          {
+            "id": "k1",
+            "type": "horizontal",
+            "l": 0
+          },
+          {
+            "id": "k2",
+            "type": "horizontal",
+            "l": 2
+          },
+          {
+            "id": "k3",
+            "type": "vertical",
+            "l": 1
+          },
+          {
+            "id": "k4",
+            "type": "vertical",
+            "l": 3
+          },
+          {
+            "id": "k5",
+            "type": "horizontal",
+            "l": 4
+          },
+          {
+            "id": "k6",
+            "type": "horizontal",
+            "l": 6
+          },
+          {
+            "id": "k7",
+            "type": "vertical",
+            "l": 5
+          },
+          {
+            "id": "k8",
+            "type": "vertical",
+            "l": 7
+          },
+          {
+            "id": "k9",
+            "type": "coincident",
+            "p": 2,
+            "q": 5
+          },
+          {
+            "id": "k10",
+            "type": "horizontal",
+            "l": 8
+          },
+          {
+            "id": "k11",
+            "type": "horizontal",
+            "l": 10
+          },
+          {
+            "id": "k12",
+            "type": "vertical",
+            "l": 9
+          },
+          {
+            "id": "k13",
+            "type": "vertical",
+            "l": 11
+          },
+          {
+            "id": "k14",
+            "type": "coincident",
+            "p": 8,
+            "q": 11
+          },
+          {
+            "id": "k15",
+            "type": "collinear",
+            "a": 3,
+            "b": 12
+          },
+          {
+            "id": "k16",
+            "type": "point_line_distance",
+            "p": 0,
+            "l": 2,
+            "value": 135.0,
+            "param": "sqp_demi_jour"
+          },
+          {
+            "id": "k17",
+            "type": "length",
+            "l": 0,
+            "value": 4110.0,
+            "param": "sqp_volee1_longueur"
+          },
+          {
+            "id": "k18",
+            "type": "length",
+            "l": 1,
+            "value": 1000.0,
+            "param": "sqp_volee1_largeur"
+          },
+          {
+            "id": "k19",
+            "type": "length",
+            "l": 4,
+            "value": 1000.0,
+            "param": "sqp_palier_profondeur"
+          },
+          {
+            "id": "k20",
+            "type": "length",
+            "l": 5,
+            "value": 2270.0,
+            "param": "sqp_palier_largeur"
+          },
+          {
+            "id": "k21",
+            "type": "length",
+            "l": 8,
+            "value": 1644.0,
+            "param": "sqp_volee2_longueur"
+          },
+          {
+            "id": "k22",
+            "type": "length",
+            "l": 9,
+            "value": 1000.0,
+            "param": "sqp_volee2_largeur"
+          }
+        ],
+        "links": [
+          {
+            "id": "j1",
+            "kind": "project",
+            "source": {
+              "type": "sketch_axis",
+              "name": "y"
+            }
+          }
+        ],
+        "counters": {
+          "j": 1,
+          "k": 22,
+          "l": 13,
+          "p": 14
+        }
+      }
+    },
+    {
+      "id": 3,
+      "name": "Axe volée 1",
+      "suppressed": false,
+      "param_names": [
+        "axe_volee_1_decalage"
+      ],
+      "type": "construction_plane",
+      "plane": {
+        "type": "offset",
+        "base": {
+          "type": "origin",
+          "name": "XZ"
+        },
+        "distance": "-(jour / 2 + emmarchement / 2)"
+      }
+    },
+    {
+      "id": 4,
+      "name": "Axe volée 2",
+      "suppressed": false,
+      "param_names": [
+        "axe_volee_2_decalage"
+      ],
+      "type": "construction_plane",
+      "plane": {
+        "type": "offset",
+        "base": {
+          "type": "origin",
+          "name": "XZ"
+        },
+        "distance": "jour / 2 + emmarchement / 2"
+      }
+    },
+    {
+      "id": 5,
+      "name": "Foulée volée 1",
+      "suppressed": false,
+      "type": "sketch",
+      "plane": {
+        "type": "flipped",
+        "base": {
+          "type": "construction",
+          "feature": 3
+        }
+      },
+      "sketch": {
+        "points": [
+          {
+            "id": "origin",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": true
+          },
+          {
+            "id": "p1",
+            "pos": [
+              0.0,
+              174.9090909090909
+            ],
+            "fixed": true,
+            "link": "j1"
+          },
+          {
+            "id": "p2",
+            "pos": [
+              4110.0,
+              2798.5454545454545
+            ],
+            "fixed": true,
+            "link": "j1"
+          }
+        ],
+        "curves": [
+          {
+            "id": "l1",
+            "type": "line",
+            "a": 1,
+            "b": 2,
+            "construction": false,
+            "link": "j1"
+          }
+        ],
+        "constraints": [],
+        "links": [
+          {
+            "id": "j1",
+            "kind": "project",
+            "source": {
+              "type": "sketch_curve",
+              "sketch": 1,
+              "curve": "l2"
+            }
+          }
+        ],
+        "counters": {
+          "j": 1,
+          "l": 1,
+          "p": 2
+        }
+      }
+    },
+    {
+      "id": 6,
+      "name": "Foulée volée 2",
+      "suppressed": false,
+      "type": "sketch",
+      "plane": {
+        "type": "flipped",
+        "base": {
+          "type": "construction",
+          "feature": 4
+        }
+      },
+      "sketch": {
+        "points": [
+          {
+            "id": "origin",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": true
+          },
+          {
+            "id": "p1",
+            "pos": [
+              3836.0,
+              2973.4545454545455
+            ],
+            "fixed": true,
+            "link": "j1"
+          },
+          {
+            "id": "p2",
+            "pos": [
+              2466.0,
+              3848.0
+            ],
+            "fixed": true,
+            "link": "j1"
+          }
+        ],
+        "curves": [
+          {
+            "id": "l1",
+            "type": "line",
+            "a": 1,
+            "b": 2,
+            "construction": false,
+            "link": "j1"
+          }
+        ],
+        "constraints": [],
+        "links": [
+          {
+            "id": "j1",
+            "kind": "project",
+            "source": {
+              "type": "sketch_curve",
+              "sketch": 1,
+              "curve": "l5"
+            }
+          }
+        ],
+        "counters": {
+          "j": 1,
+          "l": 1,
+          "p": 2
+        }
+      }
+    },
+    {
+      "id": 7,
+      "name": "Profil marche V1",
+      "suppressed": false,
+      "type": "sketch",
+      "plane": {
+        "type": "flipped",
+        "base": {
+          "type": "construction",
+          "feature": 3
+        }
+      },
+      "sketch": {
+        "points": [
+          {
+            "id": "origin",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": true
+          },
+          {
+            "id": "p1",
+            "pos": [
+              0.0,
+              174.9090909090909
+            ],
+            "fixed": true,
+            "link": "j1"
+          },
+          {
+            "id": "p2",
+            "pos": [
+              0.0,
+              114.9090909090909
+            ],
+            "fixed": false
+          },
+          {
+            "id": "p3",
+            "pos": [
+              274.0,
+              114.9090909090909
+            ],
+            "fixed": false
+          },
+          {
+            "id": "p4",
+            "pos": [
+              274.0,
+              174.9090909090909
+            ],
+            "fixed": false
+          },
+          {
+            "id": "p5",
+            "pos": [
+              0.0,
+              174.9090909090909
+            ],
+            "fixed": false
+          }
+        ],
+        "curves": [
+          {
+            "id": "l1",
+            "type": "line",
+            "a": 2,
+            "b": 3,
+            "construction": false
+          },
+          {
+            "id": "l2",
+            "type": "line",
+            "a": 3,
+            "b": 4,
+            "construction": false
+          },
+          {
+            "id": "l3",
+            "type": "line",
+            "a": 4,
+            "b": 5,
+            "construction": false
+          },
+          {
+            "id": "l4",
+            "type": "line",
+            "a": 5,
+            "b": 2,
+            "construction": false
+          }
+        ],
+        "constraints": [
+          {
+            "id": "k1",
+            "type": "horizontal",
+            "l": 0
+          },
+          {
+            "id": "k2",
+            "type": "horizontal",
+            "l": 2
+          },
+          {
+            "id": "k3",
+            "type": "vertical",
+            "l": 1
+          },
+          {
+            "id": "k4",
+            "type": "vertical",
+            "l": 3
+          },
+          {
+            "id": "k5",
+            "type": "point_on_curve",
+            "p": 1,
+            "c": 2
+          },
+          {
+            "id": "k6",
+            "type": "distance_x",
+            "p": 1,
+            "q": 4,
+            "value": 274.0,
+            "param": "marche_v1_nez_x"
+          },
+          {
+            "id": "k7",
+            "type": "length",
+            "l": 0,
+            "value": 274.0,
+            "param": "marche_v1_profondeur"
+          },
+          {
+            "id": "k8",
+            "type": "length",
+            "l": 1,
+            "value": 60.0,
+            "param": "marche_v1_epaisseur"
+          }
+        ],
+        "links": [
+          {
+            "id": "j1",
+            "kind": "project",
+            "source": {
+              "type": "sketch_point",
+              "sketch": 1,
+              "point": "l1.end"
+            }
+          }
+        ],
+        "counters": {
+          "j": 1,
+          "k": 8,
+          "l": 4,
+          "p": 5
+        }
+      }
+    },
+    {
+      "id": 8,
+      "name": "Marche V1",
+      "suppressed": false,
+      "body_names": [
+        "Marche V1"
+      ],
+      "param_names": [
+        "marche_v1_distance"
+      ],
+      "type": "extrude",
+      "sketch": 7,
+      "profiles": {
+        "type": "all"
+      },
+      "extent": {
+        "distance": "emmarchement",
+        "convention": "total_distance",
+        "direction": "symmetric"
+      },
+      "operation": "new_body"
+    },
+    {
+      "id": 9,
+      "name": "Profil équerre V1",
+      "suppressed": false,
+      "type": "sketch",
+      "plane": {
+        "type": "origin",
+        "name": "YZ"
+      },
+      "sketch": {
+        "points": [
+          {
+            "id": "origin",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": true
+          },
+          {
+            "id": "l1.start",
+            "pos": [
+              -1135.0,
+              114.9090909090909
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l1.end",
+            "pos": [
+              -1135.0,
+              84.9090909090909
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l2.end",
+            "pos": [
+              -1132.0,
+              84.9090909090909
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l3.end",
+            "pos": [
+              -1132.0,
+              111.9090909090909
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l4.end",
+            "pos": [
+              -1105.0,
+              111.9090909090909
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l5.end",
+            "pos": [
+              -1105.0,
+              114.9090909090909
+            ],
+            "fixed": false
+          }
+        ],
+        "curves": [
+          {
+            "id": "l1",
+            "type": "line",
+            "a": 1,
+            "b": 2,
+            "construction": false
+          },
+          {
+            "id": "l2",
+            "type": "line",
+            "a": 2,
+            "b": 3,
+            "construction": false
+          },
+          {
+            "id": "l3",
+            "type": "line",
+            "a": 3,
+            "b": 4,
+            "construction": false
+          },
+          {
+            "id": "l4",
+            "type": "line",
+            "a": 4,
+            "b": 5,
+            "construction": false
+          },
+          {
+            "id": "l5",
+            "type": "line",
+            "a": 5,
+            "b": 6,
+            "construction": false
+          },
+          {
+            "id": "l6",
+            "type": "line",
+            "a": 6,
+            "b": 1,
+            "construction": false
+          }
+        ],
+        "constraints": [
+          {
+            "id": "k1",
+            "type": "vertical",
+            "l": 0
+          },
+          {
+            "id": "k2",
+            "type": "horizontal",
+            "l": 1
+          },
+          {
+            "id": "k3",
+            "type": "vertical",
+            "l": 2
+          },
+          {
+            "id": "k4",
+            "type": "horizontal",
+            "l": 3
+          },
+          {
+            "id": "k5",
+            "type": "vertical",
+            "l": 4
+          },
+          {
+            "id": "k6",
+            "type": "horizontal",
+            "l": 5
+          },
+          {
+            "id": "k7",
+            "type": "length",
+            "l": 0,
+            "value": 30.0,
+            "param": "equerre_v1_aile_1"
+          },
+          {
+            "id": "k8",
+            "type": "length",
+            "l": 5,
+            "value": 30.0,
+            "param": "equerre_v1_aile_2"
+          },
+          {
+            "id": "k9",
+            "type": "length",
+            "l": 1,
+            "value": 3.0,
+            "param": "equerre_v1_ep_1"
+          },
+          {
+            "id": "k10",
+            "type": "length",
+            "l": 4,
+            "value": 3.0,
+            "param": "equerre_v1_ep_2"
+          },
+          {
+            "id": "k11",
+            "type": "point_line_distance",
+            "p": 0,
+            "l": 0,
+            "value": 1135.0,
+            "param": "equerre_v1_y"
+          },
+          {
+            "id": "k12",
+            "type": "point_line_distance",
+            "p": 0,
+            "l": 5,
+            "value": 114.9090909090909,
+            "param": "equerre_v1_z"
+          }
+        ],
+        "counters": {
+          "k": 12,
+          "l": 6
+        }
+      }
+    },
+    {
+      "id": 10,
+      "name": "Équerre V1",
+      "suppressed": false,
+      "body_names": [
+        "Équerre ext V1"
+      ],
+      "param_names": [
+        "equerre_v1_distance",
+        "equerre_v1_decalage"
+      ],
+      "type": "extrude",
+      "sketch": 9,
+      "profiles": {
+        "type": "all"
+      },
+      "extent": {
+        "distance": "equerre_longueur",
+        "convention": "total_distance",
+        "direction": "positive",
+        "start_offset": "(giron - equerre_longueur) / 2"
+      },
+      "operation": "new_body"
+    },
+    {
+      "id": 11,
+      "name": "Symétrie équerre V1",
+      "suppressed": false,
+      "body_names": [
+        "Équerre int V1"
+      ],
+      "type": "mirror",
+      "features": [],
+      "plane": {
+        "type": "construction",
+        "feature": 3
+      },
+      "bodies": [
+        "Équerre ext V1"
+      ]
+    },
+    {
+      "id": 12,
+      "name": "Réseau marches V1",
+      "suppressed": false,
+      "body_names": [
+        "Marche V1 (2)",
+        "Marche V1 (3)",
+        "Marche V1 (4)",
+        "Marche V1 (5)",
+        "Marche V1 (6)",
+        "Marche V1 (7)",
+        "Marche V1 (8)",
+        "Marche V1 (9)",
+        "Marche V1 (10)",
+        "Marche V1 (11)",
+        "Marche V1 (12)",
+        "Marche V1 (13)",
+        "Marche V1 (14)",
+        "Marche V1 (15)",
+        "Marche V1 (16)",
+        "Équerre ext V1 (2)",
+        "Équerre ext V1 (3)",
+        "Équerre ext V1 (4)",
+        "Équerre ext V1 (5)",
+        "Équerre ext V1 (6)",
+        "Équerre ext V1 (7)",
+        "Équerre ext V1 (8)",
+        "Équerre ext V1 (9)",
+        "Équerre ext V1 (10)",
+        "Équerre ext V1 (11)",
+        "Équerre ext V1 (12)",
+        "Équerre ext V1 (13)",
+        "Équerre ext V1 (14)",
+        "Équerre ext V1 (15)",
+        "Équerre ext V1 (16)",
+        "Équerre int V1 (2)",
+        "Équerre int V1 (3)",
+        "Équerre int V1 (4)",
+        "Équerre int V1 (5)",
+        "Équerre int V1 (6)",
+        "Équerre int V1 (7)",
+        "Équerre int V1 (8)",
+        "Équerre int V1 (9)",
+        "Équerre int V1 (10)",
+        "Équerre int V1 (11)",
+        "Équerre int V1 (12)",
+        "Équerre int V1 (13)",
+        "Équerre int V1 (14)",
+        "Équerre int V1 (15)",
+        "Équerre int V1 (16)"
+      ],
+      "param_names": [
+        "reseau_marches_v1_nombre",
+        "reseau_marches_v1_distance"
+      ],
+      "type": "pattern",
+      "features": [],
+      "pattern": {
+        "type": "path",
+        "path_sketch": 5,
+        "path": [
+          "l1"
+        ],
+        "count": "nb_volee1 - 1",
+        "spacing": "pas_volee"
+      },
+      "bodies": [
+        "Marche V1",
+        "Équerre ext V1",
+        "Équerre int V1"
+      ]
+    },
+    {
+      "id": 13,
+      "name": "Profil marche V2",
+      "suppressed": false,
+      "type": "sketch",
+      "plane": {
+        "type": "flipped",
+        "base": {
+          "type": "construction",
+          "feature": 4
+        }
+      },
+      "sketch": {
+        "points": [
+          {
+            "id": "origin",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": true
+          },
+          {
+            "id": "p2",
+            "pos": [
+              3836.0,
+              2738.5454545454545
+            ],
+            "fixed": false
+          },
+          {
+            "id": "p3",
+            "pos": [
+              4110.0,
+              2738.5454545454545
+            ],
+            "fixed": false
+          },
+          {
+            "id": "p4",
+            "pos": [
+              4110.0,
+              2798.5454545454545
+            ],
+            "fixed": false
+          },
+          {
+            "id": "p5",
+            "pos": [
+              3836.0,
+              2798.5454545454545
+            ],
+            "fixed": false
+          },
+          {
+            "id": "p6",
+            "pos": [
+              4110.0,
+              2798.5454545454545
+            ],
+            "fixed": true,
+            "link": "j2"
+          }
+        ],
+        "curves": [
+          {
+            "id": "l1",
+            "type": "line",
+            "a": 1,
+            "b": 2,
+            "construction": false
+          },
+          {
+            "id": "l2",
+            "type": "line",
+            "a": 2,
+            "b": 3,
+            "construction": false
+          },
+          {
+            "id": "l3",
+            "type": "line",
+            "a": 3,
+            "b": 4,
+            "construction": false
+          },
+          {
+            "id": "l4",
+            "type": "line",
+            "a": 4,
+            "b": 1,
+            "construction": false
+          }
+        ],
+        "constraints": [
+          {
+            "id": "k1",
+            "type": "horizontal",
+            "l": 0
+          },
+          {
+            "id": "k2",
+            "type": "horizontal",
+            "l": 2
+          },
+          {
+            "id": "k3",
+            "type": "vertical",
+            "l": 1
+          },
+          {
+            "id": "k4",
+            "type": "vertical",
+            "l": 3
+          },
+          {
+            "id": "k7",
+            "type": "length",
+            "l": 0,
+            "value": 274.0,
+            "param": "marche_v2_profondeur"
+          },
+          {
+            "id": "k8",
+            "type": "length",
+            "l": 1,
+            "value": 60.0,
+            "param": "marche_v2_epaisseur"
+          },
+          {
+            "id": "k9",
+            "type": "point_on_curve",
+            "p": 5,
+            "c": 2
+          },
+          {
+            "id": "k10",
+            "type": "distance_x",
+            "p": 4,
+            "q": 5,
+            "value": 274.0,
+            "param": "marche_v2_nez_x"
+          }
+        ],
+        "links": [
+          {
+            "id": "j2",
+            "kind": "project",
+            "source": {
+              "type": "sketch_point",
+              "sketch": 1,
+              "point": "l2.end"
+            }
+          }
+        ],
+        "counters": {
+          "j": 2,
+          "k": 10,
+          "l": 4,
+          "p": 6
+        }
+      }
+    },
+    {
+      "id": 14,
+      "name": "Marche V2",
+      "suppressed": false,
+      "body_names": [
+        "Marche V2"
+      ],
+      "param_names": [
+        "marche_v2_distance"
+      ],
+      "type": "extrude",
+      "sketch": 13,
+      "profiles": {
+        "type": "all"
+      },
+      "extent": {
+        "distance": "emmarchement",
+        "convention": "total_distance",
+        "direction": "symmetric"
+      },
+      "operation": "new_body"
+    },
+    {
+      "id": 15,
+      "name": "Profil équerre V2",
+      "suppressed": false,
+      "type": "sketch",
+      "plane": {
+        "type": "origin",
+        "name": "YZ"
+      },
+      "sketch": {
+        "points": [
+          {
+            "id": "origin",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": true
+          },
+          {
+            "id": "l1.start",
+            "pos": [
+              1135.0,
+              2738.5454545454545
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l1.end",
+            "pos": [
+              1135.0,
+              2708.5454545454545
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l2.end",
+            "pos": [
+              1132.0,
+              2708.5454545454545
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l3.end",
+            "pos": [
+              1132.0,
+              2735.5454545454545
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l4.end",
+            "pos": [
+              1105.0,
+              2735.5454545454545
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l5.end",
+            "pos": [
+              1105.0,
+              2738.5454545454545
+            ],
+            "fixed": false
+          }
+        ],
+        "curves": [
+          {
+            "id": "l1",
+            "type": "line",
+            "a": 1,
+            "b": 2,
+            "construction": false
+          },
+          {
+            "id": "l2",
+            "type": "line",
+            "a": 2,
+            "b": 3,
+            "construction": false
+          },
+          {
+            "id": "l3",
+            "type": "line",
+            "a": 3,
+            "b": 4,
+            "construction": false
+          },
+          {
+            "id": "l4",
+            "type": "line",
+            "a": 4,
+            "b": 5,
+            "construction": false
+          },
+          {
+            "id": "l5",
+            "type": "line",
+            "a": 5,
+            "b": 6,
+            "construction": false
+          },
+          {
+            "id": "l6",
+            "type": "line",
+            "a": 6,
+            "b": 1,
+            "construction": false
+          }
+        ],
+        "constraints": [
+          {
+            "id": "k1",
+            "type": "vertical",
+            "l": 0
+          },
+          {
+            "id": "k2",
+            "type": "horizontal",
+            "l": 1
+          },
+          {
+            "id": "k3",
+            "type": "vertical",
+            "l": 2
+          },
+          {
+            "id": "k4",
+            "type": "horizontal",
+            "l": 3
+          },
+          {
+            "id": "k5",
+            "type": "vertical",
+            "l": 4
+          },
+          {
+            "id": "k6",
+            "type": "horizontal",
+            "l": 5
+          },
+          {
+            "id": "k7",
+            "type": "length",
+            "l": 0,
+            "value": 30.0,
+            "param": "equerre_v2_aile_1"
+          },
+          {
+            "id": "k8",
+            "type": "length",
+            "l": 5,
+            "value": 30.0,
+            "param": "equerre_v2_aile_2"
+          },
+          {
+            "id": "k9",
+            "type": "length",
+            "l": 1,
+            "value": 3.0,
+            "param": "equerre_v2_ep_1"
+          },
+          {
+            "id": "k10",
+            "type": "length",
+            "l": 4,
+            "value": 3.0,
+            "param": "equerre_v2_ep_2"
+          },
+          {
+            "id": "k11",
+            "type": "point_line_distance",
+            "p": 0,
+            "l": 0,
+            "value": 1135.0,
+            "param": "equerre_v2_y"
+          },
+          {
+            "id": "k12",
+            "type": "point_line_distance",
+            "p": 0,
+            "l": 5,
+            "value": 2738.5454545454545,
+            "param": "equerre_v2_z"
+          }
+        ],
+        "counters": {
+          "k": 12,
+          "l": 6
+        }
+      }
+    },
+    {
+      "id": 16,
+      "name": "Équerre V2",
+      "suppressed": false,
+      "body_names": [
+        "Équerre ext V2"
+      ],
+      "param_names": [
+        "equerre_v2_distance",
+        "equerre_v2_decalage"
+      ],
+      "type": "extrude",
+      "sketch": 15,
+      "profiles": {
+        "type": "all"
+      },
+      "extent": {
+        "distance": "equerre_longueur",
+        "convention": "total_distance",
+        "direction": "positive",
+        "start_offset": "(nb_volee1 - 1) * giron - (giron + equerre_longueur) / 2"
+      },
+      "operation": "new_body"
+    },
+    {
+      "id": 17,
+      "name": "Symétrie équerre V2",
+      "suppressed": false,
+      "body_names": [
+        "Équerre int V2"
+      ],
+      "type": "mirror",
+      "features": [],
+      "plane": {
+        "type": "construction",
+        "feature": 4
+      },
+      "bodies": [
+        "Équerre ext V2"
+      ]
+    },
+    {
+      "id": 18,
+      "name": "Réseau marches V2",
+      "suppressed": false,
+      "body_names": [
+        "Marche V2 (2)",
+        "Marche V2 (3)",
+        "Marche V2 (4)",
+        "Marche V2 (5)",
+        "Équerre ext V2 (2)",
+        "Équerre ext V2 (3)",
+        "Équerre ext V2 (4)",
+        "Équerre ext V2 (5)",
+        "Équerre int V2 (2)",
+        "Équerre int V2 (3)",
+        "Équerre int V2 (4)",
+        "Équerre int V2 (5)",
+        "Équerre int V2 (6)",
+        "Équerre int V2 (7)",
+        "Équerre int V2 (8)",
+        "Équerre int V2 (9)",
+        "Équerre int V2 (10)",
+        "Équerre int V2 (11)"
+      ],
+      "param_names": [
+        "reseau_marches_v2_nombre",
+        "reseau_marches_v2_distance"
+      ],
+      "type": "pattern",
+      "features": [],
+      "pattern": {
+        "type": "path",
+        "path_sketch": 6,
+        "path": [
+          "l1"
+        ],
+        "count": "nb_volee2",
+        "spacing": "pas_volee"
+      },
+      "bodies": [
+        "Marche V2",
+        "Équerre ext V2",
+        "Équerre int V2"
+      ]
+    },
+    {
+      "id": 19,
+      "name": "Rive ext V1",
+      "suppressed": false,
+      "param_names": [
+        "rive_ext_v1_decalage"
+      ],
+      "type": "construction_plane",
+      "plane": {
+        "type": "offset",
+        "base": {
+          "type": "construction",
+          "feature": 3
+        },
+        "distance": "-emmarchement / 2"
+      }
+    },
+    {
+      "id": 81,
+      "name": "Axe limon V1",
+      "suppressed": false,
+      "type": "sketch",
+      "plane": {
+        "type": "construction",
+        "feature": 19
+      },
+      "sketch": {
+        "points": [
+          {
+            "id": "origin",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": true
+          },
+          {
+            "id": "p1",
+            "pos": [
+              0.0,
+              -174.9090909090909
+            ],
+            "fixed": true,
+            "link": "j1"
+          },
+          {
+            "id": "p2",
+            "pos": [
+              4110.0,
+              -2798.5454545454545
+            ],
+            "fixed": true,
+            "link": "j1"
+          },
+          {
+            "id": "l2.start",
+            "pos": [
+              -220.0,
+              256.53235098631006
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l2.end",
+            "pos": [
+              4315.0,
+              -2638.404609863059
+            ],
+            "fixed": false
+          }
+        ],
+        "curves": [
+          {
+            "id": "l1",
+            "type": "line",
+            "a": 1,
+            "b": 2,
+            "construction": true,
+            "link": "j1"
+          },
+          {
+            "id": "l2",
+            "type": "line",
+            "a": 3,
+            "b": 4,
+            "construction": false
+          }
+        ],
+        "constraints": [
+          {
+            "id": "k1",
+            "type": "parallel",
+            "a": 1,
+            "b": 0
+          },
+          {
+            "id": "k2",
+            "type": "point_line_distance",
+            "p": 3,
+            "l": 0,
+            "value": 245.2870186102156,
+            "param": "axe_limon_v1_bas"
+          },
+          {
+            "id": "k3",
+            "type": "distance_x",
+            "p": 0,
+            "q": 3,
+            "value": 220.0,
+            "param": "axe_limon_v1_debut_x"
+          },
+          {
+            "id": "k4",
+            "type": "distance_x",
+            "p": 0,
+            "q": 4,
+            "value": 4315.0,
+            "param": "axe_limon_v1_fin_x"
+          }
+        ],
+        "links": [
+          {
+            "id": "j1",
+            "kind": "project",
+            "source": {
+              "type": "sketch_curve",
+              "sketch": 1,
+              "curve": "l2"
+            }
+          }
+        ],
+        "counters": {
+          "j": 1,
+          "k": 4,
+          "l": 1,
+          "p": 2
+        }
+      }
+    },
+    {
+      "id": 82,
+      "name": "Barre limon V1",
+      "suppressed": false,
+      "param_names": [
+        "barre_limon_v1_aile",
+        "barre_limon_v1_hauteur",
+        "barre_limon_v1_conge",
+        "barre_limon_v1_ame",
+        "barre_limon_v1_largeur"
+      ],
+      "type": "frame_member",
+      "path_sketch": 81,
+      "lines": [
+        "l2"
+      ],
+      "profile": {
+        "source": "library",
+        "profile": {
+          "kind": "channel",
+          "flange": "limon_tf",
+          "height": "limon_h",
+          "root_radius": "limon_r",
+          "web": "limon_tw",
+          "width": "limon_b"
+        }
+      },
+      "anchor": "bottom_right",
+      "mirror": true,
+      "body_name": "Limon ext V1 FM",
+      "names": {
+        "l2": "Limon ext V1"
+      }
+    },
+    {
+      "id": 83,
+      "name": "Coupes limon V1",
+      "suppressed": false,
+      "type": "sketch",
+      "plane": {
+        "type": "construction",
+        "feature": 19
+      },
+      "sketch": {
+        "points": [
+          {
+            "id": "origin",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": true
+          },
+          {
+            "id": "l1.start",
+            "pos": [
+              -440.0,
+              -3848.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l1.end",
+            "pos": [
+              -440.0,
+              440.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l2.end",
+            "pos": [
+              4535.0,
+              440.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l3.end",
+            "pos": [
+              4535.0,
+              -3848.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l4.end",
+            "pos": [
+              4095.0,
+              -3848.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l5.end",
+            "pos": [
+              4095.0,
+              0.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l6.end",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l7.end",
+            "pos": [
+              0.0,
+              -3848.0
+            ],
+            "fixed": false
+          }
+        ],
+        "curves": [
+          {
+            "id": "l1",
+            "type": "line",
+            "a": 1,
+            "b": 2,
+            "construction": false
+          },
+          {
+            "id": "l2",
+            "type": "line",
+            "a": 2,
+            "b": 3,
+            "construction": false
+          },
+          {
+            "id": "l3",
+            "type": "line",
+            "a": 3,
+            "b": 4,
+            "construction": false
+          },
+          {
+            "id": "l4",
+            "type": "line",
+            "a": 4,
+            "b": 5,
+            "construction": false
+          },
+          {
+            "id": "l5",
+            "type": "line",
+            "a": 5,
+            "b": 6,
+            "construction": false
+          },
+          {
+            "id": "l6",
+            "type": "line",
+            "a": 6,
+            "b": 7,
+            "construction": false
+          },
+          {
+            "id": "l7",
+            "type": "line",
+            "a": 7,
+            "b": 8,
+            "construction": false
+          },
+          {
+            "id": "l8",
+            "type": "line",
+            "a": 8,
+            "b": 1,
+            "construction": false
+          }
+        ],
+        "constraints": [
+          {
+            "id": "k1",
+            "type": "vertical",
+            "l": 0
+          },
+          {
+            "id": "k2",
+            "type": "horizontal",
+            "l": 1
+          },
+          {
+            "id": "k3",
+            "type": "vertical",
+            "l": 2
+          },
+          {
+            "id": "k4",
+            "type": "horizontal",
+            "l": 3
+          },
+          {
+            "id": "k5",
+            "type": "vertical",
+            "l": 4
+          },
+          {
+            "id": "k6",
+            "type": "horizontal",
+            "l": 5
+          },
+          {
+            "id": "k7",
+            "type": "vertical",
+            "l": 6
+          },
+          {
+            "id": "k8",
+            "type": "horizontal",
+            "l": 7
+          },
+          {
+            "id": "k9",
+            "type": "coincident",
+            "p": 0,
+            "q": 7
+          },
+          {
+            "id": "k10",
+            "type": "distance_x",
+            "p": 0,
+            "q": 5,
+            "value": 4095.0,
+            "param": "coupes_limon_v1_x"
+          },
+          {
+            "id": "k11",
+            "type": "distance_y",
+            "p": 0,
+            "q": 5,
+            "value": 3848.0,
+            "param": "coupes_limon_v1_haut_1"
+          },
+          {
+            "id": "k12",
+            "type": "distance_y",
+            "p": 0,
+            "q": 8,
+            "value": 3848.0,
+            "param": "coupes_limon_v1_haut_2"
+          },
+          {
+            "id": "k13",
+            "type": "distance_x",
+            "p": 0,
+            "q": 1,
+            "value": 440.0,
+            "param": "coupes_limon_v1_marge_1"
+          },
+          {
+            "id": "k14",
+            "type": "distance_y",
+            "p": 0,
+            "q": 2,
+            "value": 440.0,
+            "param": "coupes_limon_v1_marge_2"
+          },
+          {
+            "id": "k15",
+            "type": "point_line_distance",
+            "p": 5,
+            "l": 2,
+            "value": 440.0,
+            "param": "coupes_limon_v1_marge_3"
+          }
+        ],
+        "counters": {
+          "k": 15
+        }
+      }
+    },
+    {
+      "id": 84,
+      "name": "Coupe limon V1",
+      "suppressed": false,
+      "param_names": [
+        "coupe_limon_v1_distance"
+      ],
+      "type": "extrude",
+      "sketch": 83,
+      "profiles": {
+        "type": "all"
+      },
+      "extent": {
+        "distance": "limon_b",
+        "convention": "total_distance",
+        "direction": "negative"
+      },
+      "operation": "cut",
+      "targets": [
+        "Limon ext V1"
+      ]
+    },
+    {
+      "id": 67,
+      "name": "Profil platine V1",
+      "suppressed": false,
+      "type": "sketch",
+      "plane": {
+        "type": "flipped",
+        "base": {
+          "type": "construction",
+          "feature": 19
+        }
+      },
+      "sketch": {
+        "points": [
+          {
+            "id": "origin",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": true
+          },
+          {
+            "id": "l1.start",
+            "pos": [
+              4095.0,
+              2497.9666536586797
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l1.end",
+            "pos": [
+              4110.0,
+              2497.9666536586797
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l2.end",
+            "pos": [
+              4110.0,
+              2758.970139349701
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l3.end",
+            "pos": [
+              4095.0,
+              2758.970139349701
+            ],
+            "fixed": false
+          }
+        ],
+        "curves": [
+          {
+            "id": "l1",
+            "type": "line",
+            "a": 1,
+            "b": 2,
+            "construction": false
+          },
+          {
+            "id": "l2",
+            "type": "line",
+            "a": 2,
+            "b": 3,
+            "construction": false
+          },
+          {
+            "id": "l3",
+            "type": "line",
+            "a": 3,
+            "b": 4,
+            "construction": false
+          },
+          {
+            "id": "l4",
+            "type": "line",
+            "a": 4,
+            "b": 1,
+            "construction": false
+          }
+        ],
+        "constraints": [
+          {
+            "id": "k1",
+            "type": "horizontal",
+            "l": 0
+          },
+          {
+            "id": "k2",
+            "type": "vertical",
+            "l": 1
+          },
+          {
+            "id": "k3",
+            "type": "horizontal",
+            "l": 2
+          },
+          {
+            "id": "k4",
+            "type": "vertical",
+            "l": 3
+          },
+          {
+            "id": "k5",
+            "type": "distance_x",
+            "p": 0,
+            "q": 2,
+            "value": 4110.0,
+            "param": "platine_v1_x"
+          },
+          {
+            "id": "k6",
+            "type": "distance_y",
+            "p": 0,
+            "q": 3,
+            "value": 2758.970139349701,
+            "param": "platine_v1_haut_z"
+          },
+          {
+            "id": "k7",
+            "type": "length",
+            "l": 0,
+            "value": 15.0,
+            "param": "platine_v1_ep"
+          },
+          {
+            "id": "k8",
+            "type": "length",
+            "l": 1,
+            "value": 261.0034856910214,
+            "param": "platine_v1_hauteur"
+          }
+        ],
+        "counters": {
+          "k": 8,
+          "l": 4,
+          "p": 12
+        }
+      }
+    },
+    {
+      "id": 68,
+      "name": "Platine limon V1",
+      "suppressed": false,
+      "body_names": [
+        "Platine ext V1"
+      ],
+      "param_names": [
+        "platine_limon_v1_distance"
+      ],
+      "type": "extrude",
+      "sketch": 67,
+      "profiles": {
+        "type": "all"
+      },
+      "extent": {
+        "distance": "limon_b",
+        "convention": "total_distance",
+        "direction": "positive"
+      },
+      "operation": "new_body"
+    },
+    {
+      "id": 75,
+      "name": "Perçage platine V1",
+      "suppressed": false,
+      "type": "sketch",
+      "plane": {
+        "type": "origin",
+        "name": "YZ"
+      },
+      "sketch": {
+        "points": [
+          {
+            "id": "origin",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": true
+          },
+          {
+            "id": "p1",
+            "pos": [
+              -1170.5,
+              2673.5454545454545
+            ],
+            "fixed": false
+          },
+          {
+            "id": "p2",
+            "pos": [
+              -1170.5,
+              2683.5454545454545
+            ],
+            "fixed": false
+          },
+          {
+            "id": "p3",
+            "pos": [
+              -1184.5000000000032,
+              2683.545454545422
+            ],
+            "fixed": false
+          },
+          {
+            "id": "p4",
+            "pos": [
+              -1184.4999999999873,
+              2673.545454545422
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a1.center",
+            "pos": [
+              -1177.5,
+              2683.5454545454545
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a2.center",
+            "pos": [
+              -1177.5,
+              2673.5454545454545
+            ],
+            "fixed": false
+          },
+          {
+            "id": "p5",
+            "pos": [
+              -1170.5,
+              2573.5454545454545
+            ],
+            "fixed": false
+          },
+          {
+            "id": "p6",
+            "pos": [
+              -1170.5,
+              2583.5454545454545
+            ],
+            "fixed": false
+          },
+          {
+            "id": "p7",
+            "pos": [
+              -1184.5000000000032,
+              2583.545454545422
+            ],
+            "fixed": false
+          },
+          {
+            "id": "p8",
+            "pos": [
+              -1184.4999999999873,
+              2573.545454545422
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a3.center",
+            "pos": [
+              -1177.5,
+              2583.5454545454545
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a4.center",
+            "pos": [
+              -1177.5,
+              2573.5454545454545
+            ],
+            "fixed": false
+          }
+        ],
+        "curves": [
+          {
+            "id": "l1",
+            "type": "line",
+            "a": 1,
+            "b": 2,
+            "construction": false
+          },
+          {
+            "id": "a1",
+            "type": "arc",
+            "c": 5,
+            "a": 2,
+            "b": 3,
+            "construction": false
+          },
+          {
+            "id": "l2",
+            "type": "line",
+            "a": 3,
+            "b": 4,
+            "construction": false
+          },
+          {
+            "id": "a2",
+            "type": "arc",
+            "c": 6,
+            "a": 4,
+            "b": 1,
+            "construction": false
+          },
+          {
+            "id": "l3",
+            "type": "line",
+            "a": 7,
+            "b": 8,
+            "construction": false
+          },
+          {
+            "id": "a3",
+            "type": "arc",
+            "c": 11,
+            "a": 8,
+            "b": 9,
+            "construction": false
+          },
+          {
+            "id": "l4",
+            "type": "line",
+            "a": 9,
+            "b": 10,
+            "construction": false
+          },
+          {
+            "id": "a4",
+            "type": "arc",
+            "c": 12,
+            "a": 10,
+            "b": 7,
+            "construction": false
+          }
+        ],
+        "constraints": [
+          {
+            "id": "k1",
+            "type": "tangent",
+            "a": 0,
+            "b": 1
+          },
+          {
+            "id": "k2",
+            "type": "tangent",
+            "a": 2,
+            "b": 1
+          },
+          {
+            "id": "k3",
+            "type": "tangent",
+            "a": 0,
+            "b": 3
+          },
+          {
+            "id": "k4",
+            "type": "tangent",
+            "a": 2,
+            "b": 3
+          },
+          {
+            "id": "k5",
+            "type": "equal",
+            "a": 3,
+            "b": 1
+          },
+          {
+            "id": "k6",
+            "type": "vertical",
+            "l": 0
+          },
+          {
+            "id": "k7",
+            "type": "radius",
+            "c": 1,
+            "value": 7.0,
+            "param": "percage_platine_v1_rayon_haut"
+          },
+          {
+            "id": "k8",
+            "type": "distance_y",
+            "p": 6,
+            "q": 5,
+            "value": 10.0,
+            "param": "percage_platine_v1_course_haut"
+          },
+          {
+            "id": "k9",
+            "type": "distance_x",
+            "p": 0,
+            "q": 6,
+            "value": 1177.5,
+            "param": "percage_platine_v1_y"
+          },
+          {
+            "id": "k10",
+            "type": "distance_y",
+            "p": 0,
+            "q": 6,
+            "value": 2673.5454545454545,
+            "param": "percage_platine_v1_z_haut"
+          },
+          {
+            "id": "k11",
+            "type": "tangent",
+            "a": 4,
+            "b": 5
+          },
+          {
+            "id": "k12",
+            "type": "tangent",
+            "a": 6,
+            "b": 5
+          },
+          {
+            "id": "k13",
+            "type": "tangent",
+            "a": 4,
+            "b": 7
+          },
+          {
+            "id": "k14",
+            "type": "tangent",
+            "a": 6,
+            "b": 7
+          },
+          {
+            "id": "k15",
+            "type": "equal",
+            "a": 7,
+            "b": 5
+          },
+          {
+            "id": "k16",
+            "type": "vertical",
+            "l": 4
+          },
+          {
+            "id": "k17",
+            "type": "radius",
+            "c": 5,
+            "value": 7.0,
+            "param": "percage_platine_v1_rayon_bas"
+          },
+          {
+            "id": "k18",
+            "type": "distance_y",
+            "p": 12,
+            "q": 11,
+            "value": 10.0,
+            "param": "percage_platine_v1_course_bas"
+          },
+          {
+            "id": "k19",
+            "type": "vertical_points",
+            "p": 12,
+            "q": 6
+          },
+          {
+            "id": "k20",
+            "type": "distance_y",
+            "p": 12,
+            "q": 6,
+            "value": 100.0,
+            "param": "percage_platine_v1_entraxe"
+          }
+        ],
+        "counters": {
+          "a": 4,
+          "k": 20,
+          "l": 4,
+          "p": 8
+        }
+      }
+    },
+    {
+      "id": 76,
+      "name": "Trous platine V1",
+      "suppressed": false,
+      "param_names": [
+        "trous_platine_v1_distance",
+        "trous_platine_v1_decalage"
+      ],
+      "type": "extrude",
+      "sketch": 75,
+      "profiles": {
+        "type": "all"
+      },
+      "extent": {
+        "distance": "platine_ep",
+        "convention": "total_distance",
+        "direction": "positive",
+        "start_offset": "(nb_volee1 - 1) * giron - platine_ep"
+      },
+      "operation": "cut",
+      "targets": [
+        "Platine ext V1"
+      ]
+    },
+    {
+      "id": 24,
+      "name": "Symétrie limon V1",
+      "suppressed": false,
+      "body_names": [
+        "Limon int V1",
+        "Platine int V1"
+      ],
+      "type": "mirror",
+      "features": [],
+      "plane": {
+        "type": "construction",
+        "feature": 3
+      },
+      "bodies": [
+        "Limon ext V1",
+        "Platine ext V1"
+      ]
+    },
+    {
+      "id": 25,
+      "name": "Rive ext V2",
+      "suppressed": false,
+      "param_names": [
+        "rive_ext_v2_decalage"
+      ],
+      "type": "construction_plane",
+      "plane": {
+        "type": "offset",
+        "base": {
+          "type": "construction",
+          "feature": 4
+        },
+        "distance": "emmarchement / 2"
+      }
+    },
+    {
+      "id": 85,
+      "name": "Axe limon V2",
+      "suppressed": false,
+      "type": "sketch",
+      "plane": {
+        "type": "construction",
+        "feature": 25
+      },
+      "sketch": {
+        "points": [
+          {
+            "id": "origin",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": true
+          },
+          {
+            "id": "p1",
+            "pos": [
+              3836.0,
+              -2973.4545454545455
+            ],
+            "fixed": true,
+            "link": "j1"
+          },
+          {
+            "id": "p2",
+            "pos": [
+              2466.0,
+              -3848.0
+            ],
+            "fixed": true,
+            "link": "j1"
+          },
+          {
+            "id": "l2.start",
+            "pos": [
+              2261.0,
+              -3687.8591553176047
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l2.end",
+            "pos": [
+              4315.0,
+              -2376.679327845807
+            ],
+            "fixed": false
+          }
+        ],
+        "curves": [
+          {
+            "id": "l1",
+            "type": "line",
+            "a": 1,
+            "b": 2,
+            "construction": true,
+            "link": "j1"
+          },
+          {
+            "id": "l2",
+            "type": "line",
+            "a": 3,
+            "b": 4,
+            "construction": false
+          }
+        ],
+        "constraints": [
+          {
+            "id": "k1",
+            "type": "parallel",
+            "a": 1,
+            "b": 0
+          },
+          {
+            "id": "k2",
+            "type": "point_line_distance",
+            "p": 3,
+            "l": 0,
+            "value": 245.2870186102156,
+            "param": "axe_limon_v2_bas"
+          },
+          {
+            "id": "k3",
+            "type": "distance_x",
+            "p": 0,
+            "q": 3,
+            "value": 2261.0,
+            "param": "axe_limon_v2_debut_x"
+          },
+          {
+            "id": "k4",
+            "type": "distance_x",
+            "p": 0,
+            "q": 4,
+            "value": 4315.0,
+            "param": "axe_limon_v2_fin_x"
+          }
+        ],
+        "links": [
+          {
+            "id": "j1",
+            "kind": "project",
+            "source": {
+              "type": "sketch_curve",
+              "sketch": 1,
+              "curve": "l5"
+            }
+          }
+        ],
+        "counters": {
+          "j": 1,
+          "k": 4,
+          "l": 1,
+          "p": 2
+        }
+      }
+    },
+    {
+      "id": 86,
+      "name": "Barre limon V2",
+      "suppressed": false,
+      "param_names": [
+        "barre_limon_v2_aile",
+        "barre_limon_v2_hauteur",
+        "barre_limon_v2_conge",
+        "barre_limon_v2_ame",
+        "barre_limon_v2_largeur"
+      ],
+      "type": "frame_member",
+      "path_sketch": 85,
+      "lines": [
+        "l2"
+      ],
+      "profile": {
+        "source": "library",
+        "profile": {
+          "kind": "channel",
+          "flange": "limon_tf",
+          "height": "limon_h",
+          "root_radius": "limon_r",
+          "web": "limon_tw",
+          "width": "limon_b"
+        }
+      },
+      "anchor": "bottom_left",
+      "body_name": "Limon ext V2 FM",
+      "names": {
+        "l2": "Limon ext V2"
+      }
+    },
+    {
+      "id": 87,
+      "name": "Coupes limon V2",
+      "suppressed": false,
+      "type": "sketch",
+      "plane": {
+        "type": "construction",
+        "feature": 25
+      },
+      "sketch": {
+        "points": [
+          {
+            "id": "origin",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": true
+          },
+          {
+            "id": "l1.start",
+            "pos": [
+              2481.0,
+              -4288.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l1.end",
+            "pos": [
+              2041.0,
+              -4288.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l2.end",
+            "pos": [
+              2041.0,
+              440.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l3.end",
+            "pos": [
+              2481.0,
+              440.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l5.start",
+            "pos": [
+              4095.0,
+              -4288.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l5.end",
+            "pos": [
+              4535.0,
+              -4288.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l6.end",
+            "pos": [
+              4535.0,
+              440.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l7.end",
+            "pos": [
+              4095.0,
+              440.0
+            ],
+            "fixed": false
+          }
+        ],
+        "curves": [
+          {
+            "id": "l1",
+            "type": "line",
+            "a": 1,
+            "b": 2,
+            "construction": false
+          },
+          {
+            "id": "l2",
+            "type": "line",
+            "a": 2,
+            "b": 3,
+            "construction": false
+          },
+          {
+            "id": "l3",
+            "type": "line",
+            "a": 3,
+            "b": 4,
+            "construction": false
+          },
+          {
+            "id": "l4",
+            "type": "line",
+            "a": 4,
+            "b": 1,
+            "construction": false
+          },
+          {
+            "id": "l5",
+            "type": "line",
+            "a": 5,
+            "b": 6,
+            "construction": false
+          },
+          {
+            "id": "l6",
+            "type": "line",
+            "a": 6,
+            "b": 7,
+            "construction": false
+          },
+          {
+            "id": "l7",
+            "type": "line",
+            "a": 7,
+            "b": 8,
+            "construction": false
+          },
+          {
+            "id": "l8",
+            "type": "line",
+            "a": 8,
+            "b": 5,
+            "construction": false
+          }
+        ],
+        "constraints": [
+          {
+            "id": "k1",
+            "type": "horizontal",
+            "l": 0
+          },
+          {
+            "id": "k2",
+            "type": "vertical",
+            "l": 1
+          },
+          {
+            "id": "k3",
+            "type": "horizontal",
+            "l": 2
+          },
+          {
+            "id": "k4",
+            "type": "vertical",
+            "l": 3
+          },
+          {
+            "id": "k5",
+            "type": "horizontal",
+            "l": 4
+          },
+          {
+            "id": "k6",
+            "type": "vertical",
+            "l": 5
+          },
+          {
+            "id": "k7",
+            "type": "horizontal",
+            "l": 6
+          },
+          {
+            "id": "k8",
+            "type": "vertical",
+            "l": 7
+          },
+          {
+            "id": "k9",
+            "type": "distance_x",
+            "p": 0,
+            "q": 1,
+            "value": 2481.0,
+            "param": "coupes_limon_v2_arrivee_x"
+          },
+          {
+            "id": "k10",
+            "type": "distance_y",
+            "p": 0,
+            "q": 1,
+            "value": 4288.0,
+            "param": "coupes_limon_v2_arrivee_haut"
+          },
+          {
+            "id": "k11",
+            "type": "length",
+            "l": 0,
+            "value": 440.0,
+            "param": "coupes_limon_v2_arrivee_largeur"
+          },
+          {
+            "id": "k12",
+            "type": "length",
+            "l": 1,
+            "value": 4728.0,
+            "param": "coupes_limon_v2_arrivee_hauteur"
+          },
+          {
+            "id": "k13",
+            "type": "distance_x",
+            "p": 0,
+            "q": 5,
+            "value": 4095.0,
+            "param": "coupes_limon_v2_palier_x"
+          },
+          {
+            "id": "k14",
+            "type": "distance_y",
+            "p": 0,
+            "q": 5,
+            "value": 4288.0,
+            "param": "coupes_limon_v2_palier_haut"
+          },
+          {
+            "id": "k15",
+            "type": "length",
+            "l": 4,
+            "value": 440.0,
+            "param": "coupes_limon_v2_palier_largeur"
+          },
+          {
+            "id": "k16",
+            "type": "length",
+            "l": 5,
+            "value": 4728.0,
+            "param": "coupes_limon_v2_palier_hauteur"
+          }
+        ],
+        "counters": {
+          "k": 16
+        }
+      }
+    },
+    {
+      "id": 88,
+      "name": "Coupe limon V2",
+      "suppressed": false,
+      "param_names": [
+        "coupe_limon_v2_distance"
+      ],
+      "type": "extrude",
+      "sketch": 87,
+      "profiles": {
+        "type": "all"
+      },
+      "extent": {
+        "distance": "limon_b",
+        "convention": "total_distance",
+        "direction": "positive"
+      },
+      "operation": "cut",
+      "targets": [
+        "Limon ext V2"
+      ]
+    },
+    {
+      "id": 71,
+      "name": "Profil platine V2",
+      "suppressed": false,
+      "type": "sketch",
+      "plane": {
+        "type": "construction",
+        "feature": 25
+      },
+      "sketch": {
+        "points": [
+          {
+            "id": "origin",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": true
+          },
+          {
+            "id": "l5.start",
+            "pos": [
+              2466.0,
+              -3547.421199113225
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l5.end",
+            "pos": [
+              2481.0,
+              -3547.421199113225
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l6.end",
+            "pos": [
+              2481.0,
+              -3808.4246848042467
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l7.end",
+            "pos": [
+              2466.0,
+              -3808.4246848042467
+            ],
+            "fixed": false
+          }
+        ],
+        "curves": [
+          {
+            "id": "l5",
+            "type": "line",
+            "a": 1,
+            "b": 2,
+            "construction": false
+          },
+          {
+            "id": "l6",
+            "type": "line",
+            "a": 2,
+            "b": 3,
+            "construction": false
+          },
+          {
+            "id": "l7",
+            "type": "line",
+            "a": 3,
+            "b": 4,
+            "construction": false
+          },
+          {
+            "id": "l8",
+            "type": "line",
+            "a": 4,
+            "b": 1,
+            "construction": false
+          }
+        ],
+        "constraints": [
+          {
+            "id": "k1",
+            "type": "horizontal",
+            "l": 0
+          },
+          {
+            "id": "k2",
+            "type": "vertical",
+            "l": 1
+          },
+          {
+            "id": "k3",
+            "type": "horizontal",
+            "l": 2
+          },
+          {
+            "id": "k4",
+            "type": "vertical",
+            "l": 3
+          },
+          {
+            "id": "k5",
+            "type": "distance_x",
+            "p": 0,
+            "q": 1,
+            "value": 2466.0,
+            "param": "platine_arrivee_v2_x"
+          },
+          {
+            "id": "k6",
+            "type": "distance_y",
+            "p": 0,
+            "q": 3,
+            "value": 3808.4246848042467,
+            "param": "platine_arrivee_v2_haut_z"
+          },
+          {
+            "id": "k7",
+            "type": "length",
+            "l": 0,
+            "value": 15.0,
+            "param": "platine_arrivee_v2_ep"
+          },
+          {
+            "id": "k8",
+            "type": "length",
+            "l": 1,
+            "value": 261.0034856910214,
+            "param": "platine_arrivee_v2_hauteur"
+          }
+        ],
+        "counters": {
+          "k": 8,
+          "l": 8,
+          "p": 8
+        }
+      }
+    },
+    {
+      "id": 72,
+      "name": "Platine limon V2",
+      "suppressed": false,
+      "body_names": [
+        "Platine ext V2"
+      ],
+      "param_names": [
+        "platine_limon_v2_distance"
+      ],
+      "type": "extrude",
+      "sketch": 71,
+      "profiles": {
+        "type": "all"
+      },
+      "extent": {
+        "distance": "limon_b",
+        "convention": "total_distance",
+        "direction": "positive"
+      },
+      "operation": "new_body"
+    },
+    {
+      "id": 73,
+      "name": "Profil platine palier V2",
+      "suppressed": false,
+      "type": "sketch",
+      "plane": {
+        "type": "construction",
+        "feature": 25
+      },
+      "sketch": {
+        "points": [
+          {
+            "id": "origin",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": true
+          },
+          {
+            "id": "l1.start",
+            "pos": [
+              4095.0,
+              -2517.1172840501863
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l1.end",
+            "pos": [
+              4110.0,
+              -2517.1172840501863
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l2.end",
+            "pos": [
+              4110.0,
+              -2778.120769741208
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l3.end",
+            "pos": [
+              4095.0,
+              -2778.120769741208
+            ],
+            "fixed": false
+          }
+        ],
+        "curves": [
+          {
+            "id": "l1",
+            "type": "line",
+            "a": 1,
+            "b": 2,
+            "construction": false
+          },
+          {
+            "id": "l2",
+            "type": "line",
+            "a": 2,
+            "b": 3,
+            "construction": false
+          },
+          {
+            "id": "l3",
+            "type": "line",
+            "a": 3,
+            "b": 4,
+            "construction": false
+          },
+          {
+            "id": "l4",
+            "type": "line",
+            "a": 4,
+            "b": 1,
+            "construction": false
+          }
+        ],
+        "constraints": [
+          {
+            "id": "k1",
+            "type": "horizontal",
+            "l": 0
+          },
+          {
+            "id": "k2",
+            "type": "vertical",
+            "l": 1
+          },
+          {
+            "id": "k3",
+            "type": "horizontal",
+            "l": 2
+          },
+          {
+            "id": "k4",
+            "type": "vertical",
+            "l": 3
+          },
+          {
+            "id": "k5",
+            "type": "distance_x",
+            "p": 0,
+            "q": 2,
+            "value": 4110.0,
+            "param": "platine_palier_v2_x"
+          },
+          {
+            "id": "k6",
+            "type": "distance_y",
+            "p": 0,
+            "q": 3,
+            "value": 2778.120769741208,
+            "param": "platine_palier_v2_haut_z"
+          },
+          {
+            "id": "k7",
+            "type": "length",
+            "l": 0,
+            "value": 15.0,
+            "param": "platine_palier_v2_ep"
+          },
+          {
+            "id": "k8",
+            "type": "length",
+            "l": 1,
+            "value": 261.0034856910214,
+            "param": "platine_palier_v2_hauteur"
+          }
+        ],
+        "counters": {
+          "k": 8,
+          "l": 4,
+          "p": 12
+        }
+      }
+    },
+    {
+      "id": 74,
+      "name": "Platine palier limon V2",
+      "suppressed": false,
+      "body_names": [
+        "Platine palier ext V2"
+      ],
+      "param_names": [
+        "platine_palier_limon_v2_distance"
+      ],
+      "type": "extrude",
+      "sketch": 73,
+      "profiles": {
+        "type": "all"
+      },
+      "extent": {
+        "distance": "limon_b",
+        "convention": "total_distance",
+        "direction": "positive"
+      },
+      "operation": "new_body"
+    },
+    {
+      "id": 77,
+      "name": "Perçage platines V2",
+      "suppressed": false,
+      "type": "sketch",
+      "plane": {
+        "type": "origin",
+        "name": "YZ"
+      },
+      "sketch": {
+        "points": [
+          {
+            "id": "origin",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": true
+          },
+          {
+            "id": "p1",
+            "pos": [
+              1184.5,
+              2673.5454545454545
+            ],
+            "fixed": false
+          },
+          {
+            "id": "p2",
+            "pos": [
+              1184.5,
+              2683.5454545454545
+            ],
+            "fixed": false
+          },
+          {
+            "id": "p3",
+            "pos": [
+              1170.4999999999968,
+              2683.545454545422
+            ],
+            "fixed": false
+          },
+          {
+            "id": "p4",
+            "pos": [
+              1170.5000000000127,
+              2673.545454545422
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a1.center",
+            "pos": [
+              1177.5,
+              2683.5454545454545
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a2.center",
+            "pos": [
+              1177.5,
+              2673.5454545454545
+            ],
+            "fixed": false
+          },
+          {
+            "id": "p5",
+            "pos": [
+              1184.5,
+              2573.5454545454545
+            ],
+            "fixed": false
+          },
+          {
+            "id": "p6",
+            "pos": [
+              1184.5,
+              2583.5454545454545
+            ],
+            "fixed": false
+          },
+          {
+            "id": "p7",
+            "pos": [
+              1170.4999999999968,
+              2583.545454545422
+            ],
+            "fixed": false
+          },
+          {
+            "id": "p8",
+            "pos": [
+              1170.5000000000127,
+              2573.545454545422
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a3.center",
+            "pos": [
+              1177.5,
+              2583.5454545454545
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a4.center",
+            "pos": [
+              1177.5,
+              2573.5454545454545
+            ],
+            "fixed": false
+          },
+          {
+            "id": "p9",
+            "pos": [
+              1184.5,
+              3722.922941958736
+            ],
+            "fixed": false
+          },
+          {
+            "id": "p10",
+            "pos": [
+              1184.5,
+              3732.922941958736
+            ],
+            "fixed": false
+          },
+          {
+            "id": "p11",
+            "pos": [
+              1170.4999999999968,
+              3732.9229419587036
+            ],
+            "fixed": false
+          },
+          {
+            "id": "p12",
+            "pos": [
+              1170.5000000000127,
+              3722.9229419587036
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a5.center",
+            "pos": [
+              1177.5,
+              3732.922941958736
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a6.center",
+            "pos": [
+              1177.5,
+              3722.922941958736
+            ],
+            "fixed": false
+          },
+          {
+            "id": "p13",
+            "pos": [
+              1184.5,
+              3622.922941958736
+            ],
+            "fixed": false
+          },
+          {
+            "id": "p14",
+            "pos": [
+              1184.5,
+              3632.922941958736
+            ],
+            "fixed": false
+          },
+          {
+            "id": "p15",
+            "pos": [
+              1170.4999999999968,
+              3632.9229419587036
+            ],
+            "fixed": false
+          },
+          {
+            "id": "p16",
+            "pos": [
+              1170.5000000000127,
+              3622.9229419587036
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a7.center",
+            "pos": [
+              1177.5,
+              3632.922941958736
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a8.center",
+            "pos": [
+              1177.5,
+              3622.922941958736
+            ],
+            "fixed": false
+          }
+        ],
+        "curves": [
+          {
+            "id": "l1",
+            "type": "line",
+            "a": 1,
+            "b": 2,
+            "construction": false
+          },
+          {
+            "id": "a1",
+            "type": "arc",
+            "c": 5,
+            "a": 2,
+            "b": 3,
+            "construction": false
+          },
+          {
+            "id": "l2",
+            "type": "line",
+            "a": 3,
+            "b": 4,
+            "construction": false
+          },
+          {
+            "id": "a2",
+            "type": "arc",
+            "c": 6,
+            "a": 4,
+            "b": 1,
+            "construction": false
+          },
+          {
+            "id": "l3",
+            "type": "line",
+            "a": 7,
+            "b": 8,
+            "construction": false
+          },
+          {
+            "id": "a3",
+            "type": "arc",
+            "c": 11,
+            "a": 8,
+            "b": 9,
+            "construction": false
+          },
+          {
+            "id": "l4",
+            "type": "line",
+            "a": 9,
+            "b": 10,
+            "construction": false
+          },
+          {
+            "id": "a4",
+            "type": "arc",
+            "c": 12,
+            "a": 10,
+            "b": 7,
+            "construction": false
+          },
+          {
+            "id": "l5",
+            "type": "line",
+            "a": 13,
+            "b": 14,
+            "construction": false
+          },
+          {
+            "id": "a5",
+            "type": "arc",
+            "c": 17,
+            "a": 14,
+            "b": 15,
+            "construction": false
+          },
+          {
+            "id": "l6",
+            "type": "line",
+            "a": 15,
+            "b": 16,
+            "construction": false
+          },
+          {
+            "id": "a6",
+            "type": "arc",
+            "c": 18,
+            "a": 16,
+            "b": 13,
+            "construction": false
+          },
+          {
+            "id": "l7",
+            "type": "line",
+            "a": 19,
+            "b": 20,
+            "construction": false
+          },
+          {
+            "id": "a7",
+            "type": "arc",
+            "c": 23,
+            "a": 20,
+            "b": 21,
+            "construction": false
+          },
+          {
+            "id": "l8",
+            "type": "line",
+            "a": 21,
+            "b": 22,
+            "construction": false
+          },
+          {
+            "id": "a8",
+            "type": "arc",
+            "c": 24,
+            "a": 22,
+            "b": 19,
+            "construction": false
+          }
+        ],
+        "constraints": [
+          {
+            "id": "k1",
+            "type": "tangent",
+            "a": 0,
+            "b": 1
+          },
+          {
+            "id": "k2",
+            "type": "tangent",
+            "a": 2,
+            "b": 1
+          },
+          {
+            "id": "k3",
+            "type": "tangent",
+            "a": 0,
+            "b": 3
+          },
+          {
+            "id": "k4",
+            "type": "tangent",
+            "a": 2,
+            "b": 3
+          },
+          {
+            "id": "k5",
+            "type": "equal",
+            "a": 3,
+            "b": 1
+          },
+          {
+            "id": "k6",
+            "type": "tangent",
+            "a": 4,
+            "b": 5
+          },
+          {
+            "id": "k7",
+            "type": "tangent",
+            "a": 6,
+            "b": 5
+          },
+          {
+            "id": "k8",
+            "type": "tangent",
+            "a": 4,
+            "b": 7
+          },
+          {
+            "id": "k9",
+            "type": "tangent",
+            "a": 6,
+            "b": 7
+          },
+          {
+            "id": "k10",
+            "type": "equal",
+            "a": 7,
+            "b": 5
+          },
+          {
+            "id": "k11",
+            "type": "tangent",
+            "a": 8,
+            "b": 9
+          },
+          {
+            "id": "k12",
+            "type": "tangent",
+            "a": 10,
+            "b": 9
+          },
+          {
+            "id": "k13",
+            "type": "tangent",
+            "a": 8,
+            "b": 11
+          },
+          {
+            "id": "k14",
+            "type": "tangent",
+            "a": 10,
+            "b": 11
+          },
+          {
+            "id": "k15",
+            "type": "equal",
+            "a": 11,
+            "b": 9
+          },
+          {
+            "id": "k16",
+            "type": "tangent",
+            "a": 12,
+            "b": 13
+          },
+          {
+            "id": "k17",
+            "type": "tangent",
+            "a": 14,
+            "b": 13
+          },
+          {
+            "id": "k18",
+            "type": "tangent",
+            "a": 12,
+            "b": 15
+          },
+          {
+            "id": "k19",
+            "type": "tangent",
+            "a": 14,
+            "b": 15
+          },
+          {
+            "id": "k20",
+            "type": "equal",
+            "a": 15,
+            "b": 13
+          },
+          {
+            "id": "k21",
+            "type": "vertical",
+            "l": 0
+          },
+          {
+            "id": "k22",
+            "type": "radius",
+            "c": 1,
+            "value": 7.0,
+            "param": "percage_palier_v2_rayon_haut"
+          },
+          {
+            "id": "k23",
+            "type": "distance_y",
+            "p": 6,
+            "q": 5,
+            "value": 10.0,
+            "param": "percage_palier_v2_course_haut"
+          },
+          {
+            "id": "k24",
+            "type": "distance_x",
+            "p": 0,
+            "q": 6,
+            "value": 1177.5,
+            "param": "percage_platines_v2_y"
+          },
+          {
+            "id": "k25",
+            "type": "distance_y",
+            "p": 0,
+            "q": 6,
+            "value": 2673.5454545454545,
+            "param": "percage_palier_v2_z_haut"
+          },
+          {
+            "id": "k26",
+            "type": "vertical",
+            "l": 4
+          },
+          {
+            "id": "k27",
+            "type": "radius",
+            "c": 5,
+            "value": 7.0,
+            "param": "percage_palier_v2_rayon_bas"
+          },
+          {
+            "id": "k28",
+            "type": "distance_y",
+            "p": 12,
+            "q": 11,
+            "value": 10.0,
+            "param": "percage_palier_v2_course_bas"
+          },
+          {
+            "id": "k29",
+            "type": "vertical_points",
+            "p": 12,
+            "q": 6
+          },
+          {
+            "id": "k30",
+            "type": "distance_y",
+            "p": 12,
+            "q": 6,
+            "value": 100.0,
+            "param": "percage_palier_v2_entraxe"
+          },
+          {
+            "id": "k31",
+            "type": "vertical",
+            "l": 8
+          },
+          {
+            "id": "k32",
+            "type": "radius",
+            "c": 9,
+            "value": 7.0,
+            "param": "percage_arrivee_v2_rayon_haut"
+          },
+          {
+            "id": "k33",
+            "type": "distance_y",
+            "p": 18,
+            "q": 17,
+            "value": 10.0,
+            "param": "percage_arrivee_v2_course_haut"
+          },
+          {
+            "id": "k34",
+            "type": "vertical_points",
+            "p": 18,
+            "q": 6
+          },
+          {
+            "id": "k35",
+            "type": "distance_y",
+            "p": 0,
+            "q": 18,
+            "value": 3722.922941958736,
+            "param": "percage_arrivee_v2_z_haut"
+          },
+          {
+            "id": "k36",
+            "type": "vertical",
+            "l": 12
+          },
+          {
+            "id": "k37",
+            "type": "radius",
+            "c": 13,
+            "value": 7.0,
+            "param": "percage_arrivee_v2_rayon_bas"
+          },
+          {
+            "id": "k38",
+            "type": "distance_y",
+            "p": 24,
+            "q": 23,
+            "value": 10.0,
+            "param": "percage_arrivee_v2_course_bas"
+          },
+          {
+            "id": "k39",
+            "type": "vertical_points",
+            "p": 24,
+            "q": 18
+          },
+          {
+            "id": "k40",
+            "type": "distance_y",
+            "p": 24,
+            "q": 18,
+            "value": 100.0,
+            "param": "percage_arrivee_v2_entraxe"
+          }
+        ],
+        "counters": {
+          "a": 8,
+          "k": 40,
+          "l": 8,
+          "p": 16
+        }
+      }
+    },
+    {
+      "id": 78,
+      "name": "Trous platines V2",
+      "suppressed": false,
+      "param_names": [
+        "trous_platines_v2_distance",
+        "trous_platines_v2_decalage"
+      ],
+      "type": "extrude",
+      "sketch": 77,
+      "profiles": {
+        "type": "all"
+      },
+      "extent": {
+        "distance": "nb_volee2 * giron",
+        "convention": "total_distance",
+        "direction": "positive",
+        "start_offset": "(nb_volee1 - nb_volee2 - 1) * giron"
+      },
+      "operation": "cut",
+      "targets": [
+        "Platine ext V2",
+        "Platine palier ext V2"
+      ]
+    },
+    {
+      "id": 30,
+      "name": "Symétrie limon V2",
+      "suppressed": false,
+      "body_names": [
+        "Limon int V2",
+        "Platine int V2",
+        "Platine palier int V2"
+      ],
+      "type": "mirror",
+      "features": [],
+      "plane": {
+        "type": "construction",
+        "feature": 4
+      },
+      "bodies": [
+        "Limon ext V2",
+        "Platine ext V2",
+        "Platine palier ext V2"
+      ]
+    },
+    {
+      "id": 31,
+      "name": "Dessus cadre palier",
+      "suppressed": false,
+      "param_names": [
+        "dessus_cadre_palier_decalage"
+      ],
+      "type": "construction_plane",
+      "plane": {
+        "type": "offset",
+        "base": {
+          "type": "origin",
+          "name": "XY"
+        },
+        "distance": "nb_volee1 * hauteur_marche - palier_ep"
+      }
+    },
+    {
+      "id": 32,
+      "name": "Plancher palier",
+      "suppressed": false,
+      "type": "sketch",
+      "plane": {
+        "type": "construction",
+        "feature": 31
+      },
+      "sketch": {
+        "points": [
+          {
+            "id": "origin",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": true
+          },
+          {
+            "id": "l1.start",
+            "pos": [
+              4110.0,
+              -1220.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l1.end",
+            "pos": [
+              5110.0,
+              -1220.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l2.end",
+            "pos": [
+              5110.0,
+              1220.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l3.end",
+            "pos": [
+              4110.0,
+              1220.0
+            ],
+            "fixed": false
+          }
+        ],
+        "curves": [
+          {
+            "id": "l1",
+            "type": "line",
+            "a": 1,
+            "b": 2,
+            "construction": false
+          },
+          {
+            "id": "l2",
+            "type": "line",
+            "a": 2,
+            "b": 3,
+            "construction": false
+          },
+          {
+            "id": "l3",
+            "type": "line",
+            "a": 3,
+            "b": 4,
+            "construction": false
+          },
+          {
+            "id": "l4",
+            "type": "line",
+            "a": 4,
+            "b": 1,
+            "construction": false
+          }
+        ],
+        "constraints": [
+          {
+            "id": "k1",
+            "type": "horizontal",
+            "l": 0
+          },
+          {
+            "id": "k2",
+            "type": "vertical",
+            "l": 1
+          },
+          {
+            "id": "k3",
+            "type": "horizontal",
+            "l": 2
+          },
+          {
+            "id": "k4",
+            "type": "vertical",
+            "l": 3
+          },
+          {
+            "id": "k5",
+            "type": "distance_x",
+            "p": 0,
+            "q": 1,
+            "value": 4110.0,
+            "param": "plancher_x"
+          },
+          {
+            "id": "k6",
+            "type": "distance_y",
+            "p": 0,
+            "q": 1,
+            "value": 1220.0,
+            "param": "plancher_y"
+          },
+          {
+            "id": "k7",
+            "type": "length",
+            "l": 0,
+            "value": 1000.0,
+            "param": "plancher_profondeur"
+          },
+          {
+            "id": "k8",
+            "type": "length",
+            "l": 1,
+            "value": 2440.0,
+            "param": "plancher_largeur"
+          }
+        ],
+        "counters": {
+          "k": 8,
+          "l": 4,
+          "p": 4
+        }
+      }
+    },
+    {
+      "id": 33,
+      "name": "Plancher palier",
+      "suppressed": false,
+      "body_names": [
+        "Plancher palier"
+      ],
+      "param_names": [
+        "plancher_palier_distance"
+      ],
+      "type": "extrude",
+      "sketch": 32,
+      "profiles": {
+        "type": "all"
+      },
+      "extent": {
+        "distance": "palier_ep",
+        "convention": "total_distance",
+        "direction": "positive"
+      },
+      "operation": "new_body"
+    },
+    {
+      "id": 89,
+      "name": "Plan pieds V1",
+      "suppressed": false,
+      "param_names": [
+        "plan_pieds_v1_decalage"
+      ],
+      "type": "construction_plane",
+      "plane": {
+        "type": "offset",
+        "base": {
+          "type": "origin",
+          "name": "XZ"
+        },
+        "distance": "-(cadre_y - poteau_cote / 2)"
+      }
+    },
+    {
+      "id": 90,
+      "name": "Plan pieds V2",
+      "suppressed": false,
+      "param_names": [
+        "plan_pieds_v2_decalage"
+      ],
+      "type": "construction_plane",
+      "plane": {
+        "type": "offset",
+        "base": {
+          "type": "origin",
+          "name": "XZ"
+        },
+        "distance": "cadre_y - poteau_cote / 2"
+      }
+    },
+    {
+      "id": 91,
+      "name": "Axes pieds V1",
+      "suppressed": false,
+      "type": "sketch",
+      "plane": {
+        "type": "construction",
+        "feature": 89
+      },
+      "sketch": {
+        "points": [
+          {
+            "id": "origin",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": true
+          },
+          {
+            "id": "l1.start",
+            "pos": [
+              4160.0,
+              0.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l1.end",
+            "pos": [
+              4160.0,
+              -2518.5454545454545
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l2.start",
+            "pos": [
+              5060.0,
+              0.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l2.end",
+            "pos": [
+              5060.0,
+              -2518.5454545454545
+            ],
+            "fixed": false
+          },
+          {
+            "id": "p1",
+            "pos": [
+              -100.0,
+              0.0
+            ],
+            "fixed": true,
+            "link": "j1"
+          },
+          {
+            "id": "p2",
+            "pos": [
+              100.0,
+              0.0
+            ],
+            "fixed": true,
+            "link": "j1"
+          }
+        ],
+        "curves": [
+          {
+            "id": "l1",
+            "type": "line",
+            "a": 1,
+            "b": 2,
+            "construction": false
+          },
+          {
+            "id": "l2",
+            "type": "line",
+            "a": 3,
+            "b": 4,
+            "construction": false
+          },
+          {
+            "id": "l3",
+            "type": "line",
+            "a": 5,
+            "b": 6,
+            "construction": true,
+            "link": "j1"
+          }
+        ],
+        "constraints": [
+          {
+            "id": "k1",
+            "type": "vertical",
+            "l": 0
+          },
+          {
+            "id": "k2",
+            "type": "vertical",
+            "l": 1
+          },
+          {
+            "id": "k3",
+            "type": "point_on_curve",
+            "p": 1,
+            "c": 2
+          },
+          {
+            "id": "k4",
+            "type": "point_on_curve",
+            "p": 3,
+            "c": 2
+          },
+          {
+            "id": "k5",
+            "type": "distance_x",
+            "p": 0,
+            "q": 1,
+            "value": 4160.0,
+            "param": "axe_pied_avant_v1_x"
+          },
+          {
+            "id": "k6",
+            "type": "distance_x",
+            "p": 0,
+            "q": 3,
+            "value": 5060.0,
+            "param": "axe_pied_arriere_v1_x"
+          },
+          {
+            "id": "k7",
+            "type": "length",
+            "l": 0,
+            "value": 2518.5454545454545,
+            "param": "axe_pied_avant_v1_hauteur"
+          },
+          {
+            "id": "k8",
+            "type": "length",
+            "l": 1,
+            "value": 2518.5454545454545,
+            "param": "axe_pied_arriere_v1_hauteur"
+          }
+        ],
+        "links": [
+          {
+            "id": "j1",
+            "kind": "project",
+            "source": {
+              "type": "sketch_axis",
+              "name": "x"
+            }
+          }
+        ],
+        "counters": {
+          "j": 1,
+          "k": 8,
+          "l": 3,
+          "p": 2
+        }
+      }
+    },
+    {
+      "id": 92,
+      "name": "Pieds V1",
+      "suppressed": false,
+      "param_names": [
+        "pieds_v1_hauteur_tube",
+        "pieds_v1_rayon",
+        "pieds_v1_paroi",
+        "pieds_v1_largeur_tube"
+      ],
+      "type": "frame_member",
+      "path_sketch": 91,
+      "lines": [
+        "l1",
+        "l2"
+      ],
+      "profile": {
+        "source": "library",
+        "profile": {
+          "kind": "rect_tube",
+          "height": "poteau_cote",
+          "outer_radius": "poteau_r",
+          "wall": "poteau_ep",
+          "width": "poteau_cote"
+        }
+      },
+      "anchor": "center",
+      "names": {
+        "l1": "Pied avant V1",
+        "l2": "Pied arrière V1"
+      }
+    },
+    {
+      "id": 93,
+      "name": "Axes pieds V2",
+      "suppressed": false,
+      "type": "sketch",
+      "plane": {
+        "type": "construction",
+        "feature": 90
+      },
+      "sketch": {
+        "points": [
+          {
+            "id": "origin",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": true
+          },
+          {
+            "id": "l1.start",
+            "pos": [
+              4160.0,
+              0.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l1.end",
+            "pos": [
+              4160.0,
+              -2518.5454545454545
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l2.start",
+            "pos": [
+              5060.0,
+              0.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l2.end",
+            "pos": [
+              5060.0,
+              -2518.5454545454545
+            ],
+            "fixed": false
+          },
+          {
+            "id": "p1",
+            "pos": [
+              -100.0,
+              0.0
+            ],
+            "fixed": true,
+            "link": "j1"
+          },
+          {
+            "id": "p2",
+            "pos": [
+              100.0,
+              0.0
+            ],
+            "fixed": true,
+            "link": "j1"
+          }
+        ],
+        "curves": [
+          {
+            "id": "l1",
+            "type": "line",
+            "a": 1,
+            "b": 2,
+            "construction": false
+          },
+          {
+            "id": "l2",
+            "type": "line",
+            "a": 3,
+            "b": 4,
+            "construction": false
+          },
+          {
+            "id": "l3",
+            "type": "line",
+            "a": 5,
+            "b": 6,
+            "construction": true,
+            "link": "j1"
+          }
+        ],
+        "constraints": [
+          {
+            "id": "k1",
+            "type": "vertical",
+            "l": 0
+          },
+          {
+            "id": "k2",
+            "type": "vertical",
+            "l": 1
+          },
+          {
+            "id": "k3",
+            "type": "point_on_curve",
+            "p": 1,
+            "c": 2
+          },
+          {
+            "id": "k4",
+            "type": "point_on_curve",
+            "p": 3,
+            "c": 2
+          },
+          {
+            "id": "k5",
+            "type": "distance_x",
+            "p": 0,
+            "q": 1,
+            "value": 4160.0,
+            "param": "axe_pied_avant_v2_x"
+          },
+          {
+            "id": "k6",
+            "type": "distance_x",
+            "p": 0,
+            "q": 3,
+            "value": 5060.0,
+            "param": "axe_pied_arriere_v2_x"
+          },
+          {
+            "id": "k7",
+            "type": "length",
+            "l": 0,
+            "value": 2518.5454545454545,
+            "param": "axe_pied_avant_v2_hauteur"
+          },
+          {
+            "id": "k8",
+            "type": "length",
+            "l": 1,
+            "value": 2518.5454545454545,
+            "param": "axe_pied_arriere_v2_hauteur"
+          }
+        ],
+        "links": [
+          {
+            "id": "j1",
+            "kind": "project",
+            "source": {
+              "type": "sketch_axis",
+              "name": "x"
+            }
+          }
+        ],
+        "counters": {
+          "j": 1,
+          "k": 8,
+          "l": 3,
+          "p": 2
+        }
+      }
+    },
+    {
+      "id": 94,
+      "name": "Pieds V2",
+      "suppressed": false,
+      "param_names": [
+        "pieds_v2_hauteur_tube",
+        "pieds_v2_rayon",
+        "pieds_v2_paroi",
+        "pieds_v2_largeur_tube"
+      ],
+      "type": "frame_member",
+      "path_sketch": 93,
+      "lines": [
+        "l1",
+        "l2"
+      ],
+      "profile": {
+        "source": "library",
+        "profile": {
+          "kind": "rect_tube",
+          "height": "poteau_cote",
+          "outer_radius": "poteau_r",
+          "wall": "poteau_ep",
+          "width": "poteau_cote"
+        }
+      },
+      "anchor": "center",
+      "names": {
+        "l1": "Pied avant V2",
+        "l2": "Pied arrière V2"
+      }
+    },
+    {
+      "id": 47,
+      "name": "Âme poutre avant",
+      "suppressed": false,
+      "type": "sketch",
+      "plane": {
+        "type": "construction",
+        "feature": 31
+      },
+      "sketch": {
+        "points": [
+          {
+            "id": "origin",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": true
+          },
+          {
+            "id": "l1.start",
+            "pos": [
+              4110.0,
+              -1220.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l1.end",
+            "pos": [
+              4116.5,
+              -1213.5
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l2.end",
+            "pos": [
+              4116.5,
+              1213.4999999999995
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l3.end",
+            "pos": [
+              4110.0,
+              1220.0
+            ],
+            "fixed": false
+          }
+        ],
+        "curves": [
+          {
+            "id": "l1",
+            "type": "line",
+            "a": 1,
+            "b": 2,
+            "construction": false
+          },
+          {
+            "id": "l2",
+            "type": "line",
+            "a": 2,
+            "b": 3,
+            "construction": false
+          },
+          {
+            "id": "l3",
+            "type": "line",
+            "a": 3,
+            "b": 4,
+            "construction": false
+          },
+          {
+            "id": "l4",
+            "type": "line",
+            "a": 4,
+            "b": 1,
+            "construction": false
+          }
+        ],
+        "constraints": [
+          {
+            "id": "k1",
+            "type": "vertical",
+            "l": 1
+          },
+          {
+            "id": "k2",
+            "type": "vertical",
+            "l": 3
+          },
+          {
+            "id": "k3",
+            "type": "distance_x",
+            "p": 0,
+            "q": 1,
+            "value": 4110.0,
+            "param": "ame_poutre_avant_x"
+          },
+          {
+            "id": "k4",
+            "type": "distance_y",
+            "p": 0,
+            "q": 1,
+            "value": 1220.0,
+            "param": "ame_poutre_avant_y_1"
+          },
+          {
+            "id": "k5",
+            "type": "distance_y",
+            "p": 0,
+            "q": 4,
+            "value": 1220.0,
+            "param": "ame_poutre_avant_y_2"
+          },
+          {
+            "id": "k6",
+            "type": "point_line_distance",
+            "p": 2,
+            "l": 3,
+            "value": 6.5,
+            "param": "ame_poutre_avant_ep"
+          },
+          {
+            "id": "k7",
+            "type": "angle",
+            "a": 0,
+            "b": 3,
+            "value": 0.7853981633974483,
+            "flip": true,
+            "param": "ame_poutre_avant_onglet_1"
+          },
+          {
+            "id": "k8",
+            "type": "angle",
+            "a": 3,
+            "b": 2,
+            "value": 0.7853981633974483,
+            "flip": true,
+            "param": "ame_poutre_avant_onglet_2"
+          }
+        ],
+        "counters": {
+          "k": 8,
+          "l": 4,
+          "p": 4
+        }
+      }
+    },
+    {
+      "id": 48,
+      "name": "Âme poutre avant",
+      "suppressed": false,
+      "body_names": [
+        "Poutre avant palier"
+      ],
+      "param_names": [
+        "ame_poutre_avant_distance"
+      ],
+      "type": "extrude",
+      "sketch": 47,
+      "profiles": {
+        "type": "all"
+      },
+      "extent": {
+        "distance": "limon_h",
+        "convention": "total_distance",
+        "direction": "negative"
+      },
+      "operation": "new_body"
+    },
+    {
+      "id": 49,
+      "name": "Ailes poutre avant",
+      "suppressed": false,
+      "type": "sketch",
+      "plane": {
+        "type": "construction",
+        "feature": 31
+      },
+      "sketch": {
+        "points": [
+          {
+            "id": "origin",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": true
+          },
+          {
+            "id": "l1.start",
+            "pos": [
+              4110.0,
+              -1220.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l1.end",
+            "pos": [
+              4195.0,
+              -1135.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l2.end",
+            "pos": [
+              4195.0,
+              1135.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l3.end",
+            "pos": [
+              4110.0,
+              1220.0
+            ],
+            "fixed": false
+          }
+        ],
+        "curves": [
+          {
+            "id": "l1",
+            "type": "line",
+            "a": 1,
+            "b": 2,
+            "construction": false
+          },
+          {
+            "id": "l2",
+            "type": "line",
+            "a": 2,
+            "b": 3,
+            "construction": false
+          },
+          {
+            "id": "l3",
+            "type": "line",
+            "a": 3,
+            "b": 4,
+            "construction": false
+          },
+          {
+            "id": "l4",
+            "type": "line",
+            "a": 4,
+            "b": 1,
+            "construction": false
+          }
+        ],
+        "constraints": [
+          {
+            "id": "k1",
+            "type": "vertical",
+            "l": 1
+          },
+          {
+            "id": "k2",
+            "type": "vertical",
+            "l": 3
+          },
+          {
+            "id": "k3",
+            "type": "distance_x",
+            "p": 0,
+            "q": 1,
+            "value": 4110.0,
+            "param": "ailes_poutre_avant_x"
+          },
+          {
+            "id": "k4",
+            "type": "distance_y",
+            "p": 0,
+            "q": 1,
+            "value": 1220.0,
+            "param": "ailes_poutre_avant_y_1"
+          },
+          {
+            "id": "k5",
+            "type": "distance_y",
+            "p": 0,
+            "q": 4,
+            "value": 1220.0,
+            "param": "ailes_poutre_avant_y_2"
+          },
+          {
+            "id": "k6",
+            "type": "point_line_distance",
+            "p": 2,
+            "l": 3,
+            "value": 85.0,
+            "param": "ailes_poutre_avant_largeur"
+          },
+          {
+            "id": "k7",
+            "type": "angle",
+            "a": 0,
+            "b": 3,
+            "value": 0.7853981633974483,
+            "flip": true,
+            "param": "ailes_poutre_avant_onglet_1"
+          },
+          {
+            "id": "k8",
+            "type": "angle",
+            "a": 3,
+            "b": 2,
+            "value": 0.7853981633974483,
+            "flip": true,
+            "param": "ailes_poutre_avant_onglet_2"
+          }
+        ],
+        "counters": {
+          "k": 8,
+          "l": 4,
+          "p": 4
+        }
+      }
+    },
+    {
+      "id": 50,
+      "name": "Aile haute poutre avant",
+      "suppressed": false,
+      "param_names": [
+        "aile_haute_poutre_avant_distance"
+      ],
+      "type": "extrude",
+      "sketch": 49,
+      "profiles": {
+        "type": "all"
+      },
+      "extent": {
+        "distance": "limon_tf",
+        "convention": "total_distance",
+        "direction": "negative"
+      },
+      "operation": "join",
+      "targets": [
+        "Poutre avant palier"
+      ]
+    },
+    {
+      "id": 51,
+      "name": "Aile basse poutre avant",
+      "suppressed": false,
+      "param_names": [
+        "aile_basse_poutre_avant_distance",
+        "aile_basse_poutre_avant_decalage"
+      ],
+      "type": "extrude",
+      "sketch": 49,
+      "profiles": {
+        "type": "all"
+      },
+      "extent": {
+        "distance": "limon_tf",
+        "convention": "total_distance",
+        "direction": "negative",
+        "start_offset": "-(limon_h - limon_tf)"
+      },
+      "operation": "join",
+      "targets": [
+        "Poutre avant palier"
+      ]
+    },
+    {
+      "id": 52,
+      "name": "Âme poutre arrière",
+      "suppressed": false,
+      "type": "sketch",
+      "plane": {
+        "type": "construction",
+        "feature": 31
+      },
+      "sketch": {
+        "points": [
+          {
+            "id": "origin",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": true
+          },
+          {
+            "id": "l1.start",
+            "pos": [
+              5110.0,
+              -1220.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l1.end",
+            "pos": [
+              5110.0,
+              1220.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l2.end",
+            "pos": [
+              5103.5,
+              1213.5
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l3.end",
+            "pos": [
+              5103.5,
+              -1213.5
+            ],
+            "fixed": false
+          }
+        ],
+        "curves": [
+          {
+            "id": "l1",
+            "type": "line",
+            "a": 1,
+            "b": 2,
+            "construction": false
+          },
+          {
+            "id": "l2",
+            "type": "line",
+            "a": 2,
+            "b": 3,
+            "construction": false
+          },
+          {
+            "id": "l3",
+            "type": "line",
+            "a": 3,
+            "b": 4,
+            "construction": false
+          },
+          {
+            "id": "l4",
+            "type": "line",
+            "a": 4,
+            "b": 1,
+            "construction": false
+          }
+        ],
+        "constraints": [
+          {
+            "id": "k1",
+            "type": "vertical",
+            "l": 0
+          },
+          {
+            "id": "k2",
+            "type": "vertical",
+            "l": 2
+          },
+          {
+            "id": "k3",
+            "type": "distance_x",
+            "p": 0,
+            "q": 1,
+            "value": 5110.0,
+            "param": "ame_poutre_arriere_x"
+          },
+          {
+            "id": "k4",
+            "type": "distance_y",
+            "p": 0,
+            "q": 1,
+            "value": 1220.0,
+            "param": "ame_poutre_arriere_y_1"
+          },
+          {
+            "id": "k5",
+            "type": "distance_y",
+            "p": 0,
+            "q": 2,
+            "value": 1220.0,
+            "param": "ame_poutre_arriere_y_2"
+          },
+          {
+            "id": "k6",
+            "type": "point_line_distance",
+            "p": 1,
+            "l": 2,
+            "value": 6.5,
+            "param": "ame_poutre_arriere_ep"
+          },
+          {
+            "id": "k7",
+            "type": "angle",
+            "a": 1,
+            "b": 0,
+            "value": 0.7853981633974483,
+            "flip": true,
+            "param": "ame_poutre_arriere_onglet_1"
+          },
+          {
+            "id": "k8",
+            "type": "angle",
+            "a": 0,
+            "b": 3,
+            "value": 0.7853981633974483,
+            "flip": true,
+            "param": "ame_poutre_arriere_onglet_2"
+          }
+        ],
+        "counters": {
+          "k": 8,
+          "l": 4,
+          "p": 4
+        }
+      }
+    },
+    {
+      "id": 53,
+      "name": "Âme poutre arrière",
+      "suppressed": false,
+      "body_names": [
+        "Poutre arrière palier"
+      ],
+      "param_names": [
+        "ame_poutre_arriere_distance"
+      ],
+      "type": "extrude",
+      "sketch": 52,
+      "profiles": {
+        "type": "all"
+      },
+      "extent": {
+        "distance": "limon_h",
+        "convention": "total_distance",
+        "direction": "negative"
+      },
+      "operation": "new_body"
+    },
+    {
+      "id": 54,
+      "name": "Ailes poutre arrière",
+      "suppressed": false,
+      "type": "sketch",
+      "plane": {
+        "type": "construction",
+        "feature": 31
+      },
+      "sketch": {
+        "points": [
+          {
+            "id": "origin",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": true
+          },
+          {
+            "id": "l1.start",
+            "pos": [
+              5110.0,
+              -1220.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l1.end",
+            "pos": [
+              5110.0,
+              1220.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l2.end",
+            "pos": [
+              5025.0,
+              1135.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l3.end",
+            "pos": [
+              5025.0,
+              -1135.0
+            ],
+            "fixed": false
+          }
+        ],
+        "curves": [
+          {
+            "id": "l1",
+            "type": "line",
+            "a": 1,
+            "b": 2,
+            "construction": false
+          },
+          {
+            "id": "l2",
+            "type": "line",
+            "a": 2,
+            "b": 3,
+            "construction": false
+          },
+          {
+            "id": "l3",
+            "type": "line",
+            "a": 3,
+            "b": 4,
+            "construction": false
+          },
+          {
+            "id": "l4",
+            "type": "line",
+            "a": 4,
+            "b": 1,
+            "construction": false
+          }
+        ],
+        "constraints": [
+          {
+            "id": "k1",
+            "type": "vertical",
+            "l": 0
+          },
+          {
+            "id": "k2",
+            "type": "vertical",
+            "l": 2
+          },
+          {
+            "id": "k3",
+            "type": "distance_x",
+            "p": 0,
+            "q": 1,
+            "value": 5110.0,
+            "param": "ailes_poutre_arriere_x"
+          },
+          {
+            "id": "k4",
+            "type": "distance_y",
+            "p": 0,
+            "q": 1,
+            "value": 1220.0,
+            "param": "ailes_poutre_arriere_y_1"
+          },
+          {
+            "id": "k5",
+            "type": "distance_y",
+            "p": 0,
+            "q": 2,
+            "value": 1220.0,
+            "param": "ailes_poutre_arriere_y_2"
+          },
+          {
+            "id": "k6",
+            "type": "point_line_distance",
+            "p": 1,
+            "l": 2,
+            "value": 85.0,
+            "param": "ailes_poutre_arriere_largeur"
+          },
+          {
+            "id": "k7",
+            "type": "angle",
+            "a": 1,
+            "b": 0,
+            "value": 0.7853981633974483,
+            "flip": true,
+            "param": "ailes_poutre_arriere_onglet_1"
+          },
+          {
+            "id": "k8",
+            "type": "angle",
+            "a": 0,
+            "b": 3,
+            "value": 0.7853981633974483,
+            "flip": true,
+            "param": "ailes_poutre_arriere_onglet_2"
+          }
+        ],
+        "counters": {
+          "k": 8,
+          "l": 4,
+          "p": 4
+        }
+      }
+    },
+    {
+      "id": 55,
+      "name": "Aile haute poutre arrière",
+      "suppressed": false,
+      "param_names": [
+        "aile_haute_poutre_arriere_distance"
+      ],
+      "type": "extrude",
+      "sketch": 54,
+      "profiles": {
+        "type": "all"
+      },
+      "extent": {
+        "distance": "limon_tf",
+        "convention": "total_distance",
+        "direction": "negative"
+      },
+      "operation": "join",
+      "targets": [
+        "Poutre arrière palier"
+      ]
+    },
+    {
+      "id": 56,
+      "name": "Aile basse poutre arrière",
+      "suppressed": false,
+      "param_names": [
+        "aile_basse_poutre_arriere_distance",
+        "aile_basse_poutre_arriere_decalage"
+      ],
+      "type": "extrude",
+      "sketch": 54,
+      "profiles": {
+        "type": "all"
+      },
+      "extent": {
+        "distance": "limon_tf",
+        "convention": "total_distance",
+        "direction": "negative",
+        "start_offset": "-(limon_h - limon_tf)"
+      },
+      "operation": "join",
+      "targets": [
+        "Poutre arrière palier"
+      ]
+    },
+    {
+      "id": 57,
+      "name": "Âme poutre latérale V2",
+      "suppressed": false,
+      "type": "sketch",
+      "plane": {
+        "type": "construction",
+        "feature": 31
+      },
+      "sketch": {
+        "points": [
+          {
+            "id": "origin",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": true
+          },
+          {
+            "id": "l1.start",
+            "pos": [
+              4110.0,
+              1220.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l1.end",
+            "pos": [
+              5110.0,
+              1220.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l2.end",
+            "pos": [
+              5103.5,
+              1213.5
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l3.end",
+            "pos": [
+              4116.5,
+              1213.5
+            ],
+            "fixed": false
+          }
+        ],
+        "curves": [
+          {
+            "id": "l1",
+            "type": "line",
+            "a": 1,
+            "b": 2,
+            "construction": false
+          },
+          {
+            "id": "l2",
+            "type": "line",
+            "a": 2,
+            "b": 3,
+            "construction": false
+          },
+          {
+            "id": "l3",
+            "type": "line",
+            "a": 3,
+            "b": 4,
+            "construction": false
+          },
+          {
+            "id": "l4",
+            "type": "line",
+            "a": 4,
+            "b": 1,
+            "construction": false
+          }
+        ],
+        "constraints": [
+          {
+            "id": "k1",
+            "type": "horizontal",
+            "l": 0
+          },
+          {
+            "id": "k2",
+            "type": "horizontal",
+            "l": 2
+          },
+          {
+            "id": "k3",
+            "type": "distance_x",
+            "p": 0,
+            "q": 1,
+            "value": 4110.0,
+            "param": "ame_poutre_laterale_v2_x_1"
+          },
+          {
+            "id": "k4",
+            "type": "distance_y",
+            "p": 0,
+            "q": 1,
+            "value": 1220.0,
+            "param": "ame_poutre_laterale_v2_y"
+          },
+          {
+            "id": "k5",
+            "type": "distance_x",
+            "p": 0,
+            "q": 2,
+            "value": 5110.0,
+            "param": "ame_poutre_laterale_v2_x_2"
+          },
+          {
+            "id": "k6",
+            "type": "point_line_distance",
+            "p": 1,
+            "l": 2,
+            "value": 6.5,
+            "param": "ame_poutre_laterale_v2_ep"
+          },
+          {
+            "id": "k7",
+            "type": "angle",
+            "a": 0,
+            "b": 1,
+            "value": 0.7853981633974483,
+            "flip": true,
+            "param": "ame_poutre_laterale_v2_onglet_1"
+          },
+          {
+            "id": "k8",
+            "type": "angle",
+            "a": 3,
+            "b": 0,
+            "value": 0.7853981633974483,
+            "flip": true,
+            "param": "ame_poutre_laterale_v2_onglet_2"
+          }
+        ],
+        "counters": {
+          "k": 8,
+          "l": 4,
+          "p": 4
+        }
+      }
+    },
+    {
+      "id": 58,
+      "name": "Âme poutre latérale V2",
+      "suppressed": false,
+      "body_names": [
+        "Poutre latérale V2"
+      ],
+      "param_names": [
+        "ame_poutre_laterale_v2_distance"
+      ],
+      "type": "extrude",
+      "sketch": 57,
+      "profiles": {
+        "type": "all"
+      },
+      "extent": {
+        "distance": "limon_h",
+        "convention": "total_distance",
+        "direction": "negative"
+      },
+      "operation": "new_body"
+    },
+    {
+      "id": 59,
+      "name": "Ailes poutre latérale V2",
+      "suppressed": false,
+      "type": "sketch",
+      "plane": {
+        "type": "construction",
+        "feature": 31
+      },
+      "sketch": {
+        "points": [
+          {
+            "id": "origin",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": true
+          },
+          {
+            "id": "l1.start",
+            "pos": [
+              4110.0,
+              1220.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l1.end",
+            "pos": [
+              5110.0,
+              1220.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l2.end",
+            "pos": [
+              5025.0,
+              1135.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l3.end",
+            "pos": [
+              4195.0,
+              1135.0
+            ],
+            "fixed": false
+          }
+        ],
+        "curves": [
+          {
+            "id": "l1",
+            "type": "line",
+            "a": 1,
+            "b": 2,
+            "construction": false
+          },
+          {
+            "id": "l2",
+            "type": "line",
+            "a": 2,
+            "b": 3,
+            "construction": false
+          },
+          {
+            "id": "l3",
+            "type": "line",
+            "a": 3,
+            "b": 4,
+            "construction": false
+          },
+          {
+            "id": "l4",
+            "type": "line",
+            "a": 4,
+            "b": 1,
+            "construction": false
+          }
+        ],
+        "constraints": [
+          {
+            "id": "k1",
+            "type": "horizontal",
+            "l": 0
+          },
+          {
+            "id": "k2",
+            "type": "horizontal",
+            "l": 2
+          },
+          {
+            "id": "k3",
+            "type": "distance_x",
+            "p": 0,
+            "q": 1,
+            "value": 4110.0,
+            "param": "ailes_poutre_laterale_v2_x_1"
+          },
+          {
+            "id": "k4",
+            "type": "distance_y",
+            "p": 0,
+            "q": 1,
+            "value": 1220.0,
+            "param": "ailes_poutre_laterale_v2_y"
+          },
+          {
+            "id": "k5",
+            "type": "distance_x",
+            "p": 0,
+            "q": 2,
+            "value": 5110.0,
+            "param": "ailes_poutre_laterale_v2_x_2"
+          },
+          {
+            "id": "k6",
+            "type": "point_line_distance",
+            "p": 1,
+            "l": 2,
+            "value": 85.0,
+            "param": "ailes_poutre_laterale_v2_largeur"
+          },
+          {
+            "id": "k7",
+            "type": "angle",
+            "a": 0,
+            "b": 1,
+            "value": 0.7853981633974483,
+            "flip": true,
+            "param": "ailes_poutre_laterale_v2_onglet_1"
+          },
+          {
+            "id": "k8",
+            "type": "angle",
+            "a": 3,
+            "b": 0,
+            "value": 0.7853981633974483,
+            "flip": true,
+            "param": "ailes_poutre_laterale_v2_onglet_2"
+          }
+        ],
+        "counters": {
+          "k": 8,
+          "l": 4,
+          "p": 4
+        }
+      }
+    },
+    {
+      "id": 60,
+      "name": "Aile haute poutre latérale V2",
+      "suppressed": false,
+      "param_names": [
+        "aile_haute_poutre_laterale_v2_distance"
+      ],
+      "type": "extrude",
+      "sketch": 59,
+      "profiles": {
+        "type": "all"
+      },
+      "extent": {
+        "distance": "limon_tf",
+        "convention": "total_distance",
+        "direction": "negative"
+      },
+      "operation": "join",
+      "targets": [
+        "Poutre latérale V2"
+      ]
+    },
+    {
+      "id": 61,
+      "name": "Aile basse poutre latérale V2",
+      "suppressed": false,
+      "param_names": [
+        "aile_basse_poutre_laterale_v2_distance",
+        "aile_basse_poutre_laterale_v2_decalage"
+      ],
+      "type": "extrude",
+      "sketch": 59,
+      "profiles": {
+        "type": "all"
+      },
+      "extent": {
+        "distance": "limon_tf",
+        "convention": "total_distance",
+        "direction": "negative",
+        "start_offset": "-(limon_h - limon_tf)"
+      },
+      "operation": "join",
+      "targets": [
+        "Poutre latérale V2"
+      ]
+    },
+    {
+      "id": 62,
+      "name": "Âme poutre latérale V1",
+      "suppressed": false,
+      "type": "sketch",
+      "plane": {
+        "type": "construction",
+        "feature": 31
+      },
+      "sketch": {
+        "points": [
+          {
+            "id": "origin",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": true
+          },
+          {
+            "id": "l1.start",
+            "pos": [
+              4110.0,
+              -1220.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l1.end",
+            "pos": [
+              4116.5,
+              -1213.5
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l2.end",
+            "pos": [
+              5103.5,
+              -1213.5
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l3.end",
+            "pos": [
+              5110.0,
+              -1220.0
+            ],
+            "fixed": false
+          }
+        ],
+        "curves": [
+          {
+            "id": "l1",
+            "type": "line",
+            "a": 1,
+            "b": 2,
+            "construction": false
+          },
+          {
+            "id": "l2",
+            "type": "line",
+            "a": 2,
+            "b": 3,
+            "construction": false
+          },
+          {
+            "id": "l3",
+            "type": "line",
+            "a": 3,
+            "b": 4,
+            "construction": false
+          },
+          {
+            "id": "l4",
+            "type": "line",
+            "a": 4,
+            "b": 1,
+            "construction": false
+          }
+        ],
+        "constraints": [
+          {
+            "id": "k1",
+            "type": "horizontal",
+            "l": 1
+          },
+          {
+            "id": "k2",
+            "type": "horizontal",
+            "l": 3
+          },
+          {
+            "id": "k3",
+            "type": "distance_x",
+            "p": 0,
+            "q": 1,
+            "value": 4110.0,
+            "param": "ame_poutre_laterale_v1_x_1"
+          },
+          {
+            "id": "k4",
+            "type": "distance_y",
+            "p": 0,
+            "q": 1,
+            "value": 1220.0,
+            "param": "ame_poutre_laterale_v1_y"
+          },
+          {
+            "id": "k5",
+            "type": "distance_x",
+            "p": 0,
+            "q": 4,
+            "value": 5110.0,
+            "param": "ame_poutre_laterale_v1_x_2"
+          },
+          {
+            "id": "k6",
+            "type": "point_line_distance",
+            "p": 2,
+            "l": 3,
+            "value": 6.5,
+            "param": "ame_poutre_laterale_v1_ep"
+          },
+          {
+            "id": "k7",
+            "type": "angle",
+            "a": 3,
+            "b": 0,
+            "value": 0.7853981633974483,
+            "flip": true,
+            "param": "ame_poutre_laterale_v1_onglet_1"
+          },
+          {
+            "id": "k8",
+            "type": "angle",
+            "a": 2,
+            "b": 3,
+            "value": 0.7853981633974483,
+            "flip": true,
+            "param": "ame_poutre_laterale_v1_onglet_2"
+          }
+        ],
+        "counters": {
+          "k": 8,
+          "l": 4,
+          "p": 4
+        }
+      }
+    },
+    {
+      "id": 63,
+      "name": "Âme poutre latérale V1",
+      "suppressed": false,
+      "body_names": [
+        "Poutre latérale V1"
+      ],
+      "param_names": [
+        "ame_poutre_laterale_v1_distance"
+      ],
+      "type": "extrude",
+      "sketch": 62,
+      "profiles": {
+        "type": "all"
+      },
+      "extent": {
+        "distance": "limon_h",
+        "convention": "total_distance",
+        "direction": "negative"
+      },
+      "operation": "new_body"
+    },
+    {
+      "id": 64,
+      "name": "Ailes poutre latérale V1",
+      "suppressed": false,
+      "type": "sketch",
+      "plane": {
+        "type": "construction",
+        "feature": 31
+      },
+      "sketch": {
+        "points": [
+          {
+            "id": "origin",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": true
+          },
+          {
+            "id": "l1.start",
+            "pos": [
+              4110.0,
+              -1220.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l1.end",
+            "pos": [
+              4195.0,
+              -1135.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l2.end",
+            "pos": [
+              5025.0,
+              -1135.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l3.end",
+            "pos": [
+              5110.0,
+              -1220.0
+            ],
+            "fixed": false
+          }
+        ],
+        "curves": [
+          {
+            "id": "l1",
+            "type": "line",
+            "a": 1,
+            "b": 2,
+            "construction": false
+          },
+          {
+            "id": "l2",
+            "type": "line",
+            "a": 2,
+            "b": 3,
+            "construction": false
+          },
+          {
+            "id": "l3",
+            "type": "line",
+            "a": 3,
+            "b": 4,
+            "construction": false
+          },
+          {
+            "id": "l4",
+            "type": "line",
+            "a": 4,
+            "b": 1,
+            "construction": false
+          }
+        ],
+        "constraints": [
+          {
+            "id": "k1",
+            "type": "horizontal",
+            "l": 1
+          },
+          {
+            "id": "k2",
+            "type": "horizontal",
+            "l": 3
+          },
+          {
+            "id": "k3",
+            "type": "distance_x",
+            "p": 0,
+            "q": 1,
+            "value": 4110.0,
+            "param": "ailes_poutre_laterale_v1_x_1"
+          },
+          {
+            "id": "k4",
+            "type": "distance_y",
+            "p": 0,
+            "q": 1,
+            "value": 1220.0,
+            "param": "ailes_poutre_laterale_v1_y"
+          },
+          {
+            "id": "k5",
+            "type": "distance_x",
+            "p": 0,
+            "q": 4,
+            "value": 5110.0,
+            "param": "ailes_poutre_laterale_v1_x_2"
+          },
+          {
+            "id": "k6",
+            "type": "point_line_distance",
+            "p": 2,
+            "l": 3,
+            "value": 85.0,
+            "param": "ailes_poutre_laterale_v1_largeur"
+          },
+          {
+            "id": "k7",
+            "type": "angle",
+            "a": 3,
+            "b": 0,
+            "value": 0.7853981633974483,
+            "flip": true,
+            "param": "ailes_poutre_laterale_v1_onglet_1"
+          },
+          {
+            "id": "k8",
+            "type": "angle",
+            "a": 2,
+            "b": 3,
+            "value": 0.7853981633974483,
+            "flip": true,
+            "param": "ailes_poutre_laterale_v1_onglet_2"
+          }
+        ],
+        "counters": {
+          "k": 8,
+          "l": 4,
+          "p": 4
+        }
+      }
+    },
+    {
+      "id": 65,
+      "name": "Aile haute poutre latérale V1",
+      "suppressed": false,
+      "param_names": [
+        "aile_haute_poutre_laterale_v1_distance"
+      ],
+      "type": "extrude",
+      "sketch": 64,
+      "profiles": {
+        "type": "all"
+      },
+      "extent": {
+        "distance": "limon_tf",
+        "convention": "total_distance",
+        "direction": "negative"
+      },
+      "operation": "join",
+      "targets": [
+        "Poutre latérale V1"
+      ]
+    },
+    {
+      "id": 66,
+      "name": "Aile basse poutre latérale V1",
+      "suppressed": false,
+      "param_names": [
+        "aile_basse_poutre_laterale_v1_distance",
+        "aile_basse_poutre_laterale_v1_decalage"
+      ],
+      "type": "extrude",
+      "sketch": 64,
+      "profiles": {
+        "type": "all"
+      },
+      "extent": {
+        "distance": "limon_tf",
+        "convention": "total_distance",
+        "direction": "negative",
+        "start_offset": "-(limon_h - limon_tf)"
+      },
+      "operation": "join",
+      "targets": [
+        "Poutre latérale V1"
+      ]
+    },
+    {
+      "id": 79,
+      "name": "Perçage poutre avant",
+      "suppressed": false,
+      "type": "sketch",
+      "plane": {
+        "type": "origin",
+        "name": "YZ"
+      },
+      "sketch": {
+        "points": [
+          {
+            "id": "origin",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": true
+          },
+          {
+            "id": "c1.center",
+            "pos": [
+              -1177.5,
+              2578.5454545454545
+            ],
+            "fixed": false
+          },
+          {
+            "id": "c2.center",
+            "pos": [
+              -1177.5,
+              2678.5454545454545
+            ],
+            "fixed": false
+          },
+          {
+            "id": "c3.center",
+            "pos": [
+              -92.5,
+              2578.5454545454545
+            ],
+            "fixed": false
+          },
+          {
+            "id": "c4.center",
+            "pos": [
+              -92.5,
+              2678.5454545454545
+            ],
+            "fixed": false
+          },
+          {
+            "id": "c5.center",
+            "pos": [
+              1177.5,
+              2578.5454545454545
+            ],
+            "fixed": false
+          },
+          {
+            "id": "c6.center",
+            "pos": [
+              1177.5,
+              2678.5454545454545
+            ],
+            "fixed": false
+          },
+          {
+            "id": "c7.center",
+            "pos": [
+              92.5,
+              2578.5454545454545
+            ],
+            "fixed": false
+          },
+          {
+            "id": "c8.center",
+            "pos": [
+              92.5,
+              2678.5454545454545
+            ],
+            "fixed": false
+          }
+        ],
+        "curves": [
+          {
+            "id": "c1",
+            "type": "circle",
+            "c": 1,
+            "r": 7.0,
+            "construction": false
+          },
+          {
+            "id": "c2",
+            "type": "circle",
+            "c": 2,
+            "r": 7.0,
+            "construction": false
+          },
+          {
+            "id": "c3",
+            "type": "circle",
+            "c": 3,
+            "r": 7.0,
+            "construction": false
+          },
+          {
+            "id": "c4",
+            "type": "circle",
+            "c": 4,
+            "r": 7.0,
+            "construction": false
+          },
+          {
+            "id": "c5",
+            "type": "circle",
+            "c": 5,
+            "r": 7.0,
+            "construction": false
+          },
+          {
+            "id": "c6",
+            "type": "circle",
+            "c": 6,
+            "r": 7.0,
+            "construction": false
+          },
+          {
+            "id": "c7",
+            "type": "circle",
+            "c": 7,
+            "r": 7.0,
+            "construction": false
+          },
+          {
+            "id": "c8",
+            "type": "circle",
+            "c": 8,
+            "r": 7.0,
+            "construction": false
+          }
+        ],
+        "constraints": [
+          {
+            "id": "k1",
+            "type": "radius",
+            "c": 0,
+            "value": 7.0,
+            "param": "trou_poutre_v1_ext_bas_rayon"
+          },
+          {
+            "id": "k2",
+            "type": "radius",
+            "c": 1,
+            "value": 7.0,
+            "param": "trou_poutre_v1_ext_haut_rayon"
+          },
+          {
+            "id": "k3",
+            "type": "radius",
+            "c": 2,
+            "value": 7.0,
+            "param": "trou_poutre_v1_int_bas_rayon"
+          },
+          {
+            "id": "k4",
+            "type": "radius",
+            "c": 3,
+            "value": 7.0,
+            "param": "trou_poutre_v1_int_haut_rayon"
+          },
+          {
+            "id": "k5",
+            "type": "radius",
+            "c": 4,
+            "value": 7.0,
+            "param": "trou_poutre_v2_ext_bas_rayon"
+          },
+          {
+            "id": "k6",
+            "type": "radius",
+            "c": 5,
+            "value": 7.0,
+            "param": "trou_poutre_v2_ext_haut_rayon"
+          },
+          {
+            "id": "k7",
+            "type": "radius",
+            "c": 6,
+            "value": 7.0,
+            "param": "trou_poutre_v2_int_bas_rayon"
+          },
+          {
+            "id": "k8",
+            "type": "radius",
+            "c": 7,
+            "value": 7.0,
+            "param": "trou_poutre_v2_int_haut_rayon"
+          },
+          {
+            "id": "k9",
+            "type": "distance_x",
+            "p": 0,
+            "q": 1,
+            "value": 1177.5,
+            "param": "trou_poutre_v1_ext_bas_y"
+          },
+          {
+            "id": "k10",
+            "type": "distance_x",
+            "p": 0,
+            "q": 2,
+            "value": 1177.5,
+            "param": "trou_poutre_v1_ext_haut_y"
+          },
+          {
+            "id": "k11",
+            "type": "distance_x",
+            "p": 0,
+            "q": 3,
+            "value": 92.5,
+            "param": "trou_poutre_v1_int_bas_y"
+          },
+          {
+            "id": "k12",
+            "type": "distance_x",
+            "p": 0,
+            "q": 4,
+            "value": 92.5,
+            "param": "trou_poutre_v1_int_haut_y"
+          },
+          {
+            "id": "k13",
+            "type": "distance_x",
+            "p": 0,
+            "q": 5,
+            "value": 1177.5,
+            "param": "trou_poutre_v2_ext_bas_y"
+          },
+          {
+            "id": "k14",
+            "type": "distance_x",
+            "p": 0,
+            "q": 6,
+            "value": 1177.5,
+            "param": "trou_poutre_v2_ext_haut_y"
+          },
+          {
+            "id": "k15",
+            "type": "distance_x",
+            "p": 0,
+            "q": 7,
+            "value": 92.5,
+            "param": "trou_poutre_v2_int_bas_y"
+          },
+          {
+            "id": "k16",
+            "type": "distance_x",
+            "p": 0,
+            "q": 8,
+            "value": 92.5,
+            "param": "trou_poutre_v2_int_haut_y"
+          },
+          {
+            "id": "k17",
+            "type": "distance_y",
+            "p": 0,
+            "q": 1,
+            "value": 2578.5454545454545,
+            "param": "trou_poutre_v1_ext_bas_z"
+          },
+          {
+            "id": "k18",
+            "type": "distance_y",
+            "p": 0,
+            "q": 2,
+            "value": 2678.5454545454545,
+            "param": "trou_poutre_v1_ext_haut_z"
+          },
+          {
+            "id": "k19",
+            "type": "distance_y",
+            "p": 0,
+            "q": 3,
+            "value": 2578.5454545454545,
+            "param": "trou_poutre_v1_int_bas_z"
+          },
+          {
+            "id": "k20",
+            "type": "distance_y",
+            "p": 0,
+            "q": 4,
+            "value": 2678.5454545454545,
+            "param": "trou_poutre_v1_int_haut_z"
+          },
+          {
+            "id": "k21",
+            "type": "distance_y",
+            "p": 0,
+            "q": 5,
+            "value": 2578.5454545454545,
+            "param": "trou_poutre_v2_ext_bas_z"
+          },
+          {
+            "id": "k22",
+            "type": "distance_y",
+            "p": 0,
+            "q": 6,
+            "value": 2678.5454545454545,
+            "param": "trou_poutre_v2_ext_haut_z"
+          },
+          {
+            "id": "k23",
+            "type": "distance_y",
+            "p": 0,
+            "q": 7,
+            "value": 2578.5454545454545,
+            "param": "trou_poutre_v2_int_bas_z"
+          },
+          {
+            "id": "k24",
+            "type": "distance_y",
+            "p": 0,
+            "q": 8,
+            "value": 2678.5454545454545,
+            "param": "trou_poutre_v2_int_haut_z"
+          }
+        ],
+        "counters": {
+          "c": 8,
+          "k": 24
+        }
+      }
+    },
+    {
+      "id": 80,
+      "name": "Trous poutre avant",
+      "suppressed": false,
+      "param_names": [
+        "trous_poutre_avant_distance",
+        "trous_poutre_avant_decalage"
+      ],
+      "type": "extrude",
+      "sketch": 79,
+      "profiles": {
+        "type": "all"
+      },
+      "extent": {
+        "distance": "limon_tw",
+        "convention": "total_distance",
+        "direction": "positive",
+        "start_offset": "(nb_volee1 - 1) * giron"
+      },
+      "operation": "cut",
+      "targets": [
+        "Poutre avant palier"
+      ]
+    }
+  ],
+  "next_id": 95,
+  "reserved_body_names": [
+    "Body1",
+    "Body2",
+    "Body3",
+    "Body4",
+    "Body5",
+    "Body6",
+    "Body7"
+  ],
+  "next_component_color_index": 0,
+  "materials": {
+    "Limon ext V1": "Steel",
+    "Limon ext V2": "Steel",
+    "Limon int V1": "Steel",
+    "Limon int V2": "Steel",
+    "Marche V1": "Oak",
+    "Marche V1 (10)": "Oak",
+    "Marche V1 (11)": "Oak",
+    "Marche V1 (12)": "Oak",
+    "Marche V1 (13)": "Oak",
+    "Marche V1 (14)": "Oak",
+    "Marche V1 (15)": "Oak",
+    "Marche V1 (16)": "Oak",
+    "Marche V1 (2)": "Oak",
+    "Marche V1 (3)": "Oak",
+    "Marche V1 (4)": "Oak",
+    "Marche V1 (5)": "Oak",
+    "Marche V1 (6)": "Oak",
+    "Marche V1 (7)": "Oak",
+    "Marche V1 (8)": "Oak",
+    "Marche V1 (9)": "Oak",
+    "Marche V2": "Oak",
+    "Marche V2 (2)": "Oak",
+    "Marche V2 (3)": "Oak",
+    "Marche V2 (4)": "Oak",
+    "Marche V2 (5)": "Oak",
+    "Pied arrière V1": "Steel",
+    "Pied arrière V2": "Steel",
+    "Pied avant V1": "Steel",
+    "Pied avant V2": "Steel",
+    "Plancher palier": "Oak",
+    "Platine ext V1": "Steel",
+    "Platine ext V2": "Steel",
+    "Platine int V1": "Steel",
+    "Platine int V2": "Steel",
+    "Platine palier ext V2": "Steel",
+    "Platine palier int V2": "Steel",
+    "Poutre arrière palier": "Steel",
+    "Poutre avant palier": "Steel",
+    "Poutre latérale V1": "Steel",
+    "Poutre latérale V2": "Steel",
+    "Équerre ext V1": "Steel",
+    "Équerre ext V1 (10)": "Steel",
+    "Équerre ext V1 (11)": "Steel",
+    "Équerre ext V1 (12)": "Steel",
+    "Équerre ext V1 (13)": "Steel",
+    "Équerre ext V1 (14)": "Steel",
+    "Équerre ext V1 (15)": "Steel",
+    "Équerre ext V1 (16)": "Steel",
+    "Équerre ext V1 (2)": "Steel",
+    "Équerre ext V1 (3)": "Steel",
+    "Équerre ext V1 (4)": "Steel",
+    "Équerre ext V1 (5)": "Steel",
+    "Équerre ext V1 (6)": "Steel",
+    "Équerre ext V1 (7)": "Steel",
+    "Équerre ext V1 (8)": "Steel",
+    "Équerre ext V1 (9)": "Steel",
+    "Équerre ext V2": "Steel",
+    "Équerre ext V2 (2)": "Steel",
+    "Équerre ext V2 (3)": "Steel",
+    "Équerre ext V2 (4)": "Steel",
+    "Équerre ext V2 (5)": "Steel",
+    "Équerre int V1": "Steel",
+    "Équerre int V1 (10)": "Steel",
+    "Équerre int V1 (11)": "Steel",
+    "Équerre int V1 (12)": "Steel",
+    "Équerre int V1 (13)": "Steel",
+    "Équerre int V1 (14)": "Steel",
+    "Équerre int V1 (15)": "Steel",
+    "Équerre int V1 (16)": "Steel",
+    "Équerre int V1 (2)": "Steel",
+    "Équerre int V1 (3)": "Steel",
+    "Équerre int V1 (4)": "Steel",
+    "Équerre int V1 (5)": "Steel",
+    "Équerre int V1 (6)": "Steel",
+    "Équerre int V1 (7)": "Steel",
+    "Équerre int V1 (8)": "Steel",
+    "Équerre int V1 (9)": "Steel",
+    "Équerre int V2": "Steel",
+    "Équerre int V2 (2)": "Steel",
+    "Équerre int V2 (3)": "Steel",
+    "Équerre int V2 (4)": "Steel",
+    "Équerre int V2 (5)": "Steel"
+  },
+  "visibility": {
+    "hidden_bodies": [],
+    "hidden_occurrences": [],
+    "hidden_origin": [],
+    "hidden_sketches": [
+      13,
+      7,
+      26,
+      28,
+      71,
+      73,
+      75,
+      77,
+      79,
+      81,
+      83,
+      85,
+      87,
+      91,
+      93
+    ],
+    "shown_sketches": [],
+    "origin_hidden": true,
+    "hidden_folders": [
+      "c0/construction"
+    ]
+  }
+}

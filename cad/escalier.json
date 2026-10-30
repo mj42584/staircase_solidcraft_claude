@@ -1085,7 +1085,7 @@
     },
     {
       "name": "limon_r",
-      "expr": "13 mm",
+      "expr": "0 mm",
       "unit": "mm",
       "comment": "congé de laminage de l'UPE (catalogue EN 10365)",
       "model": false
@@ -1274,7 +1274,7 @@
     },
     {
       "name": "mc_h",
-      "expr": "900",
+      "expr": "900 mm",
       "unit": "mm",
       "comment": "hauteur de la main courante au-dessus des nez, en vertical",
       "model": false
@@ -1934,13 +1934,13 @@
     },
     {
       "name": "coupe_potelet_v1_penetration",
-      "expr": "potelet_l + 1 mm",
+      "expr": "potelet_l + 3 mm",
       "unit": "mm",
       "model": true
     },
     {
       "name": "coupe_potelet_v2_penetration",
-      "expr": "potelet_l + 1 mm",
+      "expr": "potelet_l + 3 mm",
       "unit": "mm",
       "model": true
     },
@@ -8917,7 +8917,8 @@
       "suppressed": false,
       "param_names": [
         "potelet_v1_epaisseur",
-        "potelet_v1_largeur"
+        "potelet_v1_largeur",
+        "d1"
       ],
       "type": "frame_member",
       "path_sketch": 96,
@@ -9047,7 +9048,7 @@
           {
             "id": "l8.start",
             "pos": [
-              94.85496898358392,
+              94.85496898358386,
               -1108.7666343251842
             ],
             "fixed": false
@@ -9055,7 +9056,7 @@
           {
             "id": "l8.end",
             "pos": [
-              179.14503101641608,
+              179.14503101641614,
               -1162.5735617834705
             ],
             "fixed": false
@@ -9063,7 +9064,7 @@
           {
             "id": "l9.end",
             "pos": [
-              181.8353773893304,
+              181.83537738933046,
               -1158.3590586818289
             ],
             "fixed": false
@@ -9071,7 +9072,7 @@
           {
             "id": "l10.end",
             "pos": [
-              97.54531535649824,
+              97.54531535649818,
               -1104.5521312235426
             ],
             "fixed": false
@@ -9095,7 +9096,7 @@
           {
             "id": "p9",
             "pos": [
-              103.28397518686711,
+              103.28397518686708,
               -1114.1473270710128
             ],
             "fixed": false
@@ -9103,7 +9104,7 @@
           {
             "id": "p10",
             "pos": [
-              170.7160248131329,
+              170.71602481313292,
               -1157.192869037642
             ],
             "fixed": false
@@ -9414,7 +9415,7 @@
           {
             "id": "p3",
             "pos": [
-              181.8353773893304,
+              181.83537738933046,
               -1158.3590586818289
             ],
             "fixed": true,
@@ -9423,7 +9424,7 @@
           {
             "id": "p4",
             "pos": [
-              97.54531535649824,
+              97.54531535649818,
               -1104.5521312235426
             ],
             "fixed": true,
@@ -9432,39 +9433,39 @@
           {
             "id": "l3.start",
             "pos": [
-              188.02205540014285,
-              -273.23844355271996
+              189.0981939492722,
+              -271.5526423120401
             ],
             "fixed": false
           },
           {
             "id": "l3.end",
             "pos": [
-              204.16413363708315,
-              -247.951424942522
+              205.2402721862125,
+              -246.26562370184215
             ],
             "fixed": false
           },
           {
             "id": "l4.end",
             "pos": [
-              94.58705299289204,
-              -178.00241924911396
+              95.6631915420214,
+              -176.3166180084341
             ],
             "fixed": false
           },
           {
             "id": "l5.end",
             "pos": [
-              78.4449747559517,
-              -203.2894378593119
+              79.52111330508106,
+              -201.60363661863207
             ],
             "fixed": false
           },
           {
             "id": "l7.start",
             "pos": [
-              181.29730811474752,
+              181.29730811474758,
               -1159.2019593021573
             ],
             "fixed": false
@@ -9472,7 +9473,7 @@
           {
             "id": "l7.end",
             "pos": [
-              165.15522987726163,
+              165.15522987726172,
               -1184.488977912007
             ],
             "fixed": false
@@ -9480,7 +9481,7 @@
           {
             "id": "l8.end",
             "pos": [
-              80.86516784442945,
+              80.86516784442942,
               -1130.6820504537206
             ],
             "fixed": false
@@ -9488,7 +9489,7 @@
           {
             "id": "l9.end",
             "pos": [
-              97.00724608191531,
+              97.00724608191526,
               -1105.395031843871
             ],
             "fixed": false
@@ -9642,7 +9643,7 @@
             "type": "distance",
             "p": 1,
             "q": 6,
-            "value": 31.0,
+            "value": 33.0,
             "param": "coupe_potelet_v1_penetration"
           },
           {
@@ -10766,7 +10767,7 @@
           {
             "id": "p2",
             "pos": [
-              766.5465707904928,
+              766.5465707904929,
               -1177.5
             ],
             "fixed": true,
@@ -10783,7 +10784,7 @@
           {
             "id": "c2.center",
             "pos": [
-              766.5465707904928,
+              766.5465707904929,
               -1177.5
             ],
             "fixed": false
@@ -10799,7 +10800,7 @@
           {
             "id": "c4.center",
             "pos": [
-              766.5465707904928,
+              766.5465707904929,
               -92.5
             ],
             "fixed": false
@@ -11355,7 +11356,8 @@
       "suppressed": false,
       "param_names": [
         "potelet_v2_epaisseur",
-        "potelet_v2_largeur"
+        "potelet_v2_largeur",
+        "d2"
       ],
       "type": "frame_member",
       "path_sketch": 103,
@@ -11870,32 +11872,32 @@
           {
             "id": "l3.start",
             "pos": [
-              3647.9779445951003,
-              -3071.783898092236
+              3646.901806046167,
+              -3070.0980968514314
             ],
             "fixed": false
           },
           {
             "id": "l3.end",
             "pos": [
-              3631.8358663611025,
-              -3046.49687948016
+              3630.7597278121693,
+              -3044.811078239355
             ],
             "fixed": false
           },
           {
             "id": "l4.end",
             "pos": [
-              3741.4129470134335,
-              -2976.547873799503
+              3740.3368084645003,
+              -2974.8620725586984
             ],
             "fixed": false
           },
           {
             "id": "l5.end",
             "pos": [
-              3757.5550252474313,
-              -3001.8348924115794
+              3756.478886698498,
+              -3000.1490911707747
             ],
             "fixed": false
           },
@@ -12080,7 +12082,7 @@
             "type": "distance",
             "p": 1,
             "q": 6,
-            "value": 31.0,
+            "value": 33.0,
             "param": "coupe_potelet_v2_penetration"
           },
           {
@@ -13060,7 +13062,8 @@
       "suppressed": false,
       "param_names": [
         "potelet_palier_v1_epaisseur",
-        "potelet_palier_v1_largeur"
+        "potelet_palier_v1_largeur",
+        "d3"
       ],
       "type": "frame_member",
       "path_sketch": 96,
@@ -13648,7 +13651,8 @@
       "param_names": [
         "potelet_fond_epaisseur",
         "potelet_fond_largeur",
-        "potelet_fond_rotation"
+        "potelet_fond_rotation",
+        "d4"
       ],
       "type": "frame_member",
       "path_sketch": 114,
@@ -14962,7 +14966,7 @@
       ]
     }
   ],
-  "next_id": 158,
+  "next_id": 159,
   "reserved_body_names": [
     "Body1",
     "Body2",
@@ -15082,6 +15086,18 @@
     "Équerre int V2 (5)": "Steel",
     "Équerre int V2 (6)": "Steel"
   },
+  "timeline_groups": [
+    {
+      "id": 158,
+      "name": "Trous limons et palier (suspendre pour travailler)",
+      "parent": null,
+      "features": [
+        131,
+        144,
+        157
+      ]
+    }
+  ],
   "visibility": {
     "hidden_bodies": [],
     "hidden_occurrences": [],

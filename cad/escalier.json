@@ -1407,7 +1407,7 @@
     },
     {
       "name": "axe_mc_palier_v1_fin_x",
-      "expr": "rive_x + palier_profondeur - (limon_b - limon_tw - potelet_ep / 2) + mc_d / 2",
+      "expr": "rive_x + palier_profondeur - limon_b / 2 + mc_d / 2",
       "unit": "mm",
       "model": true
     },
@@ -1437,7 +1437,7 @@
     },
     {
       "name": "axe_mc_palier_v2_fin_x",
-      "expr": "rive_x + palier_profondeur - (limon_b - limon_tw - potelet_ep / 2) + mc_d / 2",
+      "expr": "rive_x + palier_profondeur - limon_b / 2 + mc_d / 2",
       "unit": "mm",
       "model": true
     },
@@ -1450,7 +1450,7 @@
     },
     {
       "name": "axe_mc_fond_longueur",
-      "expr": "2 * (jour / 2 + emmarchement + limon_tw + potelet_ep / 2 - mc_d / 2)",
+      "expr": "2 * (jour / 2 + emmarchement + limon_b / 2 - mc_d / 2)",
       "unit": "mm",
       "model": true
     },
@@ -1462,7 +1462,7 @@
     },
     {
       "name": "potelet_fond_y",
-      "expr": "jour / 2 + emmarchement + limon_tw + potelet_ep / 2",
+      "expr": "jour / 2 + emmarchement + limon_b / 2",
       "unit": "mm",
       "model": true
     },
@@ -8061,7 +8061,7 @@
           "type": "construction",
           "feature": 3
         },
-        "distance": "-(emmarchement / 2 + limon_tw + potelet_ep / 2)"
+        "distance": "-(emmarchement / 2 + limon_b / 2)"
       }
     },
     {
@@ -8168,7 +8168,7 @@
           {
             "id": "l6.end",
             "pos": [
-              5059.0,
+              5090.0,
               -3798.5454545454545
             ],
             "fixed": false
@@ -8361,7 +8361,7 @@
             "type": "distance_x",
             "p": 0,
             "q": 11,
-            "value": 5059.0,
+            "value": 5090.0,
             "param": "axe_mc_palier_v1_fin_x"
           },
           {
@@ -8551,7 +8551,7 @@
           "type": "construction",
           "feature": 4
         },
-        "distance": "emmarchement / 2 + limon_tw + potelet_ep / 2"
+        "distance": "emmarchement / 2 + limon_b / 2"
       }
     },
     {
@@ -8658,7 +8658,7 @@
           {
             "id": "l6.end",
             "pos": [
-              5059.0,
+              5090.0,
               -3798.5454545454545
             ],
             "fixed": false
@@ -8825,7 +8825,7 @@
             "type": "distance_x",
             "p": 0,
             "q": 11,
-            "value": 5059.0,
+            "value": 5090.0,
             "param": "axe_mc_palier_v2_fin_x"
           }
         ],
@@ -9069,7 +9069,7 @@
           "type": "origin",
           "name": "YZ"
         },
-        "distance": "rive_x + palier_profondeur - (limon_b - limon_tw - potelet_ep / 2)"
+        "distance": "rive_x + palier_profondeur - limon_b / 2"
       }
     },
     {
@@ -9094,23 +9094,23 @@
           {
             "id": "l1.start",
             "pos": [
-              -1124.0,
-              3798.545454545457
+              -1155.0,
+              3798.5454545454545
             ],
             "fixed": false
           },
           {
             "id": "l1.end",
             "pos": [
-              1124.0,
-              3798.5454545454572
+              1155.0,
+              3798.5454545454545
             ],
             "fixed": false
           },
           {
             "id": "l2.start",
             "pos": [
-              -1146.5,
+              -1177.5,
               2798.5454545454545
             ],
             "fixed": false
@@ -9118,8 +9118,8 @@
           {
             "id": "l2.end",
             "pos": [
-              -1146.5,
-              3776.045454545458
+              -1177.5,
+              3776.0454545454545
             ],
             "fixed": false
           },
@@ -9188,7 +9188,7 @@
             "id": "k4",
             "type": "length",
             "l": 0,
-            "value": 2248.0,
+            "value": 2310.0,
             "param": "axe_mc_fond_longueur"
           },
           {
@@ -9204,7 +9204,7 @@
             "type": "distance_x",
             "p": 0,
             "q": 3,
-            "value": 1146.5,
+            "value": 1177.5,
             "param": "potelet_fond_y"
           },
           {
@@ -9318,7 +9318,7 @@
           0.0
         ],
         "count1": "nb_potelets_fond",
-        "spacing1": "2 * (jour / 2 + emmarchement + limon_tw + potelet_ep / 2) / (nb_potelets_fond - 1)"
+        "spacing1": "2 * (jour / 2 + emmarchement + limon_b / 2) / (nb_potelets_fond - 1)"
       },
       "bodies": [
         "Potelet fond"

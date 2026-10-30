@@ -1364,7 +1364,7 @@
     },
     {
       "name": "axe_mc_v2_fin_x",
-      "expr": "rive_x - platine_ep",
+      "expr": "rive_x - giron",
       "unit": "mm",
       "model": true
     },
@@ -1376,7 +1376,7 @@
     },
     {
       "name": "potelet_v2_x",
-      "expr": "rive_x - platine_ep - giron / 2",
+      "expr": "rive_x - 3 * giron / 2",
       "unit": "mm",
       "model": true
     },
@@ -1389,6 +1389,92 @@
     {
       "name": "potelet_v2_haut",
       "expr": "mc_d / 2 + potelet_l / 2 * hauteur_marche / pas_volee",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "mc_palier_h",
+      "expr": "1000 mm",
+      "unit": "mm",
+      "comment": "hauteur de la main courante au-dessus du plancher du palier",
+      "model": false
+    },
+    {
+      "name": "axe_mc_palier_v1_hauteur",
+      "expr": "nb_volee1 * hauteur_marche + mc_palier_h",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "axe_mc_palier_v1_fin_x",
+      "expr": "rive_x + palier_profondeur - (limon_b - limon_tw - potelet_ep / 2) + mc_d / 2",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "potelet_palier_v1_x",
+      "expr": "rive_x + palier_profondeur / 2",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "potelet_palier_v1_bas",
+      "expr": "nb_volee1 * hauteur_marche",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "potelet_palier_v1_haut",
+      "expr": "mc_d / 2",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "axe_mc_palier_v2_hauteur",
+      "expr": "nb_volee1 * hauteur_marche + mc_palier_h",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "axe_mc_palier_v2_fin_x",
+      "expr": "rive_x + palier_profondeur - (limon_b - limon_tw - potelet_ep / 2) + mc_d / 2",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "nb_potelets_fond",
+      "expr": "3",
+      "unit": "",
+      "comment": "potelets du fond du palier, angles compris (supposé)",
+      "model": false
+    },
+    {
+      "name": "axe_mc_fond_longueur",
+      "expr": "2 * (jour / 2 + emmarchement + limon_tw + potelet_ep / 2 - mc_d / 2)",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "axe_mc_fond_hauteur",
+      "expr": "nb_volee1 * hauteur_marche + mc_palier_h",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "potelet_fond_y",
+      "expr": "jour / 2 + emmarchement + limon_tw + potelet_ep / 2",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "potelet_fond_bas",
+      "expr": "nb_volee1 * hauteur_marche",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "potelet_fond_haut",
+      "expr": "mc_d / 2",
       "unit": "mm",
       "model": true
     }
@@ -8062,6 +8148,46 @@
               -1122.903011126656
             ],
             "fixed": false
+          },
+          {
+            "id": "l5.start",
+            "pos": [
+              4095.0,
+              -3688.9701393497007
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l5.end",
+            "pos": [
+              4266.652806652809,
+              -3798.5454545454545
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l6.end",
+            "pos": [
+              5059.0,
+              -3798.5454545454545
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l7.start",
+            "pos": [
+              4610.0,
+              -2798.5454545454545
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l7.end",
+            "pos": [
+              4610.0,
+              -3776.0454545454545
+            ],
+            "fixed": false
           }
         ],
         "curves": [
@@ -8092,6 +8218,27 @@
             "type": "line",
             "a": 7,
             "b": 8,
+            "construction": false
+          },
+          {
+            "id": "l5",
+            "type": "line",
+            "a": 9,
+            "b": 10,
+            "construction": false
+          },
+          {
+            "id": "l6",
+            "type": "line",
+            "a": 10,
+            "b": 11,
+            "construction": false
+          },
+          {
+            "id": "l7",
+            "type": "line",
+            "a": 12,
+            "b": 13,
             "construction": false
           }
         ],
@@ -8178,6 +8325,68 @@
             "l": 1,
             "value": 33.26138549127512,
             "param": "potelet_v1_haut"
+          },
+          {
+            "id": "k13",
+            "type": "coincident",
+            "p": 9,
+            "q": 4
+          },
+          {
+            "id": "k14",
+            "type": "collinear",
+            "a": 4,
+            "b": 1
+          },
+          {
+            "id": "k15",
+            "type": "horizontal",
+            "l": 5
+          },
+          {
+            "id": "k16",
+            "type": "vertical",
+            "l": 6
+          },
+          {
+            "id": "k17",
+            "type": "distance_y",
+            "p": 0,
+            "q": 10,
+            "value": 3798.5454545454545,
+            "param": "axe_mc_palier_v1_hauteur"
+          },
+          {
+            "id": "k18",
+            "type": "distance_x",
+            "p": 0,
+            "q": 11,
+            "value": 5059.0,
+            "param": "axe_mc_palier_v1_fin_x"
+          },
+          {
+            "id": "k19",
+            "type": "distance_x",
+            "p": 0,
+            "q": 12,
+            "value": 4610.0,
+            "param": "potelet_palier_v1_x"
+          },
+          {
+            "id": "k20",
+            "type": "distance_y",
+            "p": 0,
+            "q": 12,
+            "value": 2798.5454545454545,
+            "param": "potelet_palier_v1_bas"
+          },
+          {
+            "id": "k21",
+            "type": "point_line_distance",
+            "p": 13,
+            "l": 5,
+            "value": 22.5,
+            "param": "potelet_palier_v1_haut"
           }
         ],
         "links": [
@@ -8193,8 +8402,8 @@
         ],
         "counters": {
           "j": 1,
-          "k": 12,
-          "l": 4,
+          "k": 21,
+          "l": 7,
           "p": 2
         }
       }
@@ -8393,8 +8602,8 @@
           {
             "id": "l2.end",
             "pos": [
-              4095.0,
-              -3708.120769741208
+              3836.0,
+              -3873.4545454545455
             ],
             "fixed": false
           },
@@ -8417,16 +8626,40 @@
           {
             "id": "l4.start",
             "pos": [
-              3958.0,
-              -2878.342402123424
+              3699.0,
+              -3043.676177836762
             ],
             "fixed": false
           },
           {
             "id": "l4.end",
             "pos": [
-              3958.0,
-              -3756.114689958773
+              3699.0,
+              -3921.4484656721106
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l5.start",
+            "pos": [
+              3836.0,
+              -3873.4545454545455
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l5.end",
+            "pos": [
+              3953.3471933471938,
+              -3798.5454545454545
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l6.end",
+            "pos": [
+              5059.0,
+              -3798.5454545454545
             ],
             "fixed": false
           }
@@ -8459,6 +8692,20 @@
             "type": "line",
             "a": 7,
             "b": 8,
+            "construction": false
+          },
+          {
+            "id": "l5",
+            "type": "line",
+            "a": 9,
+            "b": 10,
+            "construction": false
+          },
+          {
+            "id": "l6",
+            "type": "line",
+            "a": 10,
+            "b": 11,
             "construction": false
           }
         ],
@@ -8513,7 +8760,7 @@
             "type": "distance_x",
             "p": 0,
             "q": 4,
-            "value": 4095.0,
+            "value": 3836.0,
             "param": "axe_mc_v2_fin_x"
           },
           {
@@ -8529,7 +8776,7 @@
             "type": "distance_x",
             "p": 0,
             "q": 7,
-            "value": 3958.0,
+            "value": 3699.0,
             "param": "potelet_v2_x"
           },
           {
@@ -8547,6 +8794,39 @@
             "l": 1,
             "value": 33.26138549127512,
             "param": "potelet_v2_haut"
+          },
+          {
+            "id": "k13",
+            "type": "coincident",
+            "p": 9,
+            "q": 4
+          },
+          {
+            "id": "k14",
+            "type": "collinear",
+            "a": 4,
+            "b": 1
+          },
+          {
+            "id": "k15",
+            "type": "horizontal",
+            "l": 5
+          },
+          {
+            "id": "k16",
+            "type": "distance_y",
+            "p": 0,
+            "q": 10,
+            "value": 3798.5454545454545,
+            "param": "axe_mc_palier_v2_hauteur"
+          },
+          {
+            "id": "k17",
+            "type": "distance_x",
+            "p": 0,
+            "q": 11,
+            "value": 5059.0,
+            "param": "axe_mc_palier_v2_fin_x"
           }
         ],
         "links": [
@@ -8562,8 +8842,8 @@
         ],
         "counters": {
           "j": 1,
-          "k": 12,
-          "l": 4,
+          "k": 17,
+          "l": 6,
           "p": 2
         }
       }
@@ -8659,7 +8939,7 @@
           "l1"
         ],
         "count": "nb_potelets_v2",
-        "spacing": "(rive_x - 2 * platine_ep - giron - (nb_volee1 - nb_volee2 - 1) * giron) * pas_volee / giron",
+        "spacing": "(rive_x - 3 * giron / 2 - ((nb_volee1 - nb_volee2 - 1) * giron + platine_ep + giron / 2)) * pas_volee / giron",
         "extent": true
       },
       "bodies": [
@@ -8686,15 +8966,366 @@
           "l1"
         ],
         "count": "nb_potelets_v2",
-        "spacing": "(rive_x - 2 * platine_ep - giron - (nb_volee1 - nb_volee2 - 1) * giron) * pas_volee / giron",
+        "spacing": "(rive_x - 3 * giron / 2 - ((nb_volee1 - nb_volee2 - 1) * giron + platine_ep + giron / 2)) * pas_volee / giron",
         "extent": true
       },
       "bodies": [
         "Potelet int V2"
       ]
+    },
+    {
+      "id": 109,
+      "name": "Main courante palier V1",
+      "suppressed": false,
+      "body_names": [
+        "Main courante palier V1"
+      ],
+      "param_names": [
+        "mc_palier_v1_diametre"
+      ],
+      "type": "pipe",
+      "path_sketch": 96,
+      "path": [
+        "l5",
+        "l6"
+      ],
+      "diameter": "mc_d",
+      "operation": "new_body"
+    },
+    {
+      "id": 110,
+      "name": "Potelet palier V1",
+      "suppressed": false,
+      "param_names": [
+        "potelet_palier_v1_epaisseur",
+        "potelet_palier_v1_largeur"
+      ],
+      "type": "frame_member",
+      "path_sketch": 96,
+      "lines": [
+        "l7"
+      ],
+      "profile": {
+        "source": "library",
+        "profile": {
+          "kind": "bar",
+          "height": "potelet_ep",
+          "width": "potelet_l"
+        }
+      },
+      "anchor": "center",
+      "body_name": "Potelet palier V1",
+      "names": {
+        "l7": "Potelet palier V1"
+      }
+    },
+    {
+      "id": 111,
+      "name": "Main courante palier V2",
+      "suppressed": false,
+      "body_names": [
+        "Main courante palier V2"
+      ],
+      "param_names": [
+        "mc_palier_v2_diametre"
+      ],
+      "type": "pipe",
+      "path_sketch": 103,
+      "path": [
+        "l5",
+        "l6"
+      ],
+      "diameter": "mc_d",
+      "operation": "new_body"
+    },
+    {
+      "id": 112,
+      "name": "Symétrie potelet palier",
+      "suppressed": false,
+      "body_names": [
+        "Potelet palier V2"
+      ],
+      "type": "mirror",
+      "features": [],
+      "plane": {
+        "type": "origin",
+        "name": "XZ"
+      },
+      "bodies": [
+        "Potelet palier V1"
+      ]
+    },
+    {
+      "id": 113,
+      "name": "Plan main courante fond",
+      "suppressed": false,
+      "param_names": [
+        "plan_mc_fond_decalage"
+      ],
+      "type": "construction_plane",
+      "plane": {
+        "type": "offset",
+        "base": {
+          "type": "origin",
+          "name": "YZ"
+        },
+        "distance": "rive_x + palier_profondeur - (limon_b - limon_tw - potelet_ep / 2)"
+      }
+    },
+    {
+      "id": 114,
+      "name": "Axes main courante fond",
+      "suppressed": false,
+      "type": "sketch",
+      "plane": {
+        "type": "construction",
+        "feature": 113
+      },
+      "sketch": {
+        "points": [
+          {
+            "id": "origin",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": true
+          },
+          {
+            "id": "l1.start",
+            "pos": [
+              -1124.0,
+              3798.545454545457
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l1.end",
+            "pos": [
+              1124.0,
+              3798.5454545454572
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l2.start",
+            "pos": [
+              -1146.5,
+              2798.5454545454545
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l2.end",
+            "pos": [
+              -1146.5,
+              3776.045454545458
+            ],
+            "fixed": false
+          },
+          {
+            "id": "p1",
+            "pos": [
+              0.0,
+              -100.0
+            ],
+            "fixed": true,
+            "link": "j1"
+          },
+          {
+            "id": "p2",
+            "pos": [
+              0.0,
+              100.0
+            ],
+            "fixed": true,
+            "link": "j1"
+          }
+        ],
+        "curves": [
+          {
+            "id": "l1",
+            "type": "line",
+            "a": 1,
+            "b": 2,
+            "construction": false
+          },
+          {
+            "id": "l2",
+            "type": "line",
+            "a": 3,
+            "b": 4,
+            "construction": false
+          },
+          {
+            "id": "l3",
+            "type": "line",
+            "a": 5,
+            "b": 6,
+            "construction": true,
+            "link": "j1"
+          }
+        ],
+        "constraints": [
+          {
+            "id": "k1",
+            "type": "horizontal",
+            "l": 0
+          },
+          {
+            "id": "k2",
+            "type": "vertical",
+            "l": 1
+          },
+          {
+            "id": "k3",
+            "type": "symmetric",
+            "p": 1,
+            "q": 2,
+            "l": 2
+          },
+          {
+            "id": "k4",
+            "type": "length",
+            "l": 0,
+            "value": 2248.0,
+            "param": "axe_mc_fond_longueur"
+          },
+          {
+            "id": "k5",
+            "type": "distance_y",
+            "p": 0,
+            "q": 1,
+            "value": 3798.5454545454545,
+            "param": "axe_mc_fond_hauteur"
+          },
+          {
+            "id": "k6",
+            "type": "distance_x",
+            "p": 0,
+            "q": 3,
+            "value": 1146.5,
+            "param": "potelet_fond_y"
+          },
+          {
+            "id": "k7",
+            "type": "distance_y",
+            "p": 0,
+            "q": 3,
+            "value": 2798.5454545454545,
+            "param": "potelet_fond_bas"
+          },
+          {
+            "id": "k8",
+            "type": "point_line_distance",
+            "p": 4,
+            "l": 0,
+            "value": 22.5,
+            "param": "potelet_fond_haut"
+          }
+        ],
+        "links": [
+          {
+            "id": "j1",
+            "kind": "project",
+            "source": {
+              "type": "sketch_axis",
+              "name": "y"
+            }
+          }
+        ],
+        "counters": {
+          "j": 1,
+          "k": 8,
+          "l": 3,
+          "p": 2
+        }
+      }
+    },
+    {
+      "id": 115,
+      "name": "Barre main courante fond",
+      "suppressed": false,
+      "param_names": [
+        "barre_mc_fond_diametre"
+      ],
+      "type": "frame_member",
+      "path_sketch": 114,
+      "lines": [
+        "l1"
+      ],
+      "profile": {
+        "source": "library",
+        "profile": {
+          "kind": "round_bar",
+          "diameter": "mc_d"
+        }
+      },
+      "anchor": "center",
+      "body_name": "Main courante fond",
+      "names": {
+        "l1": "Main courante fond"
+      }
+    },
+    {
+      "id": 116,
+      "name": "Potelet fond",
+      "suppressed": false,
+      "param_names": [
+        "potelet_fond_epaisseur",
+        "potelet_fond_largeur",
+        "potelet_fond_rotation"
+      ],
+      "type": "frame_member",
+      "path_sketch": 114,
+      "lines": [
+        "l2"
+      ],
+      "profile": {
+        "source": "library",
+        "profile": {
+          "kind": "bar",
+          "height": "potelet_ep",
+          "width": "potelet_l"
+        }
+      },
+      "anchor": "center",
+      "angle": "90 deg",
+      "body_name": "Potelet fond",
+      "names": {
+        "l2": "Potelet fond"
+      }
+    },
+    {
+      "id": 117,
+      "name": "Réseau potelets fond",
+      "suppressed": false,
+      "body_names": [
+        "Potelet fond (2)",
+        "Potelet fond (3)"
+      ],
+      "param_names": [
+        "reseau_potelets_fond_nombre",
+        "reseau_potelets_fond_pas"
+      ],
+      "type": "pattern",
+      "features": [],
+      "pattern": {
+        "type": "rectangular",
+        "dir1": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "count1": "nb_potelets_fond",
+        "spacing1": "2 * (jour / 2 + emmarchement + limon_tw + potelet_ep / 2) / (nb_potelets_fond - 1)"
+      },
+      "bodies": [
+        "Potelet fond"
+      ]
     }
   ],
-  "next_id": 109,
+  "next_id": 118,
   "reserved_body_names": [
     "Body1",
     "Body2",
@@ -8712,8 +9343,11 @@
     "Limon int V2": "Steel",
     "Main courante ext V1": "Oak",
     "Main courante ext V2": "Oak",
+    "Main courante fond": "Oak",
     "Main courante int V1": "Oak",
     "Main courante int V2": "Oak",
+    "Main courante palier V1": "Oak",
+    "Main courante palier V2": "Oak",
     "Marche V1": "Oak",
     "Marche V1 (10)": "Oak",
     "Marche V1 (11)": "Oak",
@@ -8752,12 +9386,17 @@
     "Potelet ext V1 (4)": "Steel",
     "Potelet ext V2": "Steel",
     "Potelet ext V2 (2)": "Steel",
+    "Potelet fond": "Steel",
+    "Potelet fond (2)": "Steel",
+    "Potelet fond (3)": "Steel",
     "Potelet int V1": "Steel",
     "Potelet int V1 (2)": "Steel",
     "Potelet int V1 (3)": "Steel",
     "Potelet int V1 (4)": "Steel",
     "Potelet int V2": "Steel",
     "Potelet int V2 (2)": "Steel",
+    "Potelet palier V1": "Steel",
+    "Potelet palier V2": "Steel",
     "Poutre arrière palier": "Steel",
     "Poutre avant palier": "Steel",
     "Poutre latérale V1": "Steel",

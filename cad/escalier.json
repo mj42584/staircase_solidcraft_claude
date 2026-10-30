@@ -1288,16 +1288,16 @@
     },
     {
       "name": "potelet_l",
-      "expr": "40 mm",
+      "expr": "30 mm",
       "unit": "mm",
-      "comment": "potelets en fer plat : largeur (supposé)",
+      "comment": "potelets en tube carré : côté (choix de l'utilisateur)",
       "model": false
     },
     {
       "name": "potelet_ep",
-      "expr": "10 mm",
+      "expr": "2 mm",
       "unit": "mm",
-      "comment": "potelets en fer plat : épaisseur (supposé)",
+      "comment": "potelets en tube carré : épaisseur de paroi (choix de l'utilisateur)",
       "model": false
     },
     {
@@ -1419,13 +1419,13 @@
     },
     {
       "name": "potelet_palier_v1_bas",
-      "expr": "nb_volee1 * hauteur_marche + platine_bas_ep",
+      "expr": "nb_volee1 * hauteur_marche + platine_bas_ep - 1 mm",
       "unit": "mm",
       "model": true
     },
     {
       "name": "potelet_palier_v1_haut",
-      "expr": "mc_d / 2 + platine_haut_ep",
+      "expr": "mc_d / 2 + platine_haut_ep - 1 mm",
       "unit": "mm",
       "model": true
     },
@@ -1468,13 +1468,13 @@
     },
     {
       "name": "potelet_fond_bas",
-      "expr": "nb_volee1 * hauteur_marche + platine_bas_ep",
+      "expr": "nb_volee1 * hauteur_marche + platine_bas_ep - 1 mm",
       "unit": "mm",
       "model": true
     },
     {
       "name": "potelet_fond_haut",
-      "expr": "mc_d / 2 + platine_haut_ep",
+      "expr": "mc_d / 2 + platine_haut_ep - 1 mm",
       "unit": "mm",
       "model": true
     },
@@ -1929,6 +1929,30 @@
     {
       "name": "percage_hautes_palier_fond_y2",
       "expr": "potelet_fond_y - platine_haut_entraxe / 2",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "coupe_potelet_v1_penetration",
+      "expr": "potelet_l + 1 mm",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "coupe_potelet_v2_penetration",
+      "expr": "potelet_l + 1 mm",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "coupe_potelet_v1_penetration_haut",
+      "expr": "potelet_l + 1 mm",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "coupe_potelet_v2_penetration_haut",
+      "expr": "potelet_l + 1 mm",
       "unit": "mm",
       "model": true
     }
@@ -8631,7 +8655,7 @@
             "id": "l7.start",
             "pos": [
               4610.0,
-              -2806.5454545454545
+              -2805.5454545454545
             ],
             "fixed": false
           },
@@ -8639,7 +8663,7 @@
             "id": "l7.end",
             "pos": [
               4610.0,
-              -3771.0454545454545
+              -3772.0454545454545
             ],
             "fixed": false
           }
@@ -8831,7 +8855,7 @@
             "type": "distance_y",
             "p": 0,
             "q": 12,
-            "value": 2806.5454545454545,
+            "value": 2805.5454545454545,
             "param": "potelet_palier_v1_bas"
           },
           {
@@ -8839,7 +8863,7 @@
             "type": "point_line_distance",
             "p": 13,
             "l": 5,
-            "value": 27.5,
+            "value": 26.5,
             "param": "potelet_palier_v1_haut"
           }
         ],
@@ -8903,8 +8927,9 @@
       "profile": {
         "source": "library",
         "profile": {
-          "kind": "bar",
-          "height": "potelet_ep",
+          "kind": "rect_tube",
+          "height": "potelet_l",
+          "wall": "potelet_ep",
           "width": "potelet_l"
         }
       },
@@ -9407,64 +9432,64 @@
           {
             "id": "l3.start",
             "pos": [
-              187.48398612557816,
-              -274.0813441730599
+              188.02205540014285,
+              -273.23844355271996
             ],
             "fixed": false
           },
           {
             "id": "l3.end",
             "pos": [
-              209.00675710816523,
-              -240.36531935946263
+              204.16413363708315,
+              -247.951424942522
             ],
             "fixed": false
           },
           {
             "id": "l4.end",
             "pos": [
-              99.4296764639741,
-              -170.41631366605458
+              94.58705299289204,
+              -178.00241924911396
             ],
             "fixed": false
           },
           {
             "id": "l5.end",
             "pos": [
-              77.90690548138701,
-              -204.13233847965188
+              78.4449747559517,
+              -203.2894378593119
             ],
             "fixed": false
           },
           {
             "id": "l7.start",
             "pos": [
-              181.8353773893304,
-              -1158.3590586818289
+              181.29730811474752,
+              -1159.2019593021573
             ],
             "fixed": false
           },
           {
             "id": "l7.end",
             "pos": [
-              160.31260640601585,
-              -1192.0750834949617
+              165.15522987726163,
+              -1184.488977912007
             ],
             "fixed": false
           },
           {
             "id": "l8.end",
             "pos": [
-              76.0225443731837,
-              -1138.2681560366755
+              80.86516784442945,
+              -1130.6820504537206
             ],
             "fixed": false
           },
           {
             "id": "l9.end",
             "pos": [
-              97.54531535649824,
-              -1104.5521312235426
+              97.00724608191531,
+              -1105.395031843871
             ],
             "fixed": false
           }
@@ -9545,30 +9570,6 @@
         ],
         "constraints": [
           {
-            "id": "k1",
-            "type": "coincident",
-            "p": 1,
-            "q": 5
-          },
-          {
-            "id": "k2",
-            "type": "coincident",
-            "p": 2,
-            "q": 8
-          },
-          {
-            "id": "k3",
-            "type": "coincident",
-            "p": 3,
-            "q": 9
-          },
-          {
-            "id": "k4",
-            "type": "coincident",
-            "p": 4,
-            "q": 12
-          },
-          {
             "id": "k5",
             "type": "perpendicular",
             "a": 2,
@@ -9590,7 +9591,7 @@
             "id": "k8",
             "type": "length",
             "l": 2,
-            "value": 40.0,
+            "value": 30.0,
             "param": "coupe_potelet_v1_bas"
           },
           {
@@ -9615,8 +9616,60 @@
             "id": "k12",
             "type": "length",
             "l": 6,
-            "value": 40.0,
+            "value": 30.0,
             "param": "coupe_potelet_v1_haut"
+          },
+          {
+            "id": "k13",
+            "type": "point_on_curve",
+            "p": 1,
+            "c": 2
+          },
+          {
+            "id": "k14",
+            "type": "point_on_curve",
+            "p": 2,
+            "c": 4
+          },
+          {
+            "id": "k15",
+            "type": "parallel",
+            "a": 5,
+            "b": 0
+          },
+          {
+            "id": "k16",
+            "type": "distance",
+            "p": 1,
+            "q": 6,
+            "value": 31.0,
+            "param": "coupe_potelet_v1_penetration"
+          },
+          {
+            "id": "k17",
+            "type": "point_on_curve",
+            "p": 3,
+            "c": 6
+          },
+          {
+            "id": "k18",
+            "type": "point_on_curve",
+            "p": 4,
+            "c": 8
+          },
+          {
+            "id": "k19",
+            "type": "parallel",
+            "a": 9,
+            "b": 1
+          },
+          {
+            "id": "k20",
+            "type": "distance",
+            "p": 3,
+            "q": 10,
+            "value": 31.0,
+            "param": "coupe_potelet_v1_penetration_haut"
           }
         ],
         "links": [
@@ -9641,7 +9694,7 @@
         ],
         "counters": {
           "j": 2,
-          "k": 12,
+          "k": 20,
           "l": 10,
           "p": 4
         }
@@ -9660,7 +9713,7 @@
         "type": "all"
       },
       "extent": {
-        "distance": "2 * potelet_ep",
+        "distance": "2 * potelet_l",
         "convention": "total_distance",
         "direction": "symmetric"
       },
@@ -11312,8 +11365,9 @@
       "profile": {
         "source": "library",
         "profile": {
-          "kind": "bar",
-          "height": "potelet_ep",
+          "kind": "rect_tube",
+          "height": "potelet_l",
+          "wall": "potelet_ep",
           "width": "potelet_l"
         }
       },
@@ -11816,64 +11870,64 @@
           {
             "id": "l3.start",
             "pos": [
-              3648.516013869567,
-              -3072.626798712639
+              3647.9779445951003,
+              -3071.783898092236
             ],
             "fixed": false
           },
           {
             "id": "l3.end",
             "pos": [
-              3626.9932428909033,
-              -3038.910773896537
+              3631.8358663611025,
+              -3046.49687948016
             ],
             "fixed": false
           },
           {
             "id": "l4.end",
             "pos": [
-              3736.5703235432343,
-              -2968.9617682158805
+              3741.4129470134335,
+              -2976.547873799503
             ],
             "fixed": false
           },
           {
             "id": "l5.end",
             "pos": [
-              3758.093094521898,
-              -3002.677793031982
+              3757.5550252474313,
+              -3001.8348924115794
             ],
             "fixed": false
           },
           {
             "id": "l7.start",
             "pos": [
-              3654.1646226112775,
-              -3956.904513228486
+              3654.702691885883,
+              -3957.7474138488
             ],
             "fixed": false
           },
           {
             "id": "l7.end",
             "pos": [
-              3675.687393595496,
-              -3990.620538041042
+              3670.8447701240466,
+              -3983.034432458217
             ],
             "fixed": false
           },
           {
             "id": "l8.end",
             "pos": [
-              3759.977455626886,
-              -3936.813610580496
+              3755.134832155437,
+              -3929.227504997671
             ],
             "fixed": false
           },
           {
             "id": "l9.end",
             "pos": [
-              3738.4546846426674,
-              -3903.09758576794
+              3738.992753917273,
+              -3903.940486388254
             ],
             "fixed": false
           }
@@ -11954,30 +12008,6 @@
         ],
         "constraints": [
           {
-            "id": "k1",
-            "type": "coincident",
-            "p": 1,
-            "q": 5
-          },
-          {
-            "id": "k2",
-            "type": "coincident",
-            "p": 2,
-            "q": 8
-          },
-          {
-            "id": "k3",
-            "type": "coincident",
-            "p": 3,
-            "q": 9
-          },
-          {
-            "id": "k4",
-            "type": "coincident",
-            "p": 4,
-            "q": 12
-          },
-          {
             "id": "k5",
             "type": "perpendicular",
             "a": 2,
@@ -11999,7 +12029,7 @@
             "id": "k8",
             "type": "length",
             "l": 2,
-            "value": 40.0,
+            "value": 30.0,
             "param": "coupe_potelet_v2_bas"
           },
           {
@@ -12024,8 +12054,60 @@
             "id": "k12",
             "type": "length",
             "l": 6,
-            "value": 40.0,
+            "value": 30.0,
             "param": "coupe_potelet_v2_haut"
+          },
+          {
+            "id": "k13",
+            "type": "point_on_curve",
+            "p": 1,
+            "c": 2
+          },
+          {
+            "id": "k14",
+            "type": "point_on_curve",
+            "p": 2,
+            "c": 4
+          },
+          {
+            "id": "k15",
+            "type": "parallel",
+            "a": 5,
+            "b": 0
+          },
+          {
+            "id": "k16",
+            "type": "distance",
+            "p": 1,
+            "q": 6,
+            "value": 31.0,
+            "param": "coupe_potelet_v2_penetration"
+          },
+          {
+            "id": "k17",
+            "type": "point_on_curve",
+            "p": 3,
+            "c": 6
+          },
+          {
+            "id": "k18",
+            "type": "point_on_curve",
+            "p": 4,
+            "c": 8
+          },
+          {
+            "id": "k19",
+            "type": "parallel",
+            "a": 9,
+            "b": 1
+          },
+          {
+            "id": "k20",
+            "type": "distance",
+            "p": 3,
+            "q": 10,
+            "value": 31.0,
+            "param": "coupe_potelet_v2_penetration_haut"
           }
         ],
         "links": [
@@ -12050,7 +12132,7 @@
         ],
         "counters": {
           "j": 2,
-          "k": 12,
+          "k": 20,
           "l": 10,
           "p": 4
         }
@@ -12069,7 +12151,7 @@
         "type": "all"
       },
       "extent": {
-        "distance": "2 * potelet_ep",
+        "distance": "2 * potelet_l",
         "convention": "total_distance",
         "direction": "symmetric"
       },
@@ -12988,8 +13070,9 @@
       "profile": {
         "source": "library",
         "profile": {
-          "kind": "bar",
-          "height": "potelet_ep",
+          "kind": "rect_tube",
+          "height": "potelet_l",
+          "wall": "potelet_ep",
           "width": "potelet_l"
         }
       },
@@ -13386,7 +13469,7 @@
             "id": "l1.start",
             "pos": [
               -1155.0,
-              3798.5454545454545
+              3798.54545454492
             ],
             "fixed": false
           },
@@ -13394,7 +13477,7 @@
             "id": "l1.end",
             "pos": [
               1155.0,
-              3798.5454545454545
+              3798.5454545448374
             ],
             "fixed": false
           },
@@ -13402,15 +13485,15 @@
             "id": "l2.start",
             "pos": [
               -1155.0,
-              2806.5454545454545
+              2805.5454545454545
             ],
             "fixed": false
           },
           {
             "id": "l2.end",
             "pos": [
-              -1155.0000000005548,
-              3771.0454545454545
+              -1155.0,
+              3772.045454544699
             ],
             "fixed": false
           },
@@ -13503,7 +13586,7 @@
             "type": "distance_y",
             "p": 0,
             "q": 3,
-            "value": 2806.5454545454545,
+            "value": 2805.5454545454545,
             "param": "potelet_fond_bas"
           },
           {
@@ -13511,7 +13594,7 @@
             "type": "point_line_distance",
             "p": 4,
             "l": 0,
-            "value": 27.5,
+            "value": 26.5,
             "param": "potelet_fond_haut"
           }
         ],
@@ -13575,8 +13658,9 @@
       "profile": {
         "source": "library",
         "profile": {
-          "kind": "bar",
-          "height": "potelet_ep",
+          "kind": "rect_tube",
+          "height": "potelet_l",
+          "wall": "potelet_ep",
           "width": "potelet_l"
         }
       },

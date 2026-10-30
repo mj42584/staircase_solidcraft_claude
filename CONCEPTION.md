@@ -144,18 +144,18 @@ Les règles de travail sont dans [REGLES_AGENT_3D.md](REGLES_AGENT_3D.md) ; ce c
 
 | Logiciel | Rôle | Référence | Vérifier avec |
 |---|---|---|---|
-| SolidCraft (Flatpak utilisateur `ai.storyteller.solidcraft`, installé depuis les releases GitHub de `tangency-labs/solidcraft`, pas Flathub) | modèle 3D | **0.24.1** | `flatpak info --user ai.storyteller.solidcraft` |
-| Connecteur MCP SolidCraft | pilotage du 3D par l'agent | à relever | selon son installation |
+| SolidCraft (Flatpak utilisateur `io.tangencylabs.solidcraft`, installé depuis les releases GitHub de `tangency-labs/solidcraft`, pas Flathub) | modèle 3D | **0.27.1** | `flatpak info --user io.tangencylabs.solidcraft` |
+| Connecteur MCP SolidCraft | pilotage du 3D par l'agent | celui de l'app, port 27878 | `~/.claude.json` |
 | Python 3 | calculs | à relever | `python3 --version` |
 | PyNiteFEA | modèle en barres (`portique.py`) | **3.2** | `pip show PyNiteFEA` |
 | PyVista, NumPy | visualisation (`visu.py`) | à relever | `pip show pyvista numpy` |
 | Claude Code | agent | à relever | `claude --version` |
 
-SolidCraft change de format de fichier à chaque version : un fichier enregistré en 0.24.1 ne s'ouvre pas en 0.24.0 ou avant.
+SolidCraft change de format de fichier à chaque version : les modèles sont au format `solidcraft/44` (0.27.1) et ne s'ouvrent plus en 0.24.1. Depuis 0.27, l'identifiant Flatpak a changé (`ai.storyteller.solidcraft` → `io.tangencylabs.solidcraft`) et l'extension par défaut des nouveaux modèles est `.sc` ; nos `.solidcraft` s'ouvrent et s'enregistrent sous leur nom.
 
 ### 6.2 Fichiers et dossiers
 
-- **Dossier de travail du connecteur MCP** : `~/.var/app/ai.storyteller.solidcraft/data/solidcraft/recovery` (il ne lit et n'écrit que là).
+- **Dossier de travail du connecteur MCP** : `~/.var/app/io.tangencylabs.solidcraft/data/solidcraft/recovery` (il ne lit et n'écrit que là).
 - **Fichiers liés** : `cad/escalier.solidcraft`, `cad/environnement.solidcraft`, `cad/projet_escalier.solidcraft`.
 - **Double enregistrement** (demande de l'utilisateur, 2026-10-29) : chaque modèle est enregistré **à la fois** en `.solidcraft` et en `.json`, sous le même nom (`cad/escalier.json`, `cad/environnement.json`, `cad/projet_escalier.json`), copiés dans `cad/` et commités ensemble. Le `.json` est le même document en texte (vérifié identique au `document.json` du `.solidcraft`, rouvert avec les mêmes corps) : c'est lui qui rend les modifications lisibles dans Git (`git diff`). Le `.solidcraft` reste le fichier ouvert par l'app et la cible des liens du projet (`component.relink` refuse un `.json`, §6.3). Le `.json` du projet embarque une copie STEP des pièces liées (≈ 1 Mo). Après chaque enregistrement en `.json` (`save` avec un chemin `.json`), rouvrir le `.solidcraft` : l'app enregistre ensuite dans le dernier fichier utilisé.
 - **Non versionné** : les photos du site, le verrou `cad/.~escalier.solidcraft.lock` (l'app ouvre directement `cad/escalier.solidcraft`).
@@ -174,8 +174,11 @@ SolidCraft change de format de fichier à chaque version : un fichier enregistr�
 - La commande d'oblong n'accepte pas d'expressions : rainures cotées à la place (§4).
 - `component.insert_design` et `occurrence.move` ne prennent qu'un décalage chiffré : l'escalier ne suit pas la répartition dans le projet, il faut le recaler à la main.
 - Un corps nouvellement créé reste en matériau « Default » (D13), par exemple une marche au-delà du nombre affecté : l'affecter à la main.
+- **Noms des corps des réseaux de marches** (0.27.1, peut-être déjà en 0.24.1) : un réseau qui répète trois corps (marche, équerre ext, équerre int) numérote ses copies à la suite en les mélangeant (`Marche V1 (16)` était une équerre) ; les matériaux, affectés par nom, tombent alors sur les mauvais corps. Corrigé en 16/6 en renommant les 39 corps selon leur position (`Marche V1 (k)`, `Équerre ext/int V1/V2 (k)`, k compté depuis le bas de chaque volée) et en réaffectant les matériaux. Les noms renommés ne valent que pour 16/6 : dans une autre répartition le réseau reprend ses propres noms (vérifié en 15/7), et ils reviennent au retour en 16/6. Après un changement de répartition : renommer et réaffecter. Piste non testée : trois réseaux par volée, un par corps.
 
 ### 6.4 État des lieux des logiciels
+
+*SolidCraft 0.24.1 → 0.27.1* (2026-10-30, constaté dans l'app ; notes de version intermédiaires **non relues**) : les 3 modèles s'ouvrent sans erreur ; escalier 82 corps, encombrement identique, volume identique à l'export de la 0.24.1 (écart 0,015 %, maillage STL) ; environnement 13 corps conformes ; projet 95 corps, liens à jour, seule la collision connue (§7). Changé : piège des noms des corps de réseaux (§6.3). Inchangé : matériaux perdus par les liens (§6.3). Les pistes ci-dessous (0.24.1) restent à tester.
 
 *SolidCraft 0.22.1 → 0.24.1* (2026-10-27, d'après les notes de version, **rien testé dans l'app**) :
 - D5 : une cote de longueur zéro garde l'esquisse contrainte (0.23.0) ; `debord = 0` pourrait être accepté directement. À tester.
@@ -279,3 +282,4 @@ Liste fixée par l'utilisateur (2026-10-26) :
 | 2026-10-29 | Prototype : limon V1 en Frame Member | Paramètre `limon_r` ; `Axe limon V1`, `Barre limon V1` (profilé channel), `Coupes limon V1`, `Coupe limon V1` insérés avant la platine V1 ; anciennes esquisses `Profil limon V1` / `Profil ailes limon V1` supprimées ; corps renommé `Limon ext V1`, `Symétrie limon V1` mise à jour, acier ; encombrement identique, volume +2,2 % (congés) ; 0 erreur, 0 interférence ; balayages `nb_volee1`, `giron`, `limon_dessus`, `limon_h`, `limon_r`, `hauteur_totale` sans échec ; 59 paramètres `dN` restants renommés (50 de fonctions oubliés par la refonte, 9 nouveaux) ; fichier rouvert identique ; projet et exports pas encore mis à jour (prototype) | `cad/escalier.solidcraft`, `CONCEPTION.md` |
 | 2026-10-29 | Limons V2 et pieds en Frame Member | Limons V2 comme V1 (`Axe limon V2`, `Barre limon V2`, `Coupes limon V2`, `Coupe limon V2`), anciennes esquisses supprimées, symétrie mise à jour, acier ; pieds : `Plan pieds V1/V2`, `Axes pieds V1/V2`, `Pieds V1/V2` (tubes 100×100×5, rayon `poteau_r` supposé), ancienne esquisse supprimée ; paramètres `poteau_r`, `pied_h` ; 35 nouveaux `dN` renommés ; encombrements identiques, volumes : limons +2,2 % (congés), pieds −3,5 % (angles arrondis), acier +2,6 kg ; 0 erreur, 0 interférence ; 9 balayages sans échec ; projet : lien mis à jour, seule collision connue ; STL régénérés, `cad/apercu.png` gardé (changement invisible à cette échelle) | `cad/escalier.solidcraft`, `cad/projet_escalier.solidcraft`, `cad/escalier.stl`, `cad/projet_escalier.stl`, `CONCEPTION.md` |
 | 2026-10-29 | Double enregistrement .solidcraft + .json | Les 3 modèles enregistrés aussi en `.json` (`cad/escalier.json`, `cad/environnement.json`, `cad/projet_escalier.json`) ; règle notée au §6.2 et dans `REGLES_AGENT_3D.md` (étape 6) ; pièges du relien et des matériaux dans le projet ; géométrie inchangée | `cad/*.json`, `CONCEPTION.md`, `REGLES_AGENT_3D.md` |
+| 2026-10-30 | Mise à jour SolidCraft 0.24.1 → 0.27.1 | Nouvel identifiant Flatpak et port du connecteur ; 3 modèles contrôlés (corps, erreurs, volumes, interférences : rien de changé) ; corps des réseaux renommés selon leur position et matériaux réaffectés (22 chêne, 60 acier ; 5 corps étaient faux), valable en 16/6 seulement (piège §6.3) ; test `nb_volee1` 16 → 15 → 16 ; 3 modèles réenregistrés en format 44 (.solidcraft + .json) ; géométrie inchangée → exports non régénérés | `cad/*.solidcraft`, `cad/*.json`, `CONCEPTION.md` |

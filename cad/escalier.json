@@ -1271,6 +1271,126 @@
       "expr": "pied_h",
       "unit": "mm",
       "model": true
+    },
+    {
+      "name": "mc_h",
+      "expr": "900",
+      "unit": "mm",
+      "comment": "hauteur de la main courante au-dessus des nez, en vertical",
+      "model": false
+    },
+    {
+      "name": "mc_d",
+      "expr": "45 mm",
+      "unit": "mm",
+      "comment": "diamètre de la main courante (chêne)",
+      "model": false
+    },
+    {
+      "name": "potelet_l",
+      "expr": "40 mm",
+      "unit": "mm",
+      "comment": "potelets en fer plat : largeur (supposé)",
+      "model": false
+    },
+    {
+      "name": "potelet_ep",
+      "expr": "10 mm",
+      "unit": "mm",
+      "comment": "potelets en fer plat : épaisseur (supposé)",
+      "model": false
+    },
+    {
+      "name": "nb_potelets_v1",
+      "expr": "4",
+      "unit": "",
+      "comment": "potelets par main courante V1 (supposé)",
+      "model": false
+    },
+    {
+      "name": "nb_potelets_v2",
+      "expr": "2",
+      "unit": "",
+      "comment": "potelets par main courante V2 (supposé)",
+      "model": false
+    },
+    {
+      "name": "axe_mc_v1_hauteur",
+      "expr": "mc_h * giron / pas_volee",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "axe_mc_v1_fin_x",
+      "expr": "rive_x - platine_ep",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "axe_mc_v1_bas_limon",
+      "expr": "limon_h - limon_dessus",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "potelet_v1_x",
+      "expr": "giron / 2",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "potelet_v1_bas",
+      "expr": "limon_h + potelet_l / 2 * hauteur_marche / pas_volee",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "potelet_v1_haut",
+      "expr": "mc_d / 2 + potelet_l / 2 * hauteur_marche / pas_volee",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "axe_mc_v2_hauteur",
+      "expr": "mc_h * giron / pas_volee",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "axe_mc_v2_debut_x",
+      "expr": "(nb_volee1 - nb_volee2 - 1) * giron + platine_ep",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "axe_mc_v2_fin_x",
+      "expr": "rive_x - platine_ep",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "axe_mc_v2_bas_limon",
+      "expr": "limon_h - limon_dessus",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "potelet_v2_x",
+      "expr": "rive_x - platine_ep - giron / 2",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "potelet_v2_bas",
+      "expr": "limon_h + potelet_l / 2 * hauteur_marche / pas_volee",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "potelet_v2_haut",
+      "expr": "mc_d / 2 + potelet_l / 2 * hauteur_marche / pas_volee",
+      "unit": "mm",
+      "model": true
     }
   ],
   "features": [
@@ -7840,9 +7960,741 @@
       "targets": [
         "Poutre avant palier"
       ]
+    },
+    {
+      "id": 95,
+      "name": "Plan main courante V1",
+      "suppressed": false,
+      "param_names": [
+        "plan_mc_v1_decalage"
+      ],
+      "type": "construction_plane",
+      "plane": {
+        "type": "offset",
+        "base": {
+          "type": "construction",
+          "feature": 3
+        },
+        "distance": "-(emmarchement / 2 + limon_tw + potelet_ep / 2)"
+      }
+    },
+    {
+      "id": 96,
+      "name": "Axes main courante V1",
+      "suppressed": false,
+      "type": "sketch",
+      "plane": {
+        "type": "construction",
+        "feature": 95
+      },
+      "sketch": {
+        "points": [
+          {
+            "id": "origin",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": true
+          },
+          {
+            "id": "p1",
+            "pos": [
+              0.0,
+              -174.9090909090909
+            ],
+            "fixed": true,
+            "link": "j1"
+          },
+          {
+            "id": "p2",
+            "pos": [
+              4110.0,
+              -2798.5454545454545
+            ],
+            "fixed": true,
+            "link": "j1"
+          },
+          {
+            "id": "l2.start",
+            "pos": [
+              0.0,
+              -1074.9090909090908
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l2.end",
+            "pos": [
+              4095.0,
+              -3688.9701393497007
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l3.start",
+            "pos": [
+              0.0,
+              116.0943947819305
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l3.end",
+            "pos": [
+              4110.0,
+              -2507.5419688544334
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l4.start",
+            "pos": [
+              137.0,
+              -245.13072329130725
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l4.end",
+            "pos": [
+              137.0,
+              -1122.903011126656
+            ],
+            "fixed": false
+          }
+        ],
+        "curves": [
+          {
+            "id": "l1",
+            "type": "line",
+            "a": 1,
+            "b": 2,
+            "construction": true,
+            "link": "j1"
+          },
+          {
+            "id": "l2",
+            "type": "line",
+            "a": 3,
+            "b": 4,
+            "construction": false
+          },
+          {
+            "id": "l3",
+            "type": "line",
+            "a": 5,
+            "b": 6,
+            "construction": true
+          },
+          {
+            "id": "l4",
+            "type": "line",
+            "a": 7,
+            "b": 8,
+            "construction": false
+          }
+        ],
+        "constraints": [
+          {
+            "id": "k1",
+            "type": "parallel",
+            "a": 1,
+            "b": 0
+          },
+          {
+            "id": "k2",
+            "type": "parallel",
+            "a": 2,
+            "b": 0
+          },
+          {
+            "id": "k3",
+            "type": "vertical",
+            "l": 3
+          },
+          {
+            "id": "k4",
+            "type": "vertical_points",
+            "p": 1,
+            "q": 3
+          },
+          {
+            "id": "k5",
+            "type": "vertical_points",
+            "p": 1,
+            "q": 5
+          },
+          {
+            "id": "k6",
+            "type": "vertical_points",
+            "p": 2,
+            "q": 6
+          },
+          {
+            "id": "k7",
+            "type": "point_line_distance",
+            "p": 3,
+            "l": 0,
+            "value": 758.610558306468,
+            "param": "axe_mc_v1_hauteur"
+          },
+          {
+            "id": "k8",
+            "type": "distance_x",
+            "p": 0,
+            "q": 4,
+            "value": 4095.0,
+            "param": "axe_mc_v1_fin_x"
+          },
+          {
+            "id": "k9",
+            "type": "point_line_distance",
+            "p": 5,
+            "l": 0,
+            "value": 245.2870186102156,
+            "param": "axe_mc_v1_bas_limon"
+          },
+          {
+            "id": "k10",
+            "type": "distance_x",
+            "p": 0,
+            "q": 7,
+            "value": 137.0,
+            "param": "potelet_v1_x"
+          },
+          {
+            "id": "k11",
+            "type": "point_line_distance",
+            "p": 7,
+            "l": 2,
+            "value": 230.76138549127512,
+            "param": "potelet_v1_bas"
+          },
+          {
+            "id": "k12",
+            "type": "point_line_distance",
+            "p": 8,
+            "l": 1,
+            "value": 33.26138549127512,
+            "param": "potelet_v1_haut"
+          }
+        ],
+        "links": [
+          {
+            "id": "j1",
+            "kind": "project",
+            "source": {
+              "type": "sketch_curve",
+              "sketch": 1,
+              "curve": "l2"
+            }
+          }
+        ],
+        "counters": {
+          "j": 1,
+          "k": 12,
+          "l": 4,
+          "p": 2
+        }
+      }
+    },
+    {
+      "id": 97,
+      "name": "Barre main courante V1",
+      "suppressed": false,
+      "param_names": [
+        "barre_mc_v1_diametre"
+      ],
+      "type": "frame_member",
+      "path_sketch": 96,
+      "lines": [
+        "l2"
+      ],
+      "profile": {
+        "source": "library",
+        "profile": {
+          "kind": "round_bar",
+          "diameter": "mc_d"
+        }
+      },
+      "anchor": "center",
+      "body_name": "Main courante ext V1",
+      "names": {
+        "l2": "Main courante ext V1"
+      }
+    },
+    {
+      "id": 98,
+      "name": "Potelet V1",
+      "suppressed": false,
+      "param_names": [
+        "potelet_v1_epaisseur",
+        "potelet_v1_largeur"
+      ],
+      "type": "frame_member",
+      "path_sketch": 96,
+      "lines": [
+        "l4"
+      ],
+      "profile": {
+        "source": "library",
+        "profile": {
+          "kind": "bar",
+          "height": "potelet_ep",
+          "width": "potelet_l"
+        }
+      },
+      "anchor": "center",
+      "body_name": "Potelet ext V1",
+      "names": {
+        "l4": "Potelet ext V1"
+      }
+    },
+    {
+      "id": 99,
+      "name": "Symétrie main courante V1",
+      "suppressed": false,
+      "body_names": [
+        "Main courante int V1",
+        "Potelet int V1"
+      ],
+      "type": "mirror",
+      "features": [],
+      "plane": {
+        "type": "construction",
+        "feature": 3
+      },
+      "bodies": [
+        "Main courante ext V1",
+        "Potelet ext V1"
+      ]
+    },
+    {
+      "id": 100,
+      "name": "Réseau potelets ext V1",
+      "suppressed": false,
+      "body_names": [
+        "Potelet ext V1 (2)",
+        "Potelet ext V1 (3)",
+        "Potelet ext V1 (4)"
+      ],
+      "param_names": [
+        "reseau_potelets_ext_v1_nombre",
+        "reseau_potelets_ext_v1_distance"
+      ],
+      "type": "pattern",
+      "features": [],
+      "pattern": {
+        "type": "path",
+        "path_sketch": 5,
+        "path": [
+          "l1"
+        ],
+        "count": "nb_potelets_v1",
+        "spacing": "(rive_x - platine_ep - giron) * pas_volee / giron",
+        "extent": true
+      },
+      "bodies": [
+        "Potelet ext V1"
+      ]
+    },
+    {
+      "id": 101,
+      "name": "Réseau potelets int V1",
+      "suppressed": false,
+      "body_names": [
+        "Potelet int V1 (2)",
+        "Potelet int V1 (3)",
+        "Potelet int V1 (4)"
+      ],
+      "param_names": [
+        "reseau_potelets_int_v1_nombre",
+        "reseau_potelets_int_v1_distance"
+      ],
+      "type": "pattern",
+      "features": [],
+      "pattern": {
+        "type": "path",
+        "path_sketch": 5,
+        "path": [
+          "l1"
+        ],
+        "count": "nb_potelets_v1",
+        "spacing": "(rive_x - platine_ep - giron) * pas_volee / giron",
+        "extent": true
+      },
+      "bodies": [
+        "Potelet int V1"
+      ]
+    },
+    {
+      "id": 102,
+      "name": "Plan main courante V2",
+      "suppressed": false,
+      "param_names": [
+        "plan_mc_v2_decalage"
+      ],
+      "type": "construction_plane",
+      "plane": {
+        "type": "offset",
+        "base": {
+          "type": "construction",
+          "feature": 4
+        },
+        "distance": "emmarchement / 2 + limon_tw + potelet_ep / 2"
+      }
+    },
+    {
+      "id": 103,
+      "name": "Axes main courante V2",
+      "suppressed": false,
+      "type": "sketch",
+      "plane": {
+        "type": "construction",
+        "feature": 102
+      },
+      "sketch": {
+        "points": [
+          {
+            "id": "origin",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": true
+          },
+          {
+            "id": "p1",
+            "pos": [
+              3836.0,
+              -2973.4545454545455
+            ],
+            "fixed": true,
+            "link": "j1"
+          },
+          {
+            "id": "p2",
+            "pos": [
+              2466.0,
+              -3848.0
+            ],
+            "fixed": true,
+            "link": "j1"
+          },
+          {
+            "id": "l2.start",
+            "pos": [
+              2481.0,
+              -4738.424684804247
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l2.end",
+            "pos": [
+              4095.0,
+              -3708.120769741208
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l3.start",
+            "pos": [
+              3836.0,
+              -2682.451059763524
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l3.end",
+            "pos": [
+              2466.0,
+              -3556.9965143089785
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l4.start",
+            "pos": [
+              3958.0,
+              -2878.342402123424
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l4.end",
+            "pos": [
+              3958.0,
+              -3756.114689958773
+            ],
+            "fixed": false
+          }
+        ],
+        "curves": [
+          {
+            "id": "l1",
+            "type": "line",
+            "a": 1,
+            "b": 2,
+            "construction": true,
+            "link": "j1"
+          },
+          {
+            "id": "l2",
+            "type": "line",
+            "a": 3,
+            "b": 4,
+            "construction": false
+          },
+          {
+            "id": "l3",
+            "type": "line",
+            "a": 5,
+            "b": 6,
+            "construction": true
+          },
+          {
+            "id": "l4",
+            "type": "line",
+            "a": 7,
+            "b": 8,
+            "construction": false
+          }
+        ],
+        "constraints": [
+          {
+            "id": "k1",
+            "type": "parallel",
+            "a": 1,
+            "b": 0
+          },
+          {
+            "id": "k2",
+            "type": "parallel",
+            "a": 2,
+            "b": 0
+          },
+          {
+            "id": "k3",
+            "type": "vertical",
+            "l": 3
+          },
+          {
+            "id": "k4",
+            "type": "vertical_points",
+            "p": 1,
+            "q": 5
+          },
+          {
+            "id": "k5",
+            "type": "vertical_points",
+            "p": 2,
+            "q": 6
+          },
+          {
+            "id": "k6",
+            "type": "point_line_distance",
+            "p": 4,
+            "l": 0,
+            "value": 758.610558306468,
+            "param": "axe_mc_v2_hauteur"
+          },
+          {
+            "id": "k7",
+            "type": "distance_x",
+            "p": 0,
+            "q": 3,
+            "value": 2481.0,
+            "param": "axe_mc_v2_debut_x"
+          },
+          {
+            "id": "k8",
+            "type": "distance_x",
+            "p": 0,
+            "q": 4,
+            "value": 4095.0,
+            "param": "axe_mc_v2_fin_x"
+          },
+          {
+            "id": "k9",
+            "type": "point_line_distance",
+            "p": 5,
+            "l": 0,
+            "value": 245.2870186102156,
+            "param": "axe_mc_v2_bas_limon"
+          },
+          {
+            "id": "k10",
+            "type": "distance_x",
+            "p": 0,
+            "q": 7,
+            "value": 3958.0,
+            "param": "potelet_v2_x"
+          },
+          {
+            "id": "k11",
+            "type": "point_line_distance",
+            "p": 7,
+            "l": 2,
+            "value": 230.76138549127512,
+            "param": "potelet_v2_bas"
+          },
+          {
+            "id": "k12",
+            "type": "point_line_distance",
+            "p": 8,
+            "l": 1,
+            "value": 33.26138549127512,
+            "param": "potelet_v2_haut"
+          }
+        ],
+        "links": [
+          {
+            "id": "j1",
+            "kind": "project",
+            "source": {
+              "type": "sketch_curve",
+              "sketch": 1,
+              "curve": "l5"
+            }
+          }
+        ],
+        "counters": {
+          "j": 1,
+          "k": 12,
+          "l": 4,
+          "p": 2
+        }
+      }
+    },
+    {
+      "id": 104,
+      "name": "Barre main courante V2",
+      "suppressed": false,
+      "param_names": [
+        "barre_mc_v2_diametre"
+      ],
+      "type": "frame_member",
+      "path_sketch": 103,
+      "lines": [
+        "l2"
+      ],
+      "profile": {
+        "source": "library",
+        "profile": {
+          "kind": "round_bar",
+          "diameter": "mc_d"
+        }
+      },
+      "anchor": "center",
+      "body_name": "Main courante ext V2",
+      "names": {
+        "l2": "Main courante ext V2"
+      }
+    },
+    {
+      "id": 105,
+      "name": "Potelet V2",
+      "suppressed": false,
+      "param_names": [
+        "potelet_v2_epaisseur",
+        "potelet_v2_largeur"
+      ],
+      "type": "frame_member",
+      "path_sketch": 103,
+      "lines": [
+        "l4"
+      ],
+      "profile": {
+        "source": "library",
+        "profile": {
+          "kind": "bar",
+          "height": "potelet_ep",
+          "width": "potelet_l"
+        }
+      },
+      "anchor": "center",
+      "body_name": "Potelet ext V2",
+      "names": {
+        "l4": "Potelet ext V2"
+      }
+    },
+    {
+      "id": 106,
+      "name": "Symétrie main courante V2",
+      "suppressed": false,
+      "body_names": [
+        "Main courante int V2",
+        "Potelet int V2"
+      ],
+      "type": "mirror",
+      "features": [],
+      "plane": {
+        "type": "construction",
+        "feature": 4
+      },
+      "bodies": [
+        "Main courante ext V2",
+        "Potelet ext V2"
+      ]
+    },
+    {
+      "id": 107,
+      "name": "Réseau potelets ext V2",
+      "suppressed": false,
+      "body_names": [
+        "Potelet ext V2 (2)"
+      ],
+      "param_names": [
+        "reseau_potelets_ext_v2_nombre",
+        "reseau_potelets_ext_v2_distance"
+      ],
+      "type": "pattern",
+      "features": [],
+      "pattern": {
+        "type": "path",
+        "path_sketch": 6,
+        "path": [
+          "l1"
+        ],
+        "count": "nb_potelets_v2",
+        "spacing": "(rive_x - 2 * platine_ep - giron - (nb_volee1 - nb_volee2 - 1) * giron) * pas_volee / giron",
+        "extent": true
+      },
+      "bodies": [
+        "Potelet ext V2"
+      ]
+    },
+    {
+      "id": 108,
+      "name": "Réseau potelets int V2",
+      "suppressed": false,
+      "body_names": [
+        "Potelet int V2 (2)"
+      ],
+      "param_names": [
+        "reseau_potelets_int_v2_nombre",
+        "reseau_potelets_int_v2_distance"
+      ],
+      "type": "pattern",
+      "features": [],
+      "pattern": {
+        "type": "path",
+        "path_sketch": 6,
+        "path": [
+          "l1"
+        ],
+        "count": "nb_potelets_v2",
+        "spacing": "(rive_x - 2 * platine_ep - giron - (nb_volee1 - nb_volee2 - 1) * giron) * pas_volee / giron",
+        "extent": true
+      },
+      "bodies": [
+        "Potelet int V2"
+      ]
     }
   ],
-  "next_id": 95,
+  "next_id": 109,
   "reserved_body_names": [
     "Body1",
     "Body2",
@@ -7858,6 +8710,10 @@
     "Limon ext V2": "Steel",
     "Limon int V1": "Steel",
     "Limon int V2": "Steel",
+    "Main courante ext V1": "Oak",
+    "Main courante ext V2": "Oak",
+    "Main courante int V1": "Oak",
+    "Main courante int V2": "Oak",
     "Marche V1": "Oak",
     "Marche V1 (10)": "Oak",
     "Marche V1 (11)": "Oak",
@@ -7890,6 +8746,18 @@
     "Platine int V2": "Steel",
     "Platine palier ext V2": "Steel",
     "Platine palier int V2": "Steel",
+    "Potelet ext V1": "Steel",
+    "Potelet ext V1 (2)": "Steel",
+    "Potelet ext V1 (3)": "Steel",
+    "Potelet ext V1 (4)": "Steel",
+    "Potelet ext V2": "Steel",
+    "Potelet ext V2 (2)": "Steel",
+    "Potelet int V1": "Steel",
+    "Potelet int V1 (2)": "Steel",
+    "Potelet int V1 (3)": "Steel",
+    "Potelet int V1 (4)": "Steel",
+    "Potelet int V2": "Steel",
+    "Potelet int V2 (2)": "Steel",
     "Poutre arrière palier": "Steel",
     "Poutre avant palier": "Steel",
     "Poutre latérale V1": "Steel",

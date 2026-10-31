@@ -21,7 +21,8 @@ Version spécialisée des règles génériques ([REGLES_AGENT_3D.md](https://git
 1. **Constater** : version de SolidCraft (`flatpak info --user io.tangencylabs.solidcraft`), modèle ouvert, nombre de corps, erreurs. Signaler seulement les écarts avec `CONCEPTION.md`.
 2. **Plan** → « oui » → branche depuis `main` à jour (nom court de la tâche).
 3. **Réaliser** par lots (`batch`), puis **tester** : faire varier un ou deux paramètres concernés puis revenir, 0 erreur, 0 interférence. Projet d'assemblage : mettre à jour les liens.
-4. **Enregistrer une seule fois, en fin de tâche** (§4), mettre à jour `CONCEPTION.md`, commit, push, ouvrir la PR. La description de la PR est le compte rendu complet ; elle dit aussi ce qui n'est pas fait ou pas vérifié.
+   Les variations de paramètres se font **en ligne de commande** (§5), sur une copie du modèle enregistré, en arrière-plan : l'app reste libre et le modèle ouvert n'est pas touché. Les interférences se contrôlent dans l'app (`inspect.interference`).
+4. **Enregistrer** (§4) avant les tests en ligne de commande, puis en fin de tâche ; mettre à jour `CONCEPTION.md`, commit, push, ouvrir la PR. La description de la PR est le compte rendu complet ; elle dit aussi ce qui n'est pas fait ou pas vérifié.
 
 Tâche non terminée enregistrée à la demande : PR en brouillon (*draft*), et ce qui reste suspendu ou non vérifié dans les points ouverts.
 
@@ -31,14 +32,24 @@ Le connecteur n'enregistre que dans les dossiers qu'on lui autorise. Lancer le s
 
 À chaque enregistrement, dans cet ordre :
 
-1. `save {path: "cad/<modèle>.json"}` : le texte, lisible dans `git diff`.
-2. `save {path: "cad/<modèle>.solidcraft"}` : le natif, en dernier ; l'app enregistre ensuite dans ce fichier, pas besoin de le rouvrir.
-3. Exports (liste dans `CONCEPTION.md`) seulement si la géométrie a changé : `export {path: "cad/<modèle>.stl"}`.
-4. Un commit qui contient tout : modèles, exports, `CONCEPTION.md`.
+1. `save {path: "<projet>/cad/<modèle>.solidcraft"}` : le seul format enregistré ; l'app continue sur ce fichier, pas besoin de le rouvrir.
+2. Un commit qui contient le modèle et `CONCEPTION.md`.
+
+Pas de `.json` ni d'exports (STL, STEP, images) dans le dépôt : ils se font à la demande, hors commit (`.gitignore`). Le modèle étant binaire, `CONCEPTION.md` et la description de la PR sont la seule trace lisible de ses modifications.
 
 Chemins absolus. Le fichier courant se lit dans le retour de `open` ou de `save` (`inspect_design` donne `path: null`). Chaque `save` garde la version précédente en `<fichier>.bak`, en écrasant le `.bak` existant : ne rien laisser d'utile sous ce nom. Ne pas commiter les `*.bak` ni les verrous `.~*.lock` (`.gitignore`).
 
-## 5. `CONCEPTION.md`
+## 5. Tester en ligne de commande
+
+`solidcraft-cli` est livré dans le Flatpak de SolidCraft. `run` rejoue un script sur une **copie** du modèle et n'enregistre rien ; il échoue si une fonction casse.
+
+- Script : `{"commands": [{"command": "parameters.change", "params": {"name": "<paramètre>", "expression": "<valeur>"}}, …]}`, l'aller puis le retour.
+- Commande, lancée en arrière-plan : `flatpak run --user --filesystem=<dossier du script> --command=solidcraft-cli io.tangencylabs.solidcraft run <script.json> --in "<projet>/cad/<modèle>.solidcraft" --results --timings --json-out <résultat.json>`. Sans `--filesystem`, le Flatpak ne voit pas `/tmp`.
+- Lire dans le résultat les `errors` de chaque étape.
+- Ce n'est pas plus rapide que dans l'app : le modèle est recalculé une fois à l'ouverture, puis à chaque changement. Lancer plusieurs scripts en parallèle (un par paramètre) fait gagner un peu.
+- Le modèle testé est celui **enregistré** : enregistrer avant de tester.
+
+## 6. `CONCEPTION.md`
 
 Il est relu à chaque session : le garder court.
 
@@ -48,7 +59,7 @@ Il est relu à chaque session : le garder court.
 - **Points ouverts** : en tête, « Calculs à relancer : <paramètres> » dès qu'un paramètre utilisé par un calcul change.
 - **Historique** : une ligne par PR, avec date, titre et lien. Le détail est dans la PR.
 
-## 6. Modélisation
+## 7. Modélisation
 
 - **Modifiable à la main** : des cotes pilotées par des paramètres nommés, pas de points définis par expression ni de valeurs en dur.
 - **Tout renommer tout de suite** : esquisses, fonctions, corps, plans, et tous les paramètres, y compris ceux des fonctions (extrusions, décalages, réseaux), qu'on liste avec `parameters.list {filter: all}` (ils n'apparaissent pas dans `inspect_design`). Renommer par petits lots : chaque renommage relance le recalcul.
@@ -58,7 +69,7 @@ Il est relu à chaque session : le garder court.
 - **Réseaux et symétries** pilotés par des paramètres plutôt que des copies ; de préférence la symétrie du corps entier.
 - **Simplifications déclarées** dans `CONCEPTION.md`.
 
-## 7. Quand SolidCraft résiste
+## 8. Quand SolidCraft résiste
 
 - **Recalcul lent** : regrouper les fonctions lentes dans un dossier de la timeline et le suspendre (`timeline.suppress`) pendant les modifications ; le réactiver avant de tester.
 - **Commande qui ne répond pas** (`still running:`) : ne pas la renvoyer, attendre avec `pending`.

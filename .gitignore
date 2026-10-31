@@ -2,3 +2,6 @@
 __pycache__/
 *.bak
 .~*.lock
+cad/*.json
+cad/*.stl
+cad/*.png

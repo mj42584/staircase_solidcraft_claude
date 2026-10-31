@@ -4,10 +4,6 @@ Escalier à demi-tour, modélisé de façon paramétrique dans **SolidCraft** et
 
 *Parametric half-turn staircase, modelled in SolidCraft, with a Python structural check (PyNite, Eurocodes).*
 
-[![Vue de l'escalier dans son environnement](cad/apercu.png)](cad/projet_escalier.stl)
-
-**[Voir en 3D →](cad/projet_escalier.stl)** (vue interactive GitHub) : l'escalier en place sur le site, avec la dalle, le mur et la mezzanine d'arrivée.
-
 ## Comment le projet est fait
 
 **SolidCraft** est un logiciel de CAO paramétrique. Le modèle de l'escalier y est construit à partir d'une vingtaine de paramètres pilotes (hauteur à monter, giron, répartition des marches entre les volées…). Squelette, marches, limons et palier se recalculent quand on en change un : on peut passer de 17 + 5 à 16 + 6 contremarches sans redessiner. Le site (dalle, mur, mezzanine d'arrivée) est un modèle séparé, assemblé avec l'escalier dans un fichier projet.

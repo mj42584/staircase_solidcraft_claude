@@ -70,6 +70,9 @@ Valeurs actuelles : voir les paramètres (§3). Ce tableau garde l'origine des d
 | `platine_haut_trou` | 5 mm | trous pour vis à bois Ø4,5 |
 | `platine_haut_entraxe` | 80 mm | entraxe des 2 trous de la platine haute : ≈ 12 mm libres entre le potelet et le bord du trou (tête de vis à bois Ø9) |
 | `poteau_r` | 10 mm | pieds : rayon extérieur du tube, **supposé** (défaut SolidCraft), à confirmer |
+| `platine_pied_ep` | `platine_ep` (15 mm) | platine de tête des pieds, soudée au pied et boulonnée sous l'aile basse du cadre (choix de l'utilisateur, 2026-10-31) |
+| `platine_pied_marge` | 40 mm | platine de tête : du tube au boulon et du boulon au bord, **supposé** |
+| `platine_pied_penetration` | 3 mm | le tube du pied entre dans la platine de tête (union face contre face, règles §8) |
 
 **Calculés**
 
@@ -84,6 +87,8 @@ Valeurs actuelles : voir les paramètres (§3). Ce tableau garde l'origine des d
 | `rive_x` | `(nb_volee1 - 1) * giron` | 4110 mm (X de la rive du palier) |
 | `cadre_y` | `jour / 2 + emmarchement + limon_b` | 1220 mm (demi-largeur hors tout du cadre) |
 | `limon_hv` | `limon_h * pas_volee / giron` | 261,0 mm (hauteur d'un limon en coupe verticale) |
+| `pied_h` | `nb_volee1 * hauteur_marche - palier_ep - limon_h - platine_pied_ep` | 2503,5 mm (sol → dessous de la platine de tête) |
+| `platine_pied_l` | `poteau_cote + 2 * platine_pied_marge` | 180 mm (côté de la platine de tête, au ras de l'angle du cadre) |
 
 **Cotes des esquisses** : préfixes `sqe_` / `sqp_` pour les squelettes d'élévation et de plan (convention de nommage : règles §7).
 
@@ -108,7 +113,8 @@ Valeurs actuelles : voir les paramètres (§3). Ce tableau garde l'origine des d
 
 13. `Dessus cadre palier` — plan XY décalé de `nb_volee1 * hauteur_marche - palier_ep` (dessus du cadre = dessous du plancher).
 14. `Plancher palier` — rectangle coté X `rive_x` → `+ palier_profondeur`, Y ±`cadre_y`, extrudé de `palier_ep` vers le haut : il couvre tout le cadre, limons extérieurs compris.
-15. `Plan pieds V1` / `Plan pieds V2` (XZ décalé de ∓(`cadre_y - poteau_cote / 2`)) → `Axes pieds V1` / `Axes pieds V2` (deux lignes verticales cotées, du sol à `pied_h`) → `Pieds V1` / `Pieds V2` (Frame Member, profilé `rect_tube` piloté par `poteau_cote`, `poteau_ep`, `poteau_r`, centré) : `Pied avant V1`, `Pied arrière V1`, `Pied avant V2`, `Pied arrière V2`.
+15. `Plan pieds V1` / `Plan pieds V2` (XZ décalé de ∓(`cadre_y - poteau_cote / 2`)) → `Axes pieds V1` / `Axes pieds V2` (deux lignes verticales cotées, du sol à `pied_h + platine_pied_penetration`) → `Pieds V1` / `Pieds V2` (Frame Member, profilé `rect_tube` piloté par `poteau_cote`, `poteau_ep`, `poteau_r`, centré) : `Pied avant V1`, `Pied arrière V1`, `Pied avant V2`, `Pied arrière V2`.
+15 bis. **Platines de tête des pieds** (fin d'arbre, avant le dossier des trous) : `Dessous platines pieds` (XY décalé de `pied_h`) → `Platines pieds` (4 carrés `platine_pied_l` au ras des angles extérieurs du cadre, 0 DDL) → `Platine pied avant V1`, `… avant V2`, `… arrière V1`, `… arrière V2` (extrusions de `platine_pied_ep` **jointes** à chaque pied : une pièce soudée par pied) → `Perçage platines pieds` (8 cercles Ø `boulon_d + trou_jeu`, 2 par pied : un sous chaque UPE de l'angle, au milieu de l'aile, à `poteau_cote + platine_pied_marge` de l'angle) → `Trous platines pieds` (enlèvement de `platine_pied_ep + limon_tf + 1 mm` dans les 4 pieds et les 4 poutres du cadre). Écrous dans le U des poutres, qui s'ouvre vers l'intérieur du palier.
 16. Cadre en **onglet à 45°** : pour chaque poutre, une esquisse `Âme poutre …` (trapèze d'épaisseur `limon_tw`, extrudé de `limon_h` vers le bas, nouveau corps) et une esquisse `Ailes poutre …` (trapèze de largeur `limon_b`, extrudé deux fois de `limon_tf` : aile haute, et aile basse avec `start_offset`, jointes au corps). Les 4 UPE ont l'**âme à l'extérieur et les ailes vers l'intérieur**, pleine longueur jusqu'aux angles extérieurs, coupées à 45° : `Poutre avant palier`, `Poutre arrière palier`, `Poutre latérale V1`, `Poutre latérale V2`. Une esquisse et un corps par poutre, pour que les onglets jointifs ne fusionnent pas les corps.
 
 17. **Mains courantes** (D18) : `Plan main courante V1` (décalé de `Axe volée 1` de −(`emmarchement / 2 + limon_b / 2`) : milieu du limon, demande de l'utilisateur) → `Axes main courante V1` (ligne des nez projetée et ligne du bas du limon en construction ; axe de la main courante parallèle à `mc_h` en vertical, du premier nez à `rive_x - platine_ep` ; premier potelet vertical à `giron / 2`, bas à `potelet_l / 2` en pente au-dessus de l'aile haute du limon, haut à `potelet_l / 2` en pente sous la main courante, pour qu'aucun coin ne pénètre) → `Barre main courante V1` (Frame Member `bar` carré `mc_cote`, `Main courante ext V1`) et `Potelet V1` (Frame Member `rect_tube`, `Potelet ext V1`, au milieu du U du limon, posé sur l'aile haute) → `Symétrie main courante V1` (corps, par `Axe volée 1` → `Main courante int V1`, `Potelet int V1`) → `Réseau potelets ext V1` et `Réseau potelets int V1` (un réseau par corps, le long de `Foulée volée 1`, `nb_potelets_v1`, premier et dernier potelets à `giron / 2` des bouts du limon). Idem V2 (`Plan main courante V2`, `Axes main courante V2`, main courante de l'arrivée `+ platine_ep` à `rive_x - giron` (premier nez de V2), premier potelet à `rive_x - 3 * giron / 2`, réseaux le long de `Foulée volée 2`).
@@ -141,7 +147,7 @@ Nombre de marches : chaque volée a une marche de moins que de contremarches (la
 - **D8 — Limons UPE 220, ailes vers l'extérieur.** Comparé : fer plat 300×10 (≈ L/300), UPE 160 (≈ L/120 sur 4,1 m, trop souple, et l'équerre L 200 ne rentre pas entre les ailes), UPE 200 (≈ L/255), UPE 220 (≈ L/345). Avec `limon_dessus = 0`, la zone boulonnable de l'âme (≈ 170 mm) couvre l'équerre (≈ 45 → 177 mm sous la ligne de nez). Ordres de grandeur seulement, pas un calcul de structure.
 - **D9 — Jour calculé depuis les limons.** Les ailes des deux limons intérieurs se font face dans le jour : `jour = 2 * limon_b + jeu_limons`. Le jeu est libre (`jeu_limons`).
 - **D10 — Symétrie de corps, pas de fonctions.** Une symétrie des fonctions « âme + ailes » joignait les ailes copiées au limon d'origine (l'extrusion des ailes est une jonction ciblée) : on symétrise le corps entier.
-- **D11 — Palier : cadre UPE + plancher dessus + 4 pieds.** Pas de mur autour. Cadre de 4 UPE (même profil que les limons, piloté par `limon_*`), âmes à l'extérieur, ailes vers l'intérieur, angles coupés à 45° et soudés (demande de l'utilisateur : poutres latérales retournées de 180° par rapport à la première version), plancher posé dessus (détail : §4, étapes 13 à 16). La poutre avant reçoit les 4 limons ; le bout du limon V1 est centré sur sa hauteur, celui de V2 19 mm plus haut (§4, D17). Pieds aux 4 coins (`poteau_*`).
+- **D11 — Palier : cadre UPE + plancher dessus + 4 pieds.** Pas de mur autour. Cadre de 4 UPE (même profil que les limons, piloté par `limon_*`), âmes à l'extérieur, ailes vers l'intérieur, angles coupés à 45° et soudés (demande de l'utilisateur : poutres latérales retournées de 180° par rapport à la première version), plancher posé dessus (détail : §4, étapes 13 à 16). La poutre avant reçoit les 4 limons ; le bout du limon V1 est centré sur sa hauteur, celui de V2 19 mm plus haut (§4, D17). Pieds aux 4 coins (`poteau_*`). Liaison pied / cadre (2026-10-31, choix de l'utilisateur) : platine de tête soudée au pied, boulonnée par 2 M12 sous l'aile basse des deux UPE de l'angle, démontable (plutôt que pied soudé sous le cadre).
 
 - **D12 — Jonction limon V2 / palier par décalage de la volée.** But de l'utilisateur : supprimer la face verticale du limon V2 qui dépassait au-dessus du palier. Une première version (limon prolongé et posé sur le plancher) a été écartée : on a plutôt ajouté une contremarche à la volée 1 (15/7 → 16/6) et mis la première marche V2 au niveau du palier (D6). Toutes les contremarches restent égales. Le limon V2 arrive à la rive au ras du palier et couvre toute la hauteur de la poutre avant.
 
@@ -208,7 +214,7 @@ Dépôt GitHub `mj42584/staircase_solidcraft_claude` (méthode : règles §3 et 
 
 ## 7. Points ouverts
 
-- **Calculs à relancer** : `hauteur_totale` (3800 → 3848), `nb_volee1` (17 → 16), `marche_epaisseur` / `palier_ep` (30 → 60), `limon_dessus` (0 → −25,3), mains courantes ajoutées (poids, poussée horizontale sur les potelets). Calculs faits en 3800 / 17/5 / 30 mm (D14, D15, `calc/rapport/`).
+- **Calculs à relancer** : `hauteur_totale` (3800 → 3848), `nb_volee1` (17 → 16), `marche_epaisseur` / `palier_ep` (30 → 60), `limon_dessus` (0 → −25,3), mains courantes ajoutées (poids, poussée horizontale sur les potelets), liaison des pieds au cadre (platine boulonnée 2 M12 au lieu d'un nœud rigide en tête, D15). Calculs faits en 3800 / 17/5 / 30 mm (D14, D15, `calc/rapport/`).
 - **En cours (tube 30 × 30 × 2)** : `Trous limons V1` et `V2` sont actifs dans `cad/escalier.solidcraft` (constaté le 2026-10-30 : ils l'étaient déjà dans le fichier de `main`), dans le dossier de timeline `Trous limons et palier (suspendre pour travailler)` ; 0 interférence avec les tubes (2026-10-30) ; balayages pas refaits avec les tubes. `Potelet palier V1/V2` et les 3 `Potelet fond` sont des corps à 2 coques (§6.3), à vérifier.
 - **Mains courantes** : nombre des potelets supposé (`potelet_*`, `nb_potelets_*`), accès à la clé pour les écrous sous l'aile, dans le U des limons, non vérifié ; `nb_potelets_*` ≥ 2 (pas des répétitions divisé par `nb - 1`) ; au palier, les vis du potelet d'angle tombent près du bord des mains courantes ; remplissage du garde-corps du palier à faire ; la main courante int V1 passe à 17 mm du `Poteau milieu arrivée` dans le projet (mesuré en rond, pas remesuré en carré ; 0 interférence) ; hauteur de 900 mm à confirmer selon la norme qui s'applique.
 - **Accès aux écrous des limons intérieurs** (platines côté palier) : le U du limon s'ouvre côté jour, avec seulement `jeu_limons` entre les deux limons intérieurs. Pistes : augmenter `jeu_limons` (≈ 150) ou remplacer les platines par des cornières d'attache (D17).
@@ -233,7 +239,7 @@ Liste fixée par l'utilisateur (2026-10-26) :
 4. **Nomenclature.**
 5. **Vérification par le calcul** (poutre avant en priorité, stabilité / contreventement) : prédimensionnement et modèle en barres faits (D14, D15) ; restent les assemblages et chevilles, le garde-corps dans le modèle et la validation par un bureau d'études.
 
-**En attente** (pas pour l'instant, choix de l'utilisateur) : visserie (platines, poutre avant, arrivée), cornière d'appui, assemblage platines / poutre avant et platines / arrivée, pieds des limons V1 au sol et platines des pieds (non modélisés).
+**En attente** (pas pour l'instant, choix de l'utilisateur) : visserie (platines, poutre avant, arrivée), cornière d'appui, assemblage platines / poutre avant et platines / arrivée, pieds des limons V1 au sol et platines des pieds au sol (non modélisés).
 
 ## 9. Historique
 

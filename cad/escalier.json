@@ -1280,10 +1280,10 @@
       "model": false
     },
     {
-      "name": "mc_d",
+      "name": "mc_cote",
       "expr": "45 mm",
       "unit": "mm",
-      "comment": "diamètre de la main courante (chêne)",
+      "comment": "côté de la main courante carrée (chêne), choix de l'utilisateur",
       "model": false
     },
     {
@@ -1346,7 +1346,7 @@
     },
     {
       "name": "potelet_v1_haut",
-      "expr": "mc_d / 2",
+      "expr": "mc_cote / 2",
       "unit": "mm",
       "model": true
     },
@@ -1388,7 +1388,7 @@
     },
     {
       "name": "potelet_v2_haut",
-      "expr": "mc_d / 2",
+      "expr": "mc_cote / 2",
       "unit": "mm",
       "model": true
     },
@@ -1407,7 +1407,7 @@
     },
     {
       "name": "axe_mc_palier_v1_fin_x",
-      "expr": "rive_x + palier_profondeur - limon_b / 2 + mc_d / 2",
+      "expr": "rive_x + palier_profondeur - limon_b / 2 + mc_cote / 2",
       "unit": "mm",
       "model": true
     },
@@ -1425,7 +1425,7 @@
     },
     {
       "name": "potelet_palier_v1_haut",
-      "expr": "mc_d / 2 + platine_haut_ep - 1 mm",
+      "expr": "mc_cote / 2 + platine_haut_ep - 1 mm",
       "unit": "mm",
       "model": true
     },
@@ -1437,7 +1437,7 @@
     },
     {
       "name": "axe_mc_palier_v2_fin_x",
-      "expr": "rive_x + palier_profondeur - limon_b / 2 + mc_d / 2",
+      "expr": "rive_x + palier_profondeur - limon_b / 2 + mc_cote / 2",
       "unit": "mm",
       "model": true
     },
@@ -1450,7 +1450,7 @@
     },
     {
       "name": "axe_mc_fond_longueur",
-      "expr": "2 * (jour / 2 + emmarchement + limon_b / 2 - mc_d / 2)",
+      "expr": "2 * (jour / 2 + emmarchement + limon_b / 2 - mc_cote / 2)",
       "unit": "mm",
       "model": true
     },
@@ -1474,7 +1474,7 @@
     },
     {
       "name": "potelet_fond_haut",
-      "expr": "mc_d / 2 + platine_haut_ep - 1 mm",
+      "expr": "mc_cote / 2 + platine_haut_ep - 1 mm",
       "unit": "mm",
       "model": true
     },
@@ -1772,7 +1772,7 @@
     },
     {
       "name": "platine_haut_palier_v1_z",
-      "expr": "nb_volee1 * hauteur_marche + mc_palier_h - mc_d / 2",
+      "expr": "nb_volee1 * hauteur_marche + mc_palier_h - mc_cote / 2",
       "unit": "mm",
       "model": true
     },
@@ -1820,7 +1820,7 @@
     },
     {
       "name": "platine_haut_fond_z",
-      "expr": "nb_volee1 * hauteur_marche + mc_palier_h - mc_d / 2 - platine_haut_ep",
+      "expr": "nb_volee1 * hauteur_marche + mc_palier_h - mc_cote / 2 - platine_haut_ep",
       "unit": "mm",
       "model": true
     },
@@ -1953,6 +1953,30 @@
     {
       "name": "coupe_potelet_v2_penetration_haut",
       "expr": "potelet_l + 1 mm",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "section_mc_palier_v1_largeur",
+      "expr": "mc_cote",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "section_mc_palier_v1_hauteur",
+      "expr": "mc_cote",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "section_mc_palier_v2_largeur",
+      "expr": "mc_cote",
+      "unit": "mm",
+      "model": true
+    },
+    {
+      "name": "section_mc_palier_v2_hauteur",
+      "expr": "mc_cote",
       "unit": "mm",
       "model": true
     }
@@ -8891,7 +8915,8 @@
       "name": "Barre main courante V1",
       "suppressed": false,
       "param_names": [
-        "barre_mc_v1_diametre"
+        "barre_mc_v1_hauteur",
+        "barre_mc_v1_largeur"
       ],
       "type": "frame_member",
       "path_sketch": 96,
@@ -8901,8 +8926,9 @@
       "profile": {
         "source": "library",
         "profile": {
-          "kind": "round_bar",
-          "diameter": "mc_d"
+          "kind": "bar",
+          "height": "mc_cote",
+          "width": "mc_cote"
         }
       },
       "anchor": "center",
@@ -9056,7 +9082,7 @@
           {
             "id": "l8.end",
             "pos": [
-              179.14503101641614,
+              179.14503101641617,
               -1162.5735617834705
             ],
             "fixed": false
@@ -9064,7 +9090,7 @@
           {
             "id": "l9.end",
             "pos": [
-              181.83537738933046,
+              181.8353773893305,
               -1158.3590586818289
             ],
             "fixed": false
@@ -9415,7 +9441,7 @@
           {
             "id": "p3",
             "pos": [
-              181.83537738933046,
+              181.8353773893305,
               -1158.3590586818289
             ],
             "fixed": true,
@@ -9465,7 +9491,7 @@
           {
             "id": "l7.start",
             "pos": [
-              181.29730811474758,
+              181.2973081147476,
               -1159.2019593021573
             ],
             "fixed": false
@@ -9473,7 +9499,7 @@
           {
             "id": "l7.end",
             "pos": [
-              165.15522987726172,
+              165.15522987726175,
               -1184.488977912007
             ],
             "fixed": false
@@ -9481,7 +9507,7 @@
           {
             "id": "l8.end",
             "pos": [
-              80.86516784442942,
+              80.86516784442941,
               -1130.6820504537206
             ],
             "fixed": false
@@ -9955,7 +9981,7 @@
           {
             "id": "p5",
             "pos": [
-              1701.5571164606765,
+              1701.5571164601217,
               -1177.5
             ],
             "fixed": false
@@ -9963,7 +9989,7 @@
           {
             "id": "p6",
             "pos": [
-              1801.557116459567,
+              1801.5571164601217,
               -1177.5
             ],
             "fixed": false
@@ -9971,7 +9997,7 @@
           {
             "id": "p7",
             "pos": [
-              1701.5571164606765,
+              1701.5571164601217,
               -92.5
             ],
             "fixed": false
@@ -9979,7 +10005,7 @@
           {
             "id": "p8",
             "pos": [
-              1801.557116459567,
+              1801.5571164601217,
               -92.5
             ],
             "fixed": false
@@ -9987,7 +10013,7 @@
           {
             "id": "p9",
             "pos": [
-              3212.6091146809686,
+              3212.6091146804138,
               -1177.5
             ],
             "fixed": false
@@ -9995,7 +10021,7 @@
           {
             "id": "p10",
             "pos": [
-              3312.609114679859,
+              3312.6091146804138,
               -1177.5
             ],
             "fixed": false
@@ -10003,7 +10029,7 @@
           {
             "id": "p11",
             "pos": [
-              3212.6091146809686,
+              3212.6091146804138,
               -92.5
             ],
             "fixed": false
@@ -10011,7 +10037,7 @@
           {
             "id": "p12",
             "pos": [
-              3312.609114679859,
+              3312.6091146804138,
               -92.5
             ],
             "fixed": false
@@ -10019,7 +10045,7 @@
           {
             "id": "p13",
             "pos": [
-              4723.661112901261,
+              4723.661112900706,
               -1177.5
             ],
             "fixed": false
@@ -10027,7 +10053,7 @@
           {
             "id": "p14",
             "pos": [
-              4823.661112900151,
+              4823.661112900706,
               -1177.5
             ],
             "fixed": false
@@ -10035,7 +10061,7 @@
           {
             "id": "p15",
             "pos": [
-              4723.661112901261,
+              4723.661112900706,
               -92.5
             ],
             "fixed": false
@@ -10043,7 +10069,7 @@
           {
             "id": "p16",
             "pos": [
-              4823.661112900151,
+              4823.661112900706,
               -92.5
             ],
             "fixed": false
@@ -11330,7 +11356,8 @@
       "name": "Barre main courante V2",
       "suppressed": false,
       "param_names": [
-        "barre_mc_v2_diametre"
+        "barre_mc_v2_hauteur",
+        "barre_mc_v2_largeur"
       ],
       "type": "frame_member",
       "path_sketch": 103,
@@ -11340,8 +11367,9 @@
       "profile": {
         "source": "library",
         "profile": {
-          "kind": "round_bar",
-          "diameter": "mc_d"
+          "kind": "bar",
+          "height": "mc_cote",
+          "width": "mc_cote"
         }
       },
       "anchor": "center",
@@ -12376,7 +12404,7 @@
           {
             "id": "p3",
             "pos": [
-              254.57412049763477,
+              254.57412049818942,
               1177.5
             ],
             "fixed": false
@@ -12384,7 +12412,7 @@
           {
             "id": "p4",
             "pos": [
-              154.57412049874472,
+              154.5741204981898,
               1177.5
             ],
             "fixed": false
@@ -12392,7 +12420,7 @@
           {
             "id": "p5",
             "pos": [
-              254.57412049763477,
+              254.57412049818942,
               92.5
             ],
             "fixed": false
@@ -12400,7 +12428,7 @@
           {
             "id": "p6",
             "pos": [
-              154.57412049874472,
+              154.5741204981898,
               92.5
             ],
             "fixed": false
@@ -13038,25 +13066,6 @@
       ]
     },
     {
-      "id": 109,
-      "name": "Main courante palier V1",
-      "suppressed": false,
-      "body_names": [
-        "Main courante palier V1"
-      ],
-      "param_names": [
-        "mc_palier_v1_diametre"
-      ],
-      "type": "pipe",
-      "path_sketch": 96,
-      "path": [
-        "l5",
-        "l6"
-      ],
-      "diameter": "mc_d",
-      "operation": "new_body"
-    },
-    {
       "id": 110,
       "name": "Potelet palier V1",
       "suppressed": false,
@@ -13397,25 +13406,6 @@
       ]
     },
     {
-      "id": 111,
-      "name": "Main courante palier V2",
-      "suppressed": false,
-      "body_names": [
-        "Main courante palier V2"
-      ],
-      "param_names": [
-        "mc_palier_v2_diametre"
-      ],
-      "type": "pipe",
-      "path_sketch": 103,
-      "path": [
-        "l5",
-        "l6"
-      ],
-      "diameter": "mc_d",
-      "operation": "new_body"
-    },
-    {
       "id": 112,
       "name": "Symétrie potelet palier",
       "suppressed": false,
@@ -13472,7 +13462,7 @@
             "id": "l1.start",
             "pos": [
               -1155.0,
-              3798.54545454492
+              3798.545454545423
             ],
             "fixed": false
           },
@@ -13480,7 +13470,7 @@
             "id": "l1.end",
             "pos": [
               1155.0,
-              3798.5454545448374
+              3798.5454545454177
             ],
             "fixed": false
           },
@@ -13496,7 +13486,7 @@
             "id": "l2.end",
             "pos": [
               -1155.0,
-              3772.045454544699
+              3772.0454545454104
             ],
             "fixed": false
           },
@@ -13624,7 +13614,8 @@
       "name": "Barre main courante fond",
       "suppressed": false,
       "param_names": [
-        "barre_mc_fond_diametre"
+        "barre_mc_fond_hauteur",
+        "barre_mc_fond_largeur"
       ],
       "type": "frame_member",
       "path_sketch": 114,
@@ -13634,8 +13625,9 @@
       "profile": {
         "source": "library",
         "profile": {
-          "kind": "round_bar",
-          "diameter": "mc_d"
+          "kind": "bar",
+          "height": "mc_cote",
+          "width": "mc_cote"
         }
       },
       "anchor": "center",
@@ -14017,7 +14009,7 @@
           "type": "origin",
           "name": "XY"
         },
-        "distance": "nb_volee1 * hauteur_marche + mc_palier_h - mc_d / 2"
+        "distance": "nb_volee1 * hauteur_marche + mc_palier_h - mc_cote / 2"
       }
     },
     {
@@ -14843,6 +14835,474 @@
       ]
     },
     {
+      "id": 159,
+      "name": "Plan section main courante palier V1",
+      "suppressed": false,
+      "param_names": [
+        "plan_section_mc_palier_v1_t"
+      ],
+      "type": "construction_plane",
+      "plane": {
+        "type": "along_path",
+        "path": {
+          "type": "sketch_curve",
+          "sketch": 96,
+          "curve": "l2"
+        },
+        "t": "0"
+      }
+    },
+    {
+      "id": 160,
+      "name": "Section main courante palier V1",
+      "suppressed": false,
+      "type": "sketch",
+      "plane": {
+        "type": "construction",
+        "feature": 159
+      },
+      "sketch": {
+        "points": [
+          {
+            "id": "origin",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": true
+          },
+          {
+            "id": "p2",
+            "pos": [
+              0.0,
+              -100.0
+            ],
+            "fixed": true,
+            "link": "j2"
+          },
+          {
+            "id": "p3",
+            "pos": [
+              0.0,
+              100.0
+            ],
+            "fixed": true,
+            "link": "j2"
+          },
+          {
+            "id": "p4",
+            "pos": [
+              -22.5,
+              -22.5
+            ],
+            "fixed": false
+          },
+          {
+            "id": "p5",
+            "pos": [
+              22.5,
+              -22.5
+            ],
+            "fixed": false
+          },
+          {
+            "id": "p6",
+            "pos": [
+              22.5,
+              22.5
+            ],
+            "fixed": false
+          },
+          {
+            "id": "p7",
+            "pos": [
+              -22.5,
+              22.5
+            ],
+            "fixed": false
+          },
+          {
+            "id": "p8",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": false
+          }
+        ],
+        "curves": [
+          {
+            "id": "l1",
+            "type": "line",
+            "a": 1,
+            "b": 2,
+            "construction": true,
+            "link": "j2"
+          },
+          {
+            "id": "l2",
+            "type": "line",
+            "a": 3,
+            "b": 4,
+            "construction": false
+          },
+          {
+            "id": "l3",
+            "type": "line",
+            "a": 4,
+            "b": 5,
+            "construction": false
+          },
+          {
+            "id": "l4",
+            "type": "line",
+            "a": 5,
+            "b": 6,
+            "construction": false
+          },
+          {
+            "id": "l5",
+            "type": "line",
+            "a": 6,
+            "b": 3,
+            "construction": false
+          },
+          {
+            "id": "l6",
+            "type": "line",
+            "a": 3,
+            "b": 5,
+            "construction": true
+          },
+          {
+            "id": "l7",
+            "type": "line",
+            "a": 4,
+            "b": 6,
+            "construction": true
+          }
+        ],
+        "constraints": [
+          {
+            "id": "k1",
+            "type": "horizontal",
+            "l": 1
+          },
+          {
+            "id": "k2",
+            "type": "horizontal",
+            "l": 3
+          },
+          {
+            "id": "k3",
+            "type": "vertical",
+            "l": 2
+          },
+          {
+            "id": "k4",
+            "type": "vertical",
+            "l": 4
+          },
+          {
+            "id": "k5",
+            "type": "midpoint",
+            "p": 7,
+            "l": 5
+          },
+          {
+            "id": "k6",
+            "type": "coincident",
+            "p": 0,
+            "q": 7
+          },
+          {
+            "id": "k7",
+            "type": "length",
+            "l": 1,
+            "value": 45.0,
+            "param": "section_mc_palier_v1_largeur"
+          },
+          {
+            "id": "k8",
+            "type": "length",
+            "l": 2,
+            "value": 45.0,
+            "param": "section_mc_palier_v1_hauteur"
+          }
+        ],
+        "links": [
+          {
+            "id": "j2",
+            "kind": "project",
+            "source": {
+              "type": "plane",
+              "name": "Plan main courante V1"
+            }
+          }
+        ],
+        "counters": {
+          "j": 2,
+          "k": 8,
+          "l": 7,
+          "p": 8
+        }
+      }
+    },
+    {
+      "id": 161,
+      "name": "Main courante palier V1",
+      "suppressed": false,
+      "type": "sweep",
+      "sketch": 160,
+      "profiles": {
+        "type": "all"
+      },
+      "path_sketch": 96,
+      "path": [
+        "l2",
+        "l5",
+        "l6"
+      ],
+      "operation": "join",
+      "targets": [
+        "Main courante ext V1"
+      ]
+    },
+    {
+      "id": 162,
+      "name": "Plan section main courante palier V2",
+      "suppressed": false,
+      "param_names": [
+        "plan_section_mc_palier_v2_t"
+      ],
+      "type": "construction_plane",
+      "plane": {
+        "type": "along_path",
+        "path": {
+          "type": "sketch_curve",
+          "sketch": 103,
+          "curve": "l2"
+        },
+        "t": "0"
+      }
+    },
+    {
+      "id": 163,
+      "name": "Section main courante palier V2",
+      "suppressed": false,
+      "type": "sketch",
+      "plane": {
+        "type": "construction",
+        "feature": 162
+      },
+      "sketch": {
+        "points": [
+          {
+            "id": "origin",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": true
+          },
+          {
+            "id": "p1",
+            "pos": [
+              0.0,
+              -100.0
+            ],
+            "fixed": true,
+            "link": "j1"
+          },
+          {
+            "id": "p2",
+            "pos": [
+              0.0,
+              100.0
+            ],
+            "fixed": true,
+            "link": "j1"
+          },
+          {
+            "id": "p3",
+            "pos": [
+              -22.5,
+              -22.5
+            ],
+            "fixed": false
+          },
+          {
+            "id": "p4",
+            "pos": [
+              22.5,
+              -22.5
+            ],
+            "fixed": false
+          },
+          {
+            "id": "p5",
+            "pos": [
+              22.5,
+              22.5
+            ],
+            "fixed": false
+          },
+          {
+            "id": "p6",
+            "pos": [
+              -22.5,
+              22.5
+            ],
+            "fixed": false
+          },
+          {
+            "id": "p7",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": false
+          }
+        ],
+        "curves": [
+          {
+            "id": "l1",
+            "type": "line",
+            "a": 1,
+            "b": 2,
+            "construction": true,
+            "link": "j1"
+          },
+          {
+            "id": "l2",
+            "type": "line",
+            "a": 3,
+            "b": 4,
+            "construction": false
+          },
+          {
+            "id": "l3",
+            "type": "line",
+            "a": 4,
+            "b": 5,
+            "construction": false
+          },
+          {
+            "id": "l4",
+            "type": "line",
+            "a": 5,
+            "b": 6,
+            "construction": false
+          },
+          {
+            "id": "l5",
+            "type": "line",
+            "a": 6,
+            "b": 3,
+            "construction": false
+          },
+          {
+            "id": "l6",
+            "type": "line",
+            "a": 3,
+            "b": 5,
+            "construction": true
+          },
+          {
+            "id": "l7",
+            "type": "line",
+            "a": 4,
+            "b": 6,
+            "construction": true
+          }
+        ],
+        "constraints": [
+          {
+            "id": "k1",
+            "type": "horizontal",
+            "l": 1
+          },
+          {
+            "id": "k2",
+            "type": "horizontal",
+            "l": 3
+          },
+          {
+            "id": "k3",
+            "type": "vertical",
+            "l": 2
+          },
+          {
+            "id": "k4",
+            "type": "vertical",
+            "l": 4
+          },
+          {
+            "id": "k5",
+            "type": "midpoint",
+            "p": 7,
+            "l": 5
+          },
+          {
+            "id": "k6",
+            "type": "coincident",
+            "p": 0,
+            "q": 7
+          },
+          {
+            "id": "k7",
+            "type": "length",
+            "l": 1,
+            "value": 45.0,
+            "param": "section_mc_palier_v2_largeur"
+          },
+          {
+            "id": "k8",
+            "type": "length",
+            "l": 2,
+            "value": 45.0,
+            "param": "section_mc_palier_v2_hauteur"
+          }
+        ],
+        "links": [
+          {
+            "id": "j1",
+            "kind": "project",
+            "source": {
+              "type": "plane",
+              "name": "Plan main courante V2"
+            }
+          }
+        ],
+        "counters": {
+          "j": 1,
+          "k": 8,
+          "l": 7,
+          "p": 7
+        }
+      }
+    },
+    {
+      "id": 164,
+      "name": "Main courante palier V2",
+      "suppressed": false,
+      "type": "sweep",
+      "sketch": 163,
+      "profiles": {
+        "type": "all"
+      },
+      "path_sketch": 103,
+      "path": [
+        "l2",
+        "l5",
+        "l6"
+      ],
+      "operation": "join",
+      "targets": [
+        "Main courante ext V2"
+      ]
+    },
+    {
       "id": 131,
       "name": "Trous limons V1",
       "suppressed": false,
@@ -14966,7 +15426,7 @@
       ]
     }
   ],
-  "next_id": 159,
+  "next_id": 165,
   "reserved_body_names": [
     "Body1",
     "Body2",

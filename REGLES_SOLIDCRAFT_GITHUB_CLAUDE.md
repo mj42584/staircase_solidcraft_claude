@@ -19,7 +19,7 @@ Version spécialisée des règles génériques ([REGLES_AGENT_3D.md](https://git
 ## 3. Déroulé d'une tâche
 
 1. **Constater** : version de SolidCraft (`flatpak info --user io.tangencylabs.solidcraft`), modèle ouvert, nombre de corps, erreurs. Signaler seulement les écarts avec `CONCEPTION.md`.
-2. **Plan** → « oui » → branche depuis `main` à jour (nom court de la tâche).
+2. **Plan** → « oui » → branche depuis `main` à jour (nom court de la tâche). Git ne fusionne pas les modèles (binaires) : une seule branche à la fois touche un modèle.
 3. **Réaliser** par lots (`batch`), puis **tester** : faire varier un ou deux paramètres concernés puis revenir, 0 erreur, 0 interférence. Projet d'assemblage : mettre à jour les liens.
    Les variations de paramètres se font **en ligne de commande** (§5), sur une copie du modèle enregistré, en arrière-plan : l'app reste libre et le modèle ouvert n'est pas touché. Les interférences se contrôlent dans l'app (`inspect.interference`).
 4. **Enregistrer** (§4) avant les tests en ligne de commande, puis en fin de tâche ; mettre à jour `CONCEPTION.md`, commit, push, ouvrir la PR. La description de la PR est le compte rendu complet ; elle dit aussi ce qui n'est pas fait ou pas vérifié.
@@ -28,7 +28,7 @@ Tâche non terminée enregistrée à la demande : PR en brouillon (*draft*), et 
 
 ## 4. Enregistrer
 
-Le connecteur n'enregistre que dans les dossiers qu'on lui autorise. Lancer le serveur MCP avec `--allow-path <projet>/cad` pour enregistrer **directement dans `cad/`**, sans passer par le dossier `recovery` ni copier.
+Le connecteur n'enregistre que dans les dossiers qu'on lui autorise. Lancer le serveur MCP avec `--allow-path <projet>/cad` pour enregistrer **directement dans `cad/`**, sans passer par le dossier `recovery` ni copier (sans cette option, il n'écrit que dans `~/.var/app/io.tangencylabs.solidcraft/data/solidcraft/recovery` et dans le dossier d'un modèle ouvert).
 
 À chaque enregistrement, dans cet ordre :
 
@@ -55,17 +55,17 @@ Il est relu à chaque session : le garder court.
 
 - **Paramètres** : valeur seulement dans le tableau des paramètres ; ailleurs, on cite le nom.
 - **Décisions** : D1, D2… en deux ou trois lignes, la décision et son pourquoi.
-- **Pièges** : une ligne par piège (symptôme → contournement, version). L'enquête va dans une issue (chez SolidCraft si c'est un bug), avec le lien dans la ligne.
+- **Pièges** : ceux du modèle seulement (ceux de SolidCraft sont au §8), une ligne par piège (symptôme → contournement, version). L'enquête va dans une issue (chez SolidCraft si c'est un bug), avec le lien dans la ligne.
 - **Points ouverts** : en tête, « Calculs à relancer : <paramètres> » dès qu'un paramètre utilisé par un calcul change.
 - **Historique** : une ligne par PR, avec date, titre et lien. Le détail est dans la PR.
 
 ## 7. Modélisation
 
-- **Modifiable à la main** : des cotes pilotées par des paramètres nommés, pas de points définis par expression ni de valeurs en dur.
-- **Tout renommer tout de suite** : esquisses, fonctions, corps, plans, et tous les paramètres, y compris ceux des fonctions (extrusions, décalages, réseaux), qu'on liste avec `parameters.list {filter: all}` (ils n'apparaissent pas dans `inspect_design`). Renommer par petits lots : chaque renommage relance le recalcul.
+- **Modifiable à la main** : des cotes pilotées par des paramètres nommés, pas de points définis par expression ni de valeurs en dur. Une ligne projetée dans une esquisse de profil passe en construction (`sketch.construction`), sinon elle peut couper le profil.
+- **Tout renommer tout de suite** : esquisses, fonctions, corps, plans, et tous les paramètres, y compris ceux des fonctions (extrusions, décalages, réseaux), qu'on liste avec `parameters.list {filter: all}` (ils n'apparaissent pas dans `inspect_design`). Cotes nommées `<pièce>_<rôle>` (ex. `limon_v1_bas`). Renommer par petits lots : chaque renommage relance le recalcul.
 - **Squelette** : s'appuyer sur des esquisses maîtresses et des plans pilotés, jamais sur les faces d'autres corps.
 - **Esquisses à 0 degré de liberté.**
-- **Un corps par pièce réelle**, avec son matériau dès sa création.
+- **Un corps par pièce réelle**, avec son matériau dès sa création ; un corps qui apparaît plus tard (copie de réseau au-delà du nombre affecté) reste en « Default » : l'affecter.
 - **Réseaux et symétries** pilotés par des paramètres plutôt que des copies ; de préférence la symétrie du corps entier.
 - **Simplifications déclarées** dans `CONCEPTION.md`.
 
@@ -74,4 +74,17 @@ Il est relu à chaque session : le garder court.
 - **Recalcul lent** : regrouper les fonctions lentes dans un dossier de la timeline et le suspendre (`timeline.suppress`) pendant les modifications ; le réactiver avant de tester.
 - **Commande qui ne répond pas** (`still running:`) : ne pas la renvoyer, attendre avec `pending`.
 - **Plantage** : récupérer la sauvegarde automatique, puis reprendre à l'étape « Constater ».
-- **Nouvelle version de SolidCraft** : ouvrir chaque modèle, comparer le nombre de corps, les erreurs et les volumes, puis réenregistrer les deux formats. Le format de fichier change souvent : une version plus ancienne n'ouvre plus le fichier.
+- **Nouvelle version de SolidCraft** : ouvrir chaque modèle, comparer le nombre de corps, les erreurs et les volumes, puis les réenregistrer. Le format de fichier change souvent : une version plus ancienne n'ouvre plus le fichier.
+
+**Pièges connus** (0.27.1 sauf mention ; une ligne par piège, symptôme → contournement) :
+
+- Contrainte verticale ou horizontale : commande `sketch.constraint.horizontal_vertical` (`mode`) ; il n'y a pas de `sketch.constraint.vertical`.
+- Esquisse sur un plan décalé de XZ : l'axe vertical de l'esquisse va vers −Z, les coordonnées Z s'écrivent en négatif ; les cotes restent des distances positives.
+- Point défini par une expression : pour le libérer, supprimer la ligne et la redessiner avec l'option `ids` (même identifiant, un Frame Member la retrouve) ; Fix/UnFix et le déplacement ne suffisent pas.
+- La commande d'oblong n'accepte pas d'expressions : dessiner des rainures cotées.
+- Union de deux corps en contact face contre face (tube mince sur une platine, balayage bout à bout d'une barre) : échec (`boolean Union: no result`) ou corps à 2 coques (`kernel.shells` = 2 dans `measure`) → faire pénétrer l'un dans l'autre (1 à 3 mm), ou faire repartir le balayage du début de la barre.
+- Profilés avec congés (UPE…) : les booléens qui les percent reprennent (« Boolean retry ») et ralentissent le recalcul → congés à 0 si la section exacte n'est pas utile au modèle.
+- Un réseau qui répète plusieurs corps numérote ses copies à la suite en les mélangeant : les noms (et les matériaux affectés par nom) tombent sur les mauvais corps → un réseau par corps.
+- Depuis le Frame Member, l'enregistrement n'écrit plus le cache de géométrie : l'ouverture recalcule tout (cause non établie).
+- Assemblage : `component.relink` n'accepte qu'un `.solidcraft` ; `component.insert_design` et `occurrence.move` ne prennent qu'un décalage chiffré (une pièce ne suit pas ses paramètres, la recaler à la main) ; les matériaux des composants liés n'y passent pas (« Default », masse fausse).
+- Lister les commandes de liaison (`list_commands` filtre `joint`) a semblé faire planter l'app (0.22) : à éviter tant que ce n'est pas vérifié.

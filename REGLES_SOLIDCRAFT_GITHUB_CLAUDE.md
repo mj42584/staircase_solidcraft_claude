@@ -20,7 +20,7 @@ Version spécialisée des règles génériques ([REGLES_AGENT_3D.md](https://git
 
 1. **Constater** : version de SolidCraft (`flatpak info --user io.tangencylabs.solidcraft`), modèle ouvert, nombre de corps, erreurs. Signaler seulement les écarts avec `CONCEPTION.md`.
 2. **Plan** → « oui » → branche depuis `main` à jour (nom court de la tâche). Git ne fusionne pas les modèles (binaires) : une seule branche à la fois touche un modèle.
-3. **Réaliser** par lots (`batch`), puis **tester** : faire varier un ou deux paramètres concernés puis revenir, 0 erreur, 0 interférence. Projet d'assemblage : mettre à jour les liens.
+3. **Réaliser** par lots (`batch`), puis **tester** : faire varier un ou deux paramètres concernés puis revenir, 0 erreur, 0 interférence. Le projet d'assemblage n'est pas ouvert : il relit le modèle lié à sa prochaine ouverture, et les interférences avec l'environnement se contrôlent à la demande.
    Les variations de paramètres se font **en ligne de commande** (§5), sur une copie du modèle enregistré, en arrière-plan : l'app reste libre et le modèle ouvert n'est pas touché. Les interférences se contrôlent dans l'app (`inspect.interference`).
 4. **Enregistrer** (§4) avant les tests en ligne de commande, puis en fin de tâche ; mettre à jour `CONCEPTION.md`, commit, push, ouvrir la PR. La description de la PR est le compte rendu complet ; elle dit aussi ce qui n'est pas fait ou pas vérifié.
 

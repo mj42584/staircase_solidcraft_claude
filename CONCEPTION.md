@@ -31,7 +31,7 @@ Valeurs actuelles : voir les paramètres (§3). Ce tableau garde l'origine des d
 |---|---|---|
 | `hauteur_totale` | 3848 mm | hauteur de marche, arrivée |
 | `nb_contremarches` | 22 | hauteur de marche, nb_volee2 |
-| `nb_volee1` | 16 | contremarches volée basse → hauteur du palier, nombre de marches V1 |
+| `nb_volee1` | 15 (16 jusqu'au 2026-10-31) | contremarches volée basse → hauteur du palier, nombre de marches V1 |
 | `giron` | 274 mm | squelette, profondeur des marches, pas des réseaux |
 | `emmarchement` | 1000 mm | largeur des volées et des marches, plans d'axe |
 | `jeu_limons` | 100 mm | vide entre les deux limons intérieurs → `jour` (passé de 20 à 100 par l'utilisateur) |
@@ -78,15 +78,15 @@ Valeurs actuelles : voir les paramètres (§3). Ce tableau garde l'origine des d
 | Paramètre | Expression | Valeur |
 |---|---|---|
 | `hauteur_marche` | `hauteur_totale / nb_contremarches` | 174,91 mm |
-| `nb_volee2` | `nb_contremarches - nb_volee1` | 6 |
+| `nb_volee2` | `nb_contremarches - nb_volee1` | 7 |
 | `angle_volee` | `atan(hauteur_marche / giron)` | 32,55° |
 | `blondel` | `2 * hauteur_marche + giron` | 624 mm (confort 600–640) |
 | `pas_volee` | `sqrt(giron ^ 2 + hauteur_marche ^ 2)` | 325,07 mm |
 | `jour` | `2 * limon_b + jeu_limons` | 270 mm |
-| `rive_x` | `(nb_volee1 - 1) * giron` | 4110 mm (X de la rive du palier) |
+| `rive_x` | `(nb_volee1 - 1) * giron` | 3836 mm (X de la rive du palier) |
 | `cadre_y` | `jour / 2 + emmarchement + limon_b` | 1220 mm (demi-largeur hors tout du cadre) |
 | `limon_hv` | `limon_h * pas_volee / giron` | 261,0 mm (hauteur d'un limon en coupe verticale) |
-| `pied_h` | `nb_volee1 * hauteur_marche - palier_ep - limon_h - platine_pied_ep` | 2503,5 mm (sol → dessous de la platine de tête ; le tube va de `platine_pied_ep` à `pied_h`) |
+| `pied_h` | `nb_volee1 * hauteur_marche - palier_ep - limon_h - platine_pied_ep` | 2328,6 mm (sol → dessous de la platine de tête ; le tube va de `platine_pied_ep` à `pied_h`) |
 | `platine_pied_l` | `poteau_cote + 2 * platine_pied_marge` | 180 mm (côté des platines des pieds : en tête au ras de l'angle du cadre, au sol centrée sur le tube) |
 
 **Cotes des esquisses** : préfixes `sqe_` / `sqp_` pour les squelettes d'élévation et de plan (convention de nommage : règles §7).
@@ -125,7 +125,7 @@ Valeurs actuelles : voir les paramètres (§3). Ce tableau garde l'origine des d
 
 **Point d'intégration de la marche** : nez de marche, face supérieure, milieu de la largeur — c'est le point par lequel passent les lignes de nez du squelette.
 
-Nombre de marches : chaque volée a une marche de moins que de contremarches (la dernière contremarche arrive sur le palier ou l'arrivée). Exception : la volée 2 a une marche de plus, au niveau du palier (D6). Avec 16/6 : 15 + 6 = 21 marches (palier à 2798,5 mm, rive à X = 4110, première contremarche V2 à X = 3836, arrivée à X = 2466).
+Nombre de marches : chaque volée a une marche de moins que de contremarches (la dernière contremarche arrive sur le palier ou l'arrivée). Exception : la volée 2 a une marche de plus, au niveau du palier (D6). Avec 15/7 : 14 + 7 = 21 marches (palier à 2623,6 mm, rive à X = 3836, première contremarche V2 à X = 3562, arrivée à X = 1918).
 
 **Environnement et assemblage**
 
@@ -138,7 +138,7 @@ Nombre de marches : chaque volée a une marche de moins que de contremarches (la
 ## 5. Journal des décisions
 
 - **D1 — Angle calculé, non piloté.** 32,4° est incohérent avec giron 274 et hauteur 172,73 (arctan → 32,23°). On pilote hauteur totale + nombre de contremarches + giron ; l'angle en découle.
-- **D2 — Répartition pilotable.** Départ 17/5 (palier à 2936 mm). L'utilisateur est ensuite passé à **16/6** dans l'app, puis à **14/8** un temps, puis de nouveau à **16/6**, revenu à **17/5** (2026-10-26) et enfin à **16/6** (2026-10-27) ; 16/6 est la valeur actuelle. Le modèle suit ces changements sans erreur.
+- **D2 — Répartition pilotable.** Départ 17/5 (palier à 2936 mm). L'utilisateur est ensuite passé à **16/6** dans l'app, puis à **14/8** un temps, puis de nouveau à **16/6**, revenu à **17/5** (2026-10-26), à **16/6** (2026-10-27) et enfin à **15/7** (2026-10-31) ; 15/7 est la valeur actuelle. Le modèle suit ces changements sans erreur.
 - **D3 — Ensemble marche intégré au squelette, pas en fichier lié.** SolidCraft permet un composant lié (`component.insert_design`), mais les paramètres ne traversent pas les fichiers et le réseau sur chemin n'accepte pas les composants. Intégré, la marche est pilotée directement par `giron` et `emmarchement`.
 - **D4 — Réseau sur chemin plutôt que rectangulaire.** Le chemin est une courbe du squelette : la direction suit l'angle de volée. Le nombre d'occurrences accepte une expression (vérifié).
 - **D5 — Débord sans cote nulle.** SolidCraft refuse une cote de 0. L'arrière de la marche est coté depuis le nez (`giron`) et la longueur totale vaut `giron + debord`.
@@ -194,7 +194,7 @@ SolidCraft change de format de fichier à chaque version : les modèles sont au 
 
 - **Potelets et mains courantes** (piège des unions face contre face, règles §8) : tubes des potelets enfoncés dans les platines (bandes de coupe décalées, cotes `coupe_potelet_v*_penetration*`, et `potelet_*_bas` / `_haut` − 1 mm au palier).
 - **Perçage des limons V1 lent** (0.27.1) : `Trous limons V1` prend 25 à 40 s à chaque recalcul (reprises du booléen « Boolean retry » sur le profilé UPE), alors que `Trous limons V2` prend 3 s ; une extrusion-enlèvement est aussi lente. Chaque renommage de paramètre relance le recalcul : l'app a planté pendant un lot de 30 renommages (2026-10-30, sauvegarde automatique récupérée). Contournement : suspendre `Trous limons V1` et `V2` (`timeline.suppress`) pendant les gros lots de modifications, puis les réactiver ; renommer par petits lots. Diagnostic du 2026-10-30 (aucun essai gardé) : recalcul complet 50 s, dont 20,5 s pour `Trous limons V1` (32 reprises : tolérance affinée puis décalage de l'outil de 0,0099 mm, pour chaque trou) ; les fonctions à reprises (trous des limons, platines des potelets et leurs trous) font ≈ 45 s sur 50. Ni une profondeur plus grande, ni l'extrusion-enlèvement des platines étendue aux limons (mêmes reprises, même décalage) n'y changent rien : c'est le booléen sur les corps `Limon ext/int V1` (21 faces, rien d'anormal) qui coince dans le noyau, pas la façon de percer. Pas de correctif côté modèle trouvé ; signalé : tangency-labs/solidcraft#9724 (cache de géométrie non enregistré : probablement #4443). Test `limon_r` 13 → 0 (annulé) : recalcul complet 50 → 33 s, `Trous limons V1` 20,5 → 7,1 s (reprises 32 → 10), `Trous limons V2` 3,2 → 1,0 s ; limon ext V1 127,0 → 124,3 kg (−2,1 %) ; les arrondis du profilé sont la cause principale. Platines des potelets (avertissement « Boolean retry ») : `coupe_potelet_v1_penetration` et `coupe_potelet_v2_penetration` passés de `potelet_l + 1 mm` à `potelet_l + 3 mm` (le potelet entre de 3 mm dans la platine basse au lieu de 1) : plus de reprise, `Platine basse potelet V1` 4,2 → 1,1 s, `V2` 2,4 → 0,6 s, recalcul complet 33 → 30 s, 0 erreur, 0 interférence. Même essai sur les platines hautes (`…_penetration_haut` à +3) : aucun effet, laissé à +1 ; leurs reprises ont une autre cause. Constat, non causé par ces essais : `Potelet palier V1/V2` et les 3 `Potelet fond` sont des corps à 2 coques (platine haute non soudée au potelet, ou vide intérieur) — à vérifier. Dossier de timeline `Trous limons et palier (suspendre pour travailler)` (`Trous limons V1`, `Trous limons V2`, `Trous palier`, ≈ 24 s) : le suspendre d'un clic pendant les modifications. Les platines des potelets et leurs trous ne peuvent pas y entrer (un dossier = fonctions contiguës, et elles doivent rester avant les réseaux de potelets) : un changement de `mc_h` prend encore ≈ 23 s dossier suspendu. Revenir à des valeurs déjà calculées est instantané (résultats réutilisés).
-- **Noms des corps des réseaux de marches** (piège des réseaux à plusieurs corps, règles §8) : `Marche V1 (16)` était une équerre. Corrigé en 16/6 en renommant les 39 corps selon leur position (`Marche V1 (k)`, `Équerre ext/int V1/V2 (k)`, k compté depuis le bas de chaque volée) et en réaffectant les matériaux. Les noms renommés ne valent que pour 16/6 : dans une autre répartition le réseau reprend ses propres noms (vérifié en 15/7), et ils reviennent au retour en 16/6. Après un changement de répartition : renommer et réaffecter. Piste non testée : trois réseaux par volée, un par corps.
+- **Noms des corps des réseaux de marches** (piège des réseaux à plusieurs corps, règles §8) : `Marche V1 (16)` était une équerre. Corrigé en 16/6 en renommant les 39 corps selon leur position (`Marche V1 (k)`, `Équerre ext/int V1/V2 (k)`, k compté depuis le bas de chaque volée) et en réaffectant les matériaux. Les noms renommés ne valent que pour la répartition où ils ont été faits (15/7 depuis le 2026-10-31 ; 16/6 avant) : dans une autre, le réseau reprend ses propres noms. Après un changement de répartition : renommer et réaffecter (en 15/7, 39 corps mal nommés, dont une équerre en chêne, une marche en acier et 3 équerres en « Default »). Piste non testée : trois réseaux par volée, un par corps.
 
 ### 6.4 État des lieux des logiciels
 
@@ -214,12 +214,13 @@ Dépôt GitHub `mj42584/staircase_solidcraft_claude` (méthode : règles §3 et 
 
 ## 7. Points ouverts
 
-- **Calculs à relancer** : `hauteur_totale` (3800 → 3848), `nb_volee1` (17 → 16), `marche_epaisseur` / `palier_ep` (30 → 60), `limon_dessus` (0 → −25,3), mains courantes ajoutées (poids, poussée horizontale sur les potelets), liaison des pieds au cadre (platine boulonnée 2 M12 au lieu d'un nœud rigide en tête, D15). Calculs faits en 3800 / 17/5 / 30 mm (D14, D15, `calc/rapport/`).
+- **Calculs à relancer** : `hauteur_totale` (3800 → 3848), `nb_volee1` (17 → 15), `marche_epaisseur` / `palier_ep` (30 → 60), `limon_dessus` (0 → −25,3), mains courantes ajoutées (poids, poussée horizontale sur les potelets), liaison des pieds au cadre (platine boulonnée 2 M12 au lieu d'un nœud rigide en tête, D15). Calculs faits en 3800 / 17/5 / 30 mm (D14, D15, `calc/rapport/`).
 - **En cours (tube 30 × 30 × 2)** : `Trous limons V1` et `V2` sont actifs dans `cad/escalier.solidcraft` (constaté le 2026-10-30 : ils l'étaient déjà dans le fichier de `main`), dans le dossier de timeline `Trous limons et palier (suspendre pour travailler)` ; 0 interférence avec les tubes (2026-10-30) ; balayages pas refaits avec les tubes. `Potelet palier V1/V2` et les 3 `Potelet fond` sont des corps à 2 coques (§6.3), à vérifier.
 - **Mains courantes** : nombre des potelets supposé (`potelet_*`, `nb_potelets_*`), accès à la clé pour les écrous sous l'aile, dans le U des limons, non vérifié ; `nb_potelets_*` ≥ 2 (pas des répétitions divisé par `nb - 1`) ; au palier, les vis du potelet d'angle tombent près du bord des mains courantes ; remplissage du garde-corps du palier à faire ; la main courante int V1 passe à 17 mm du `Poteau milieu arrivée` dans le projet (mesuré en rond, pas remesuré en carré ; 0 interférence) ; hauteur de 900 mm à confirmer selon la norme qui s'applique.
 - **Accès aux écrous des limons intérieurs** (platines côté palier) : le U du limon s'ouvre côté jour, avec seulement `jeu_limons` entre les deux limons intérieurs. Pistes : augmenter `jeu_limons` (≈ 150) ou remplacer les platines par des cornières d'attache (D17).
-- **Hauteur libre au-dessus de V1** sous la poutre d'arrivée : `cadre_dessus − ipe_h − (nb_volee1 − nb_volee2) × hauteur_marche` = 3588 − 10 h = **1,84 m** en 16/6 (1,49 m en 17/5) ; ≈ 2 m visés en général.
+- **Hauteur libre au-dessus de V1** sous la poutre d'arrivée : `cadre_dessus − ipe_h − (nb_volee1 − nb_volee2) × hauteur_marche` = 3588 − 8 h = **2,19 m** en 15/7 (1,84 m en 16/6, 1,49 m en 17/5) ; 1,90 m minimum usuel, 2 m conseillés.
 - **Collision dans le projet** (`inspect.interference`, 16/6) : `Poteau milieu arrivée` / `Limon int V1` (3,4 mm). Celle de `Poutre mur` avec le haut de V2 (limon, platine, équerre) a disparu avec le jeu en Y (il faut au moins ≈ 100 mm).
+- **Projet d'assemblage pas recalé en 15/7** : décalage X de l'escalier encore à −2466 (16/6) ; en 15/7, −(`nb_volee1` − `nb_volee2` − 1) × `giron` = −1918 ; collisions à recontrôler.
 - **Jeu V2 / face du cadre** (≈ 227 mm, choisi par l'utilisateur) : à revoir.
 - **Placement de l'escalier dans le projet** : tester les liaisons (joints) pour qu'il suive la répartition (piège du décalage chiffré, règles §8).
 - **Environnement à confirmer** : `cadre_longueur` 3788 vient du croquis, alors que la plateforme mesurée fait ≈ 5,51 m et que 3788 est aussi la hauteur du cadre ; sens de prolongement de `poutre_mur_longueur`.

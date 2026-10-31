@@ -1,6 +1,6 @@
 # Conception — Escalier gab
 
-Ce fichier décrit l'**état actuel** du projet et **le pourquoi des choix**. Les règles de travail avec l'agent sont dans [REGLES_AGENT_3D.md](REGLES_AGENT_3D.md).
+Ce fichier décrit l'**état actuel** du projet et **le pourquoi des choix**. Les règles de travail avec l'agent sont dans [REGLES_SOLIDCRAFT_GITHUB_CLAUDE.md](REGLES_SOLIDCRAFT_GITHUB_CLAUDE.md).
 
 ## 1. Objectif
 
@@ -161,7 +161,7 @@ Nombre de marches : chaque volée a une marche de moins que de contremarches (la
 
 ## 6. Outils et pièges du projet
 
-Les règles de travail sont dans [REGLES_AGENT_3D.md](REGLES_AGENT_3D.md) ; ce chapitre n'en garde que ce qui est propre à ce projet.
+Les règles de travail sont dans [REGLES_SOLIDCRAFT_GITHUB_CLAUDE.md](REGLES_SOLIDCRAFT_GITHUB_CLAUDE.md) ; ce chapitre n'en garde que ce qui est propre à ce projet.
 
 ### 6.1 Versions des logiciels (poste local de l'utilisateur)
 
@@ -323,3 +323,4 @@ Liste fixée par l'utilisateur (2026-10-26) :
 | 2026-10-31 | Enregistrement direct dans `cad/` | Connecteur MCP lancé avec `--allow-path "<projet>/cad"` (`~/.claude.json`) ; `escalier` ouvert depuis `cad/`, enregistré en `.json` puis `.solidcraft` sans copie ni réouverture, fichiers identiques, 106 corps, 0 erreur ; §6.2 mis à jour ; `*.bak` et `.~*.lock` ignorés par Git ; l'ancien `cad/escalier.solidcraft.bak` (27/10, non suivi) a été écrasé par le `save` ; géométrie inchangée | `CONCEPTION.md`, `.gitignore` |
 | 2026-10-31 | Mains courantes carrées, montante d'une seule pièce | Branche `mc-carree` ; `mc_d` → `mc_cote` (45, choix de l'utilisateur) ; 3 Frame Member `round_bar` → `bar` carré ; les 2 Pipe du palier (corps séparés) remplacés par des balayages carrés joints à `Main courante ext V1/V2` (plans et esquisses de section, coudes en onglet) : chaque main courante ext est un seul corps (1 coque, 8 faces) ; paramètres de fonctions renommés ; 104 corps (27 chêne, 77 acier), 0 erreur, 0 interférence ; tests `mc_cote` 45 → 50 → 45, `mc_h` 900 → 950 → 900, `nb_volee1` 16 → 15 → 16 OK (trous suspendus pendant les tests, réactivés) ; projet : lien mis à jour, seule la collision connue ; STL et aperçu régénérés | `cad/escalier.*`, `cad/projet_escalier.*`, `cad/*.stl`, `cad/apercu.png`, `CONCEPTION.md` |
 | 2026-10-31 | Tests hors de l'app | Essai de `solidcraft-cli run` sur une copie de `cad/escalier.json` (tests `mc_cote`, `mc_h`, `nb_volee1` aller-retour, 0 erreur) ; méthode et temps notés au §6.2, outil ajouté au §6.1 ; modèle inchangé | `CONCEPTION.md` |
+| 2026-10-31 | Règles spécialisées | `REGLES_AGENT_3D.md` remplacé par `REGLES_SOLIDCRAFT_GITHUB_CLAUDE.md` (dépôt `cad-agent-rules`, lien vers les règles génériques) ; `AGENTS.md`, `README.md` et renvois de `CONCEPTION.md` mis à jour | `REGLES_*.md`, `AGENTS.md`, `README.md`, `CONCEPTION.md` |

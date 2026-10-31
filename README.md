@@ -19,7 +19,7 @@ Escalier à demi-tour, modélisé de façon paramétrique dans **SolidCraft** et
 | Fichier | Rôle |
 |---|---|
 | [CONCEPTION.md](CONCEPTION.md) | État du projet : paramètres, architecture du modèle, décisions, points ouverts, historique |
-| [REGLES_AGENT_3D.md](REGLES_AGENT_3D.md) | Règles de travail avec l'agent, réutilisables sur d'autres projets 3D |
+| [REGLES_SOLIDCRAFT_GITHUB_CLAUDE.md](REGLES_SOLIDCRAFT_GITHUB_CLAUDE.md) | Règles de travail avec l'agent (SolidCraft + GitHub + Claude Code), issues de [cad-agent-rules](https://github.com/mj42584/cad-agent-rules) |
 | [AGENTS.md](AGENTS.md) | Point d'entrée pour un agent (ordre de lecture) |
 
 Conçu avec l'aide de [Claude Code](https://claude.com/claude-code).

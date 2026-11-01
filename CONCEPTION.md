@@ -175,7 +175,7 @@ Les règles de travail et les pièges de SolidCraft sont dans [REGLES_SOLIDCRAFT
 
 | Logiciel | Rôle | Référence | Vérifier avec |
 |---|---|---|---|
-| SolidCraft (Flatpak utilisateur `io.tangencylabs.solidcraft`, installé depuis les releases GitHub de `tangency-labs/solidcraft`, pas Flathub) | modèle 3D | **0.27.1** | `flatpak info --user io.tangencylabs.solidcraft` |
+| SolidCraft (Flatpak utilisateur `io.tangencylabs.solidcraft`, installé depuis les releases GitHub de `tangency-labs/solidcraft`, pas Flathub) | modèle 3D | **0.29.0** | `flatpak info --user io.tangencylabs.solidcraft` |
 | Connecteur MCP SolidCraft | pilotage du 3D par l'agent | celui de l'app, port 27878 | `~/.claude.json` |
 | `solidcraft-cli` | tests de paramètres hors de l'app (§6.2) | celle de l'app (même Flatpak) | `flatpak run --user --command=solidcraft-cli io.tangencylabs.solidcraft --help` |
 | Python 3 | calculs | à relever | `python3 --version` |
@@ -183,7 +183,7 @@ Les règles de travail et les pièges de SolidCraft sont dans [REGLES_SOLIDCRAFT
 | PyVista, NumPy | visualisation (`visu.py`) | à relever | `pip show pyvista numpy` |
 | Claude Code | agent | à relever | `claude --version` |
 
-SolidCraft change de format de fichier à chaque version : les modèles sont au format `solidcraft/44` (0.27.1) et ne s'ouvrent plus en 0.24.1. Depuis 0.27, l'identifiant Flatpak a changé (`ai.storyteller.solidcraft` → `io.tangencylabs.solidcraft`) et l'extension par défaut des nouveaux modèles est `.sc` ; nos `.solidcraft` s'ouvrent et s'enregistrent sous leur nom.
+SolidCraft change de format de fichier à chaque version : les modèles sont au format 46 (0.29.0) et ne s'ouvrent plus en 0.28 ni avant ; la version 0.27.1 de `main` avant la PR de mise à jour reste au format 44. Depuis 0.27, l'identifiant Flatpak a changé (`ai.storyteller.solidcraft` → `io.tangencylabs.solidcraft`) et l'extension par défaut des nouveaux modèles est `.sc` ; nos `.solidcraft` s'ouvrent et s'enregistrent sous leur nom.
 
 ### 6.2 Fichiers et dossiers
 
@@ -200,6 +200,16 @@ SolidCraft change de format de fichier à chaque version : les modèles sont au 
 - **Noms des corps des réseaux de marches** (piège des réseaux à plusieurs corps, règles §8) : `Marche V1 (16)` était une équerre. Corrigé en 16/6 en renommant les 39 corps selon leur position (`Marche V1 (k)`, `Équerre ext/int V1/V2 (k)`, k compté depuis le bas de chaque volée) et en réaffectant les matériaux. Les noms renommés ne valent que pour la répartition où ils ont été faits (15/7 depuis le 2026-10-31 ; 16/6 avant) : dans une autre, le réseau reprend ses propres noms. Après un changement de répartition : renommer et réaffecter (en 15/7, 39 corps mal nommés, dont une équerre en chêne, une marche en acier et 3 équerres en « Default »). Piste non testée : trois réseaux par volée, un par corps.
 
 ### 6.4 État des lieux des logiciels
+
+*SolidCraft 0.27.1 → 0.29.0* (2026-11-01, Flatpak des releases GitHub, somme SHA256 vérifiée) : les 3 modèles mesurés par `solidcraft-cli eval` en 0.27.1 puis en 0.29.0 : escalier 146 corps, environnement 13, projet 159, volumes, matériaux, encombrements et masses identiques, 0 erreur (avertissements connus de `Trous limon ext/int V1`) ; escalier 0 interférence dans l'app ; aller-retour `nb_volee1` 15 → 16 → 15 et `mc_h` 900 → 1000 → 900 sans erreur (CLI : 11,0 s et 6,8 s, contre 8,3 et 6,9 s en 0.27.1, §6.3) ; réenregistrés sans cache au format 46 (un premier enregistrement, fait avant le redémarrage de l'app, était resté au format 44). Nouveautés **testées** :
+- `check_parameters {set, report}` (outil MCP) : essaie une ou plusieurs valeurs ensemble, rend erreurs, avertissements et mesures, puis remet le modèle (`restored: true`, vérifié) ; `nb_volee1` 16, puis `mc_h` 1000 + `giron` 280 : 0 erreur, ≈ 24 s pour les deux. `report: ["errors"]` : la mesure liste les 146 corps (très long).
+- `expect {volume_mm3, bodies, bbox}` sur `execute` / `batch` : volume (146 corps, 622 152 986 mm³) et encombrement justes → `ok` ; valeurs fausses → erreur qui nomme chaque écart, modèle gardé tel quel.
+- Oblong (modèle jetable) : `sketch.slot.center_to_center` refuse toujours les expressions, mais l'oblong dessiné en chiffres puis coté (rayon `(boulon + jeu) / 2`, entraxe des centres, côté vertical) est à 0 DDL et suit les paramètres (vérifié : 12 → 16, 10 → 20, volume juste). Les rainures cotées actuelles restent valables ; pas de changement du modèle.
+- `assembly.mass_properties` (escalier, 15/7) : masse par exemplaire, total **1141,28 kg** = `solidcraft-cli eval` (1141,3) ; acier 745,9, chêne 395,3. Racine (marches, plancher, mains courantes) 406,6 kg, cadre 173,0, limons ext/int V1 118,4 chacun, V2 63,3 chacun, pied 40,9 (× 4), potelet de volée 2,01 (× 12), potelet de palier 2,13 (× 5). Il donne aussi les groupes rigides (liaisons `joint.as_built`) : cadre + 4 pieds + 5 potelets du palier 347,1 kg, chaque limon avec ses potelets. Réponse longue (≈ 90 Ko).
+- Nomenclature (`assembly.bom`, `top` ou `flat`, `group_children`) : une ligne par ensemble « inseparable » avec son nombre (pieds 4, potelets 12 et 5 : 8 lignes, 26 exemplaires), mais **pas les pièces dessous** : `children` ne liste que des sous-composants (achetés, avec référence), pas les corps d'un ensemble. Les corps de la racine (marches, plancher, mains courantes) n'y sont pas. Pour lister les pièces : un sous-composant par pièce, ou `mass_properties` (corps par exemplaire).
+- Frame Member renommé : `check_parameters {nb_volee1: 16}` → 0 erreur, 146 corps, `Limon ext/int V1/V2` et leurs platines gardent leur nom et leur place (bout V1 à X = 4095, rive 4110) ; avertissements connus de `Trous limon ext/int V1` ; modèle remis (`restored: true`).
+- Interférences du projet (`projet_escalier`, 159 corps, 23 s) : seule la collision connue `Poteau milieu arrivée` / `Limon int V1` (3,4 mm, 9 721 mm³, §7). Le projet nomme désormais les corps des exemplaires (`Platine tête (Ensemble pied:3)`).
+Pistes **non testées** : Insert Part dans plusieurs trous (visserie). Aucune correction annoncée pour nos pièges (union face contre face, reprises du booléen sur l'UPE #9724, cote nulle D5, noms des réseaux à plusieurs corps). Le `.bak` est un lien dur : il garde bien l'ancienne version (constaté).
 
 *SolidCraft 0.24.1 → 0.27.1* (2026-10-30, constaté dans l'app ; notes de version intermédiaires **non relues**) : les 3 modèles s'ouvrent sans erreur ; escalier 82 corps, encombrement identique, volume identique à l'export de la 0.24.1 (écart 0,015 %, maillage STL) ; environnement 13 corps conformes ; projet 95 corps, liens à jour, seule la collision connue (§7). Changé : piège des noms des corps de réseaux (§6.3). Inchangé : matériaux perdus par les liens (règles §8). Les pistes ci-dessous (0.24.1) restent à tester.
 
@@ -330,3 +340,4 @@ Liste fixée par l'utilisateur (2026-10-26) :
 | 2026-11-01 | Potelets : 2 ensembles soudés de 3 corps, posés 12 et 5 fois, liés aux trous | [PR #18](https://github.com/mj42584/staircase_solidcraft_claude/pull/18) | `cad/escalier.solidcraft`, `CONCEPTION.md` |
 | 2026-11-01 | Mesures de vitesse après les ensembles (recalcul complet 27 → 7,7 s) | [PR #19](https://github.com/mj42584/staircase_solidcraft_claude/pull/19) | `CONCEPTION.md` |
 | 2026-11-01 | Règles de l'agent : conception par ensembles (composants soudés, pièces posées N fois et liées), pièges SolidCraft | [PR #20](https://github.com/mj42584/staircase_solidcraft_claude/pull/20) | `REGLES_SOLIDCRAFT_GITHUB_CLAUDE.md`, `CONCEPTION.md` |
+| 2026-11-01 | Mise à jour SolidCraft 0.27.1 → 0.29.0 : 3 modèles contrôlés et réenregistrés au format 46 ; `check_parameters`, `expect` et oblongs cotés testés | [PR #21](https://github.com/mj42584/staircase_solidcraft_claude/pull/21) | `cad/*.solidcraft`, `CONCEPTION.md`, `REGLES_SOLIDCRAFT_GITHUB_CLAUDE.md` |

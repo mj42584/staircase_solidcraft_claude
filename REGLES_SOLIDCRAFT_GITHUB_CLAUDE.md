@@ -21,7 +21,7 @@ Version spécialisée des règles génériques ([REGLES_AGENT_3D.md](https://git
 1. **Constater** : version de SolidCraft (`flatpak info --user io.tangencylabs.solidcraft`), modèle ouvert, nombre de corps, erreurs. Signaler seulement les écarts avec `CONCEPTION.md`.
 2. **Plan** → « oui » → branche depuis `main` à jour (nom court de la tâche). Git ne fusionne pas les modèles (binaires) : une seule branche à la fois touche un modèle.
 3. **Réaliser** par lots (`batch`), puis **tester** : faire varier un ou deux paramètres concernés puis revenir, 0 erreur, 0 interférence. Le projet d'assemblage n'est pas ouvert : il relit le modèle lié à sa prochaine ouverture, et les interférences avec l'environnement se contrôlent à la demande.
-   Les variations de paramètres se font **en ligne de commande** (§5), sur une copie du modèle enregistré, en arrière-plan : l'app reste libre et le modèle ouvert n'est pas touché. Les interférences se contrôlent dans l'app (`inspect.interference`).
+   Les variations de paramètres se font avec l'outil `check_parameters {set: {<paramètre>: <valeur>, …}, report: ["errors"]}` (0.29) : il essaie les valeurs dans l'app puis remet le modèle ; ou **en ligne de commande** (§5), sur une copie du modèle enregistré, en arrière-plan, pour garder l'app libre. Un lot de construction porte un `expect {volume_mm3, bodies, bbox}` quand on connaît le résultat attendu. Les interférences se contrôlent dans l'app (`inspect.interference`).
 4. **Enregistrer** (§4) avant les tests en ligne de commande, puis en fin de tâche ; mettre à jour `CONCEPTION.md`, commit, push, ouvrir la PR. La description de la PR est le compte rendu complet ; elle dit aussi ce qui n'est pas fait ou pas vérifié.
 
 Tâche non terminée enregistrée à la demande : PR en brouillon (*draft*), et ce qui reste suspendu ou non vérifié dans les points ouverts.
@@ -86,14 +86,14 @@ Il est relu à chaque session : le garder court.
 - **Recalcul lent** : regrouper les fonctions lentes dans un dossier de la timeline et le suspendre (`timeline.suppress`) pendant les modifications ; le réactiver avant de tester.
 - **Commande qui ne répond pas** (`still running:`) : ne pas la renvoyer, attendre avec `pending`.
 - **Plantage** : récupérer la sauvegarde automatique, puis reprendre à l'étape « Constater ».
-- **Nouvelle version de SolidCraft** : ouvrir chaque modèle, comparer le nombre de corps, les erreurs et les volumes, puis les réenregistrer. Le format de fichier change souvent : une version plus ancienne n'ouvre plus le fichier.
+- **Nouvelle version de SolidCraft** : redémarrer l'app **et** la session de l'agent (le connecteur MCP garde l'ancien binaire et ses outils), vérifier le format dans `document.json` d'un fichier enregistré ; ouvrir chaque modèle, comparer le nombre de corps, les erreurs et les volumes, puis les réenregistrer. Le format de fichier change souvent : une version plus ancienne n'ouvre plus le fichier.
 
 **Pièges connus** (0.27.1 sauf mention ; une ligne par piège, symptôme → contournement) :
 
 - Contrainte verticale ou horizontale : commande `sketch.constraint.horizontal_vertical` (`mode`) ; il n'y a pas de `sketch.constraint.vertical`.
 - Esquisse sur un plan décalé de XZ : l'axe vertical de l'esquisse va vers −Z, les coordonnées Z s'écrivent en négatif ; les cotes restent des distances positives.
 - Point défini par une expression : pour le libérer, supprimer la ligne et la redessiner avec l'option `ids` (même identifiant, un Frame Member la retrouve) ; Fix/UnFix et le déplacement ne suffisent pas.
-- La commande d'oblong n'accepte pas d'expressions : dessiner des rainures cotées.
+- La commande d'oblong (`sketch.slot.*`) n'accepte pas d'expressions (0.29 aussi) → la dessiner en chiffres, puis coter rayon et entraxe des centres en expressions et contraindre un côté (0 DDL, suit les paramètres).
 - Union de deux corps en contact face contre face (tube mince sur une platine, balayage bout à bout d'une barre) : échec (`boolean Union: no result`) ou corps à 2 coques (`kernel.shells` = 2 dans `measure`) → corps séparés au contact (ensemble soudé), ou faire pénétrer l'un dans l'autre (1 à 3 mm), ou faire repartir le balayage du début de la barre.
 - Profilés avec congés (UPE…) : les booléens qui les percent reprennent (« Boolean retry ») et ralentissent le recalcul → congés à 0 si la section exacte n'est pas utile au modèle.
 - Un réseau qui répète plusieurs corps numérote ses copies à la suite en les mélangeant : les noms (et les matériaux affectés par nom) tombent sur les mauvais corps → un réseau par corps.

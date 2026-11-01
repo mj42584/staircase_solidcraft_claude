@@ -329,4 +329,4 @@ Liste fixée par l'utilisateur (2026-10-26) :
 | 2026-10-31 | Pièces soudées en sous-composants : cadre, 4 pieds, 4 limons (corps séparés) | [PR #16](https://github.com/mj42584/staircase_solidcraft_claude/pull/16) | `cad/escalier.solidcraft`, `CONCEPTION.md` |
 | 2026-11-01 | Ensembles soudés avec leurs fonctions : perçages scindés, un Frame Member par pied | [PR #17](https://github.com/mj42584/staircase_solidcraft_claude/pull/17) | `cad/escalier.solidcraft`, `CONCEPTION.md` |
 | 2026-11-01 | Potelets : 2 ensembles soudés de 3 corps, posés 12 et 5 fois, liés aux trous | [PR #18](https://github.com/mj42584/staircase_solidcraft_claude/pull/18) | `cad/escalier.solidcraft`, `CONCEPTION.md` |
-| 2026-11-01 | Mesures de vitesse après les ensembles (recalcul complet 27 → 7,7 s) | PR à venir | `CONCEPTION.md` |
+| 2026-11-01 | Mesures de vitesse après les ensembles (recalcul complet 27 → 7,7 s) | [PR #19](https://github.com/mj42584/staircase_solidcraft_claude/pull/19) | `CONCEPTION.md` |

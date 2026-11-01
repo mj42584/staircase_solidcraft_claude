@@ -32,7 +32,7 @@ Le connecteur n'enregistre que dans les dossiers qu'on lui autorise. Lancer le s
 
 À chaque enregistrement, dans cet ordre :
 
-1. `save {path: "<projet>/cad/<modèle>.solidcraft"}` : le seul format enregistré ; l'app continue sur ce fichier, pas besoin de le rouvrir.
+1. `file.save {path: "<projet>/cad/<modèle>.solidcraft", cache: false, overwrite: true}` (par `execute`) : le seul format enregistré ; l'app continue sur ce fichier, pas besoin de le rouvrir. Sans `cache: false`, le cache de géométrie est écrit (fichier ×13) ; `overwrite` est nécessaire quand Git a réécrit le fichier (changement de branche).
 2. Un commit qui contient le modèle et `CONCEPTION.md`.
 
 Pas de `.json` ni d'exports (STL, STEP, images) dans le dépôt : ils se font à la demande, hors commit (`.gitignore`). Le modèle étant binaire, `CONCEPTION.md` et la description de la PR sont la seule trace lisible de ses modifications.
@@ -45,7 +45,8 @@ Chemins absolus. Le fichier courant se lit dans le retour de `open` ou de `save`
 
 - Script : `{"commands": [{"command": "parameters.change", "params": {"name": "<paramètre>", "expression": "<valeur>"}}, …]}`, l'aller puis le retour.
 - Commande, lancée en arrière-plan : `flatpak run --user --filesystem=<dossier du script> --command=solidcraft-cli io.tangencylabs.solidcraft run <script.json> --in "<projet>/cad/<modèle>.solidcraft" --results --timings --json-out <résultat.json>`. Sans `--filesystem`, le Flatpak ne voit pas `/tmp`.
-- Lire dans le résultat les `errors` de chaque étape.
+- Lire dans le résultat les `errors` de chaque étape. Pour placer une pièce posée plusieurs fois, `occurrence.properties` (bbox de l'exemplaire) avant et après.
+- Mesurer la vitesse : `inspect.parameter_sweep {parameter, values}` donne la durée de recalcul de chaque valeur (`ms`) ; `document.inspect` celle de chaque fonction à l'ouverture.
 - Ce n'est pas plus rapide que dans l'app : le modèle est recalculé une fois à l'ouverture, puis à chaque changement. Lancer plusieurs scripts en parallèle (un par paramètre) fait gagner un peu.
 - Le modèle testé est celui **enregistré** : enregistrer avant de tester.
 
@@ -65,9 +66,20 @@ Il est relu à chaque session : le garder court.
 - **Tout renommer tout de suite** : esquisses, fonctions, corps, plans, et tous les paramètres, y compris ceux des fonctions (extrusions, décalages, réseaux), qu'on liste avec `parameters.list {filter: all}` (ils n'apparaissent pas dans `inspect_design`). Cotes nommées `<pièce>_<rôle>` (ex. `limon_v1_bas`). Renommer par petits lots : chaque renommage relance le recalcul.
 - **Squelette** : s'appuyer sur des esquisses maîtresses et des plans pilotés, jamais sur les faces d'autres corps.
 - **Esquisses à 0 degré de liberté.**
-- **Un corps par pièce réelle**, avec son matériau dès sa création ; un corps qui apparaît plus tard (copie de réseau au-delà du nombre affecté) reste en « Default » : l'affecter.
-- **Réseaux et symétries** pilotés par des paramètres plutôt que des copies ; de préférence la symétrie du corps entier.
+- **Un corps par pièce réelle**, y compris dans un ensemble soudé, avec son matériau dès sa création ; un corps qui apparaît plus tard (copie de réseau au-delà du nombre affecté) reste en « Default » : l'affecter.
+- **Réseaux et symétries** pilotés par des paramètres plutôt que des copies, pour les pièces de la racine (marches…) ; de préférence la symétrie du corps entier, et un réseau par corps.
 - **Simplifications déclarées** dans `CONCEPTION.md`.
+
+### Ensembles (depuis 2026-11-01)
+
+- **Pièces soudées entre elles = un sous-composant** de type « inseparable » (`component.metadata.set {bom_type: inseparable}`) : une ligne de nomenclature, ses pièces dessous. Il porte **ses esquisses, plans et fonctions**, pas seulement ses corps.
+- **Repère propre** : construire l'ensemble à l'origine du composant (origine sur sa face d'appui ou un angle utile, plans inclinés par `construct.plane.at_angle` si besoin), avec les paramètres globaux du modèle ; puis le poser.
+- **Pièce identique répétée = un seul composant posé N fois** (`occurrence.copy`, puis `occurrence.move` avec une matrice), pas un réseau ni une symétrie de corps : une seule pièce à calculer et à modifier (recalcul ≈ 3,5 fois plus rapide sur l'escalier). Le nombre d'exemplaires devient fixe : le dire à l'utilisateur avant.
+- **Chaque exemplaire est lié** par une liaison rigide `joint.as_built` à la géométrie qui le pilote, sur un ensemble ancré : `at: {occurrence, circle: [point du bord d'un trou]}` ou `{occurrence, edge, on, corner}`. Il suit alors les paramètres ; jamais un décalage chiffré seul.
+- **Pièces au contact, sans pénétration** : dans un ensemble à plusieurs corps, couper au ras (une pénétration devient une interférence). Prolonger la pièce coupée en biais avant de la couper, sinon un coin n'atteint pas la face.
+- **Noms de corps uniques dans tout le modèle**, même d'un composant à l'autre (`<pièce> <ensemble>` : `Platine basse potelet volée`).
+- **Perçage commun à plusieurs ensembles** : l'esquisse reste à la racine, une découpe (ou un Trou) par ensemble, sur la même esquisse.
+- **Remplacer sans perdre** : poser le nouvel ensemble avant de supprimer l'ancien arbre, et vérifier le recouvrement (`inspect.interference` : chaque paire ancien / nouveau a le volume entier du corps) ; puis supprimer, et contrôler 0 erreur, 0 interférence, les paramètres en aller-retour.
 
 ## 8. Quand SolidCraft résiste
 
@@ -82,9 +94,16 @@ Il est relu à chaque session : le garder court.
 - Esquisse sur un plan décalé de XZ : l'axe vertical de l'esquisse va vers −Z, les coordonnées Z s'écrivent en négatif ; les cotes restent des distances positives.
 - Point défini par une expression : pour le libérer, supprimer la ligne et la redessiner avec l'option `ids` (même identifiant, un Frame Member la retrouve) ; Fix/UnFix et le déplacement ne suffisent pas.
 - La commande d'oblong n'accepte pas d'expressions : dessiner des rainures cotées.
-- Union de deux corps en contact face contre face (tube mince sur une platine, balayage bout à bout d'une barre) : échec (`boolean Union: no result`) ou corps à 2 coques (`kernel.shells` = 2 dans `measure`) → faire pénétrer l'un dans l'autre (1 à 3 mm), ou faire repartir le balayage du début de la barre.
+- Union de deux corps en contact face contre face (tube mince sur une platine, balayage bout à bout d'une barre) : échec (`boolean Union: no result`) ou corps à 2 coques (`kernel.shells` = 2 dans `measure`) → corps séparés au contact (ensemble soudé), ou faire pénétrer l'un dans l'autre (1 à 3 mm), ou faire repartir le balayage du début de la barre.
 - Profilés avec congés (UPE…) : les booléens qui les percent reprennent (« Boolean retry ») et ralentissent le recalcul → congés à 0 si la section exacte n'est pas utile au modèle.
 - Un réseau qui répète plusieurs corps numérote ses copies à la suite en les mélangeant : les noms (et les matériaux affectés par nom) tombent sur les mauvais corps → un réseau par corps.
-- Depuis le Frame Member, l'enregistrement n'écrit plus le cache de géométrie : l'ouverture recalcule tout (cause non établie).
-- Assemblage : `component.relink` n'accepte qu'un `.solidcraft` ; `component.insert_design` et `occurrence.move` ne prennent qu'un décalage chiffré (une pièce ne suit pas ses paramètres, la recaler à la main) ; les matériaux des composants liés n'y passent pas (« Default », masse fausse).
-- Lister les commandes de liaison (`list_commands` filtre `joint`) a semblé faire planter l'app (0.22) : à éviter tant que ce n'est pas vérifié.
+- L'outil `save` du connecteur écrit le cache de géométrie (474 Ko au lieu de 37 Ko, 2026-11-01) → `file.save` avec `cache: false` (§4).
+- Assemblage : `component.relink` n'accepte qu'un `.solidcraft` ; `component.insert_design` ne prend qu'un décalage chiffré ; les matériaux des composants liés n'y passent pas (« Default », masse fausse). Le projet ne voit l'escalier que comme un bloc de corps à plat (sans ses sous-composants).
+- `occurrence.move {matrix}` compose avec la position actuelle (relatif) ; un exemplaire neuf (`occurrence.copy`) est à l'identité, la matrice y est donc absolue. Placer puis lier (`joint.as_built`) pour qu'il suive les paramètres.
+- `component.move_features` refuse une fonction qui touche des corps de plusieurs composants → la scinder (une fonction par composant sur la même esquisse) ; il refuse aussi de casser un `BodyTransfer`.
+- Supprimer une fonction dont un paramètre sert ailleurs (répétition d'esquisse qui cite `reseau_…`) casse ces esquisses, et on ne peut plus les réparer après coup → **avant** de supprimer, remplacer la référence par son expression (`sketch.edit`, `sketch.pattern.rectangular {pattern, entities, count, spacing, spacing2}`).
+- `timeline.edit` d'une extrusion : `operation` vaut `new_body`, `join`, `cut` ou `intersect` (pas `new`), pas de `body_name` → `body.rename` après ; un corps renommé ou créé ainsi repasse en « Default ».
+- Un `batch` dont une commande échoue est entièrement annulé (`rolled_back`) : ne pas mettre un contrôle douteux à la fin d'un lot de construction.
+- Cote `distance_y` entre deux points confondus (origine et début de ligne) refusée (« over-constrain ») → coter l'autre bout de la ligne.
+- Rouvrir un chemin déjà ouvert garde le document en mémoire → `new_design` avant `open`.
+- Lister les commandes de liaison (`list_commands` filtre `joint`) a semblé faire planter l'app (0.22) → `describe_command` ou `skill_reference {skill: solidcraft-mechanisms}` (formes des origines de liaison), sans souci en 0.27.1.

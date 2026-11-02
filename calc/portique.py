@@ -114,13 +114,13 @@ def construire(tete_rigide=True):
                 m.def_releases(nom, Ryi=True, Rzi=True)
             charge(nom, "G", wl_G)
             charge(nom, "Q", wl_Q)
-            m.add_member_dist_load(nom, "FZ", -q_gc, -q_gc, case="GCY")
+            m.add_member_dist_load(nom, "FZ", q_gc, q_gc, case="GCY")
 
-    # Poussée sur les mains courantes, toutes dans le même sens (côté sécurité), appliquée à l'axe des barres :
-    # en travers (Y) sur les 4 limons et les poutres latérales, en long (X) sur la poutre arrière.
+    # Poussée sur les mains courantes, toutes dans le sens des défauts de verticalité (côté sécurité), appliquée
+    # à l'axe des barres : en travers (Y) sur les 4 limons et les poutres latérales, en long (X) sur la poutre arrière.
     # shortcut: pas de moment dû à la hauteur de la main courante (torsion des limons, platines des potelets)
     for b in ("PL1", "PL2"):
-        m.add_member_dist_load(b, "FZ", -q_gc, -q_gc, case="GCY")
+        m.add_member_dist_load(b, "FZ", q_gc, q_gc, case="GCY")
     m.add_member_dist_load("PB", "FX", q_gc, q_gc, case="GCX")
 
     # Défauts de verticalité (EN 1993-1-1 §5.3.2) en forces horizontales aux 4 angles du palier
@@ -164,16 +164,20 @@ def resultats(m, poutres_avant, coins, tete_rigide=True):
     taux = 0.0
     for p in (f"T{n}" for n in coins):
         for c in elu:
-            N = -m.members[p].min_axial(c)
+            N = m.members[p].max_axial(c)  # PyNite : compression positive
             M = max(abs(m.members[p].max_moment(a, c)) for a in ("My", "Mz"))
             M = max(M, max(abs(m.members[p].min_moment(a, c)) for a in ("My", "Mz")))
             taux = max(taux, N / N_b + M / (tube_W * fy / gM0))
     verif(f"Pieds tube {poteau_cote}×{poteau_ep}", "N + M ELU", taux, 1.0, "taux")
 
-    # Limons V1 : flexion forte
-    sigma = max(max(abs(m.members[f"LV1{k}"].max_moment("Mz", c)), abs(m.members[f"LV1{k}"].min_moment("Mz", c))) / upe_W
-                for k in (0, 1) for c in elu)
-    verif("Limons V1 UPE 220", "flexion ELU", sigma, fy / gM0, "MPa")
+    # Limons : flexion forte (charges verticales) + faible (poussée des mains courantes)
+    def m_max(barre, axe, c):
+        return max(abs(m.members[barre].max_moment(axe, c)), abs(m.members[barre].min_moment(axe, c)))
+
+    for v in ("V1", "V2"):
+        sigma = max(m_max(f"L{v}{k}", "Mz", c) / upe_W + m_max(f"L{v}{k}", "My", c) / upe_Wz
+                    for k in (0, 1) for c in elu)
+        verif(f"Limons {v} UPE 220", "flexion ELU", sigma, fy / gM0, "MPa")
 
     # Efforts aux appuis (ELU) pour chevilles et fixation de l'arrivée
     print("\nEfforts aux appuis, enveloppe ELU (N vertical en kN, V horizontal en kN, M en kN·m) :")
@@ -201,6 +205,12 @@ def _auto_controle():
     m.analyze()
     assert isclose(-m.members["p"].min_deflection("dy", "C"), 5 * 4000**4 / (384 * E_acier * upe_I), rel_tol=1e-3)
     assert isclose(-m.members["p"].min_moment("Mz", "C"), 4000**2 / 8, rel_tol=1e-3)  # moment positif = négatif dans PyNite
+    # Signe de l'effort normal : un poteau comprimé a un effort normal positif
+    m.add_node("h", 0, 1000, 0)
+    m.add_member("c", "a", "h", "acier", "tube")
+    m.add_node_load("h", "FY", -1000, case="G")
+    m.analyze()
+    assert isclose(m.members["c"].max_axial("C"), 1000, rel_tol=1e-3)
     assert 2.3e6 < upe_Iz < 2.6e6 and 25 < e_cc < 40  # ordres de grandeur d'un UPE 220
 
 

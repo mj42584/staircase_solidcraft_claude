@@ -3,9 +3,10 @@
 Reprend les paramètres et hypothèses de calc/predim.py. Ordres de grandeur, pas une note de calcul.
 Installer : pip install PyNiteFEA. Lancer : python3 calc/portique.py
 
-Appuis : pieds et bas des limons V1 encastrés (platines chevillées dans la dalle) ; haut des limons V2
-articulé (boulonné à la structure supérieure) ; limons articulés sur la poutre avant (platines boulonnées).
-Les marches ne relient pas les limons entre eux dans le modèle (côté sécurité).
+Appuis : pieds encastrés au sol (platine à 4 chevilles) ; bas des limons V1 articulé (2 chevilles alignées
+dans l'axe du limon, D28) ; haut des limons V2 articulé (boulonné à la structure supérieure) ; limons
+articulés sur la poutre avant (platines boulonnées). Tête des pieds (platine boulonnée par 2 M12 sous le cadre) :
+calculée rigide puis articulée, les deux bornes. Les marches ne relient pas les limons entre eux (côté sécurité).
 """
 from math import cos, isclose, sqrt, tan
 
@@ -48,7 +49,7 @@ def nouveau_modele():
     # PyNite : local z = axe fort d'une barre non verticale quand Y est vertical
     m.add_section("UPE", upe_A, upe_Iz, upe_I, upe_J)
     m.add_section("tube", tube_A, tube_I, tube_I, tube_J)
-    m.add_section("rigide", 1e6, 1e12, 1e12, 1e12)
+    m.add_section("rigide", 1e6, 1e10, 1e10, 1e10)  # 400 × l'UPE : au-delà, le solveur rejette le système mal conditionné
     return m
 
 
@@ -56,7 +57,7 @@ def noeud(m, nom, x, y, z):
     return m.add_node(nom, x, z, y)  # PyNite veut Y vertical : (x, y, z) → (x, z, y)
 
 
-def construire():
+def construire(tete_rigide=True):
     m = nouveau_modele()
     tot = {"G": 0.0, "Q": 0.0}
 
@@ -87,6 +88,8 @@ def construire():
         noeud(m, f"S{haut}", x, y, 0)
         m.def_support(f"S{haut}", True, True, True, True, True, True)
         m.add_member(f"T{haut}", f"S{haut}", haut, "acier", "tube")
+        if not tete_rigide:
+            m.def_releases(f"T{haut}", Ryj=True, Rzj=True)
         charge(f"T{haut}", "G", tube_A * g_acier)
 
     # Limons : charges par mètre horizontal ramenées à la longueur inclinée
@@ -101,7 +104,7 @@ def construire():
             m.add_member(f"{nom}e", appui, f"{nom}p", "acier", "rigide")
             if volee == "V1":
                 noeud(m, f"{nom}s", X_0, y, 0)
-                m.def_support(f"{nom}s", True, True, True, True, True, True)
+                m.def_support(f"{nom}s", True, True, True, False, False, False)
                 m.add_member(nom, f"{nom}s", f"{nom}p", "acier", "UPE")
                 m.def_releases(nom, Ryj=True, Rzj=True)
             else:
@@ -111,6 +114,14 @@ def construire():
                 m.def_releases(nom, Ryi=True, Rzi=True)
             charge(nom, "G", wl_G)
             charge(nom, "Q", wl_Q)
+            m.add_member_dist_load(nom, "FZ", q_gc, q_gc, case="GCY")
+
+    # Poussée sur les mains courantes, toutes dans le sens des défauts de verticalité (côté sécurité), appliquée
+    # à l'axe des barres : en travers (Y) sur les 4 limons et les poutres latérales, en long (X) sur la poutre arrière.
+    # shortcut: pas de moment dû à la hauteur de la main courante (torsion des limons, platines des potelets)
+    for b in ("PL1", "PL2"):
+        m.add_member_dist_load(b, "FZ", q_gc, q_gc, case="GCY")
+    m.add_member_dist_load("PB", "FX", q_gc, q_gc, case="GCX")
 
     # Défauts de verticalité (EN 1993-1-1 §5.3.2) en forces horizontales aux 4 angles du palier
     alpha_h = min(1.0, max(2 / 3, 2 / sqrt(Z_c / 1000)))
@@ -123,16 +134,20 @@ def construire():
     for d in ("X", "Y"):
         m.add_load_combo(f"ELU_{d}", {"G": 1.35, "Q": 1.5, f"H{d}": 1.0})
         m.add_load_combo(f"ELS_{d}", {"G": 1.0, "Q": 1.0, f"H{d}": r})
+        m.add_load_combo(f"ELU_GC{d}", {"G": 1.35, f"GC{d}": 1.5, "Q": 1.05, f"H{d}": 1.0})
+        m.add_load_combo(f"ELS_GC{d}", {"G": 1.0, f"GC{d}": 1.0, "Q": 0.7, f"H{d}": r})
     # shortcut: Q partout en même temps, pas de chargement alterné d'une seule volée ; à ajouter si une vérif est limite
     m.analyze(check_statics=False)
     return m, poutres_avant, coins
 
 
-def resultats(m, poutres_avant, coins):
-    elu, els = ("ELU_X", "ELU_Y"), ("ELS_X", "ELS_Y")
-    # Stabilité : déplacement horizontal du palier
-    d = max(sqrt(m.nodes[n].DX[c] ** 2 + m.nodes[n].DZ[c] ** 2) for n in coins for c in els)
-    verif("Palier (défauts de verticalité)", "dépl. horiz. ELS", d, Z_c / 300, "mm")
+def resultats(m, poutres_avant, coins, tete_rigide=True):
+    elu = ("ELU_X", "ELU_Y", "ELU_GCX", "ELU_GCY")
+    els = ("ELS_X", "ELS_Y", "ELS_GCX", "ELS_GCY")
+    # Stabilité : déplacement horizontal du palier, en long (X) et en travers (Y)
+    for d, ddl in (("X", "DX"), ("Y", "DZ")):
+        u = max(abs(getattr(m.nodes[n], ddl)[c]) for n in coins for c in els)
+        verif(f"Palier, en {'long' if d == 'X' else 'travers'} ({d})", "dépl. horiz. ELS", u, Z_c / 300, "mm")
 
     # Poutre avant : flexion forte + faible, puis torsion de Saint-Venant
     sigma = max(abs(m.members[b].max_moment("Mz", c)) / upe_W + abs(m.members[b].max_moment("My", c)) / upe_Wz
@@ -143,22 +158,26 @@ def resultats(m, poutres_avant, coins):
     verif("Poutre avant UPE 220", "flexion ELU", sigma, fy / gM0, "MPa")
     verif("Poutre avant UPE 220", "torsion ELU", T * limon_tf / upe_J, fy / sqrt(3) / gM0, "MPa")
 
-    # Pieds : flambement (L_cr = 0,7 H, encastré en pied, tenu par le cadre en tête) + flexion
+    # Pieds : flambement + flexion ; le palier n'est pas tenu en travers : L_cr = H (tête rigide), 2 H (articulée)
     H = Z_c
-    N_b = flambement(1, 0.7 * H, tube_A, tube_I)
+    N_b = flambement(1, (1 if tete_rigide else 2) * H, tube_A, tube_I)
     taux = 0.0
     for p in (f"T{n}" for n in coins):
         for c in elu:
-            N = -m.members[p].min_axial(c)
+            N = m.members[p].max_axial(c)  # PyNite : compression positive
             M = max(abs(m.members[p].max_moment(a, c)) for a in ("My", "Mz"))
             M = max(M, max(abs(m.members[p].min_moment(a, c)) for a in ("My", "Mz")))
             taux = max(taux, N / N_b + M / (tube_W * fy / gM0))
     verif(f"Pieds tube {poteau_cote}×{poteau_ep}", "N + M ELU", taux, 1.0, "taux")
 
-    # Limons V1 : flexion forte sous l'encastrement en pied
-    sigma = max(max(abs(m.members[f"LV1{k}"].max_moment("Mz", c)), abs(m.members[f"LV1{k}"].min_moment("Mz", c))) / upe_W
-                for k in (0, 1) for c in elu)
-    verif("Limons V1 UPE 220", "flexion ELU", sigma, fy / gM0, "MPa")
+    # Limons : flexion forte (charges verticales) + faible (poussée des mains courantes)
+    def m_max(barre, axe, c):
+        return max(abs(m.members[barre].max_moment(axe, c)), abs(m.members[barre].min_moment(axe, c)))
+
+    for v in ("V1", "V2"):
+        sigma = max(m_max(f"L{v}{k}", "Mz", c) / upe_W + m_max(f"L{v}{k}", "My", c) / upe_Wz
+                    for k in (0, 1) for c in elu)
+        verif(f"Limons {v} UPE 220", "flexion ELU", sigma, fy / gM0, "MPa")
 
     # Efforts aux appuis (ELU) pour chevilles et fixation de l'arrivée
     print("\nEfforts aux appuis, enveloppe ELU (N vertical en kN, V horizontal en kN, M en kN·m) :")
@@ -186,17 +205,25 @@ def _auto_controle():
     m.analyze()
     assert isclose(-m.members["p"].min_deflection("dy", "C"), 5 * 4000**4 / (384 * E_acier * upe_I), rel_tol=1e-3)
     assert isclose(-m.members["p"].min_moment("Mz", "C"), 4000**2 / 8, rel_tol=1e-3)  # moment positif = négatif dans PyNite
+    # Signe de l'effort normal : un poteau comprimé a un effort normal positif
+    m.add_node("h", 0, 1000, 0)
+    m.add_member("c", "a", "h", "acier", "tube")
+    m.add_node_load("h", "FY", -1000, case="G")
+    m.analyze()
+    assert isclose(m.members["c"].max_axial("C"), 1000, rel_tol=1e-3)
     assert 2.3e6 < upe_Iz < 2.6e6 and 25 < e_cc < 40  # ordres de grandeur d'un UPE 220
 
 
 if __name__ == "__main__":
     _auto_controle()
-    modele = construire()
     print(f"Escalier {nb_volee1}/{nb_volee2} — modèle en barres PyNite")
     print(f"UPE 220 calculé : Iz = {upe_Iz / 1e4:.0f} cm⁴, J = {upe_J / 1e4:.1f} cm⁴, "
           f"centre de cisaillement à {e_cc:.0f} mm de l'âme")
-    resultats(*modele)
-    print()
-    afficher()
+    for tete_rigide in (True, False):
+        print(f"\n=== Tête des pieds {'rigide' if tete_rigide else 'articulée'} ===")
+        lignes.clear()
+        resultats(*construire(tete_rigide), tete_rigide)
+        print()
+        afficher()
     print("\nNon calculé : déversement, gauchissement (torsion non uniforme), assemblages, chevilles,"
           " vibrations, chargement alterné d'une seule volée.")

@@ -6,14 +6,14 @@ Les paramètres sont recopiés de cad/escalier.solidcraft (CONCEPTION.md §3) : 
 from math import atan, cos, degrees, isclose, sqrt
 
 # --- Paramètres du modèle (CONCEPTION.md §3)
-hauteur_totale = 3800
+hauteur_totale = 3848
 nb_contremarches = 22
-nb_volee1 = 17
+nb_volee1 = 15
 giron = 274
 emmarchement = 1000
 jeu_limons = 100
 palier_profondeur = 1000
-marche_epaisseur = 30
+marche_epaisseur = 60
 palier_ep = marche_epaisseur
 limon_h, limon_b, limon_tw, limon_tf = 220, 85, 6.5, 12
 poteau_cote, poteau_ep = 100, 5
@@ -27,6 +27,7 @@ jour = 2 * limon_b + jeu_limons
 # --- Hypothèses, à faire valider par un bureau d'études
 q_k = 2.5e-3          # N/mm² : escalier de logement (cat. A), AN française de l'EN 1991-1-1
 Q_k = 2000            # N : charge ponctuelle, vérifications locales, non cumulée avec q_k
+q_gc = 0.6            # N/mm : poussée horizontale sur les mains courantes, cat. A, supposée (AN française, à confirmer)
 g_chene = 7.5e-6      # N/mm³ (0,75 g/cm³, comme le modèle)
 equerres_g = 2 * 200 * 0.0133   # N par marche : 2 cornières 30×30×3 de 200 mm (1,36 kg/m)
 # Chêne D30 (EN 338), classe de service 1, charge de moyen terme
@@ -152,7 +153,7 @@ def _auto_controle():
     M, f = poutre(1000, w=1)
     assert isclose(M, 1000**2 / 8) and isclose(f, 5 * 1000**4 / 384)
     assert isclose(reaction_gauche(1000, charges=[(1, 250)]), 0.75)
-    assert round(2 * hauteur_marche + giron) == 619   # Blondel de CONCEPTION.md
+    assert round(2 * hauteur_marche + giron) == 624   # Blondel de CONCEPTION.md
 
 
 if __name__ == "__main__":

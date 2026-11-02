@@ -194,6 +194,8 @@ Hauteur libre au-dessus de V1 sous la poutre d'arrivée : `cadre_dessus − ipe_
 
 - **D28 — Pied des limons V1 : platine verticale et platine au sol** (2026-11-02, choix de l'utilisateur). Chaque limon V1 est raccourci de `pied_limon_ep` au sol et au premier nez (`Coupes limon V1`, cotes `coupes_limon_v1_pied_x/z`). Deux platines soudées au limon, dans `Ensemble limon ext V1` (composants `Platine verticale pied ext V1`, `Platine sol pied ext V1`, esquisses sur `Rive ext V1` retourné, extrusion `limon_b`) et par symétrie dans `Ensemble limon int V1` : verticale de X 0 à `pied_limon_ep`, de `pied_limon_ep` jusqu'au dessus du limon (`hauteur_marche + limon_dessus * pas_volee / giron + pied_limon_ep * hauteur_marche / giron`) ; au sol, `pied_limon_l` × `limon_b` × `pied_limon_ep`, 2 trous Ø `boulon_d + trou_jeu` à `pied_limon_l / 2 ± pied_limon_entraxe / 2`, au milieu du U (entre l'âme et le bord des ailes), accessibles par le côté ouvert du U (≈ 130 mm sous l'aile haute). Le bout de l'aile basse du limon s'arrête vers X ≈ 205 mm (calculé, non mesuré), juste au-delà des 200 mm de la platine. Contrôles : platines 177 843 et 250 383 mm³ (trous compris), limons V1 −75 034 mm³ chacun, rien d'autre ne bouge (158 corps) ; 0 erreur, 0 interférence ; essai `giron` 280, `nb_volee1` 16, `emmarchement` 1100, `pied_limon_ep` 20, `pied_limon_l` 220 : platines et coupes suivent, 0 interférence, retour identique. Dalle non percée (projet en suspens).
 
+- **D29 — Stabilité du palier recalculée** (2026-11-02, demande de l'utilisateur : contreventement du palier). `predim.py` et `portique.py` en 3848 / 15/7 / 60 mm ; dans `portique.py`, pieds des limons V1 **articulés** (D28), poussée sur les mains courantes `q_gc` = 0,6 kN/m **supposée** (cat. A, AN française, à confirmer), sur toutes les lignes à la fois et à l'axe des barres, et tête des pieds calculée **rigide puis articulée** (platine à 2 M12, entre les deux). En long (X) : 0,05 mm, les limons font bracon. **En travers (Y)**, seuls les 4 pieds en console tiennent le palier : tête rigide 3,1 mm (37 % de H/300), pied de poteau M = 2,7 kN·m ; tête articulée **11,0 mm (134 %)**, M = 4,9 kN·m, soit ≈ 18 kN de traction par cheville M12 (ordre de grandeur, bras de levier 140 mm). Le reste ≤ 34 % ; marches de 60 mm à 25 %. Barres « rigide » ramenées de 1e12 à 1e10 (au-delà, PyNite rejette le système, mal conditionné par ce palier souple en Y). Ordres de grandeur, pas un calcul de structure.
+
 - **D17 — Limons descendus de 30 mm** (2026-10-29, demande de l'utilisateur). Avec le plancher de 60 mm posé sur le cadre, la poutre avant était 30 mm trop bas par rapport aux bouts de limons : trous excentrés, écrous difficiles d'accès près des ailes. Plutôt que de toucher au palier, `limon_dessus` = −30 mm vertical : V1 centré sur la poutre, V2 à 19 mm, entraxe 100 retrouvé. Effets : les marches dépassent de 30 mm au-dessus des limons (moitié de leur épaisseur), la platine V2 côté palier ne dépasse plus du plancher, les équerres sortent du congé bas de l'UPE (≈ 20 mm de marge). Ne règle pas l'accès aux écrous des limons intérieurs, côté jour (`jeu_limons`, §7).
 
 ## 6. Outils et pièges du projet
@@ -207,8 +209,8 @@ Les règles de travail et les pièges de SolidCraft sont dans [REGLES_SOLIDCRAFT
 | SolidCraft (Flatpak utilisateur `io.tangencylabs.solidcraft`, installé depuis les releases GitHub de `tangency-labs/solidcraft`, pas Flathub) | modèle 3D | **0.29.0** | `flatpak info --user io.tangencylabs.solidcraft` |
 | Connecteur MCP SolidCraft | pilotage du 3D par l'agent | celui de l'app, port 27878 | `~/.claude.json` |
 | `solidcraft-cli` | tests de paramètres hors de l'app (§6.2) | celle de l'app (même Flatpak) | `flatpak run --user --command=solidcraft-cli io.tangencylabs.solidcraft --help` |
-| Python 3 | calculs | à relever | `python3 --version` |
-| PyNiteFEA | modèle en barres (`portique.py`) | **3.2** | `pip show PyNiteFEA` |
+| Python 3 | calculs | 3.13.5 | `python3 --version` |
+| PyNiteFEA | modèle en barres (`portique.py`) | **3.2**, non installé : environnement temporaire `uv run --no-project --with PyNiteFEA==3.2 python3 portique.py` (2026-11-02, Python 3.14 de uv) | `pip show PyNiteFEA` |
 | PyVista, NumPy | visualisation (`visu.py`) | à relever | `pip show pyvista numpy` |
 | Claude Code | agent | à relever | `claude --version` |
 
@@ -257,7 +259,7 @@ Dépôt GitHub `mj42584/staircase_solidcraft_claude` (méthode : règles §3 et 
 
 ## 7. Points ouverts
 
-- **Calculs à relancer** : `hauteur_totale` (3800 → 3848), `nb_volee1` (17 → 15), `marche_epaisseur` / `palier_ep` (30 → 60), `limon_dessus` (0 → −25,3), mains courantes ajoutées (poids, poussée horizontale sur les potelets), liaison des pieds au cadre (platine boulonnée 2 M12 au lieu d'un nœud rigide en tête, D15). Calculs faits en 3800 / 17/5 / 30 mm (D14, D15, `calc/rapport/`).
+- **Calculs à relancer** : `limon_dessus` (0 → −25,3, non repris), poids des mains courantes et potelets ; `calc/rapport/` et `visu.py` restent en 3800 / 17/5 / 30 mm (D14, D15). `predim.py` et `portique.py` relancés en 3848 / 15/7 / 60 mm (D29).
 - **Mains courantes** : `nb_potelets_*` ≥ 2 (pas des répétitions divisé par `nb - 1`) ; `nb_potelets_*` ne pilote plus que les perçages : les potelets sont posés à la main (12 + 7 exemplaires, D20, D26) ; remplissage du garde-corps à faire (plus tard, choix de l'utilisateur).
 - **Montage : accès à toutes les vis et écrous** (demande de l'utilisateur, 2026-11-02, à faire plus tard) : vérifier pour chaque assemblage boulonné ou vissé qu'on peut engager la vis et serrer (clé, douille, ordre de montage). Déjà repérés :
   - écrous M8 des potelets sous l'aile haute des limons, dans le U (≈ 36 mm de l'âme, 196 mm entre ailes) ; le plus serré est `Ensemble potelet volée:8` (int V1, près du palier), en face du bas du U de int V2 à `jeu_limons` (100 mm), depuis D25 ;
@@ -268,10 +270,10 @@ Dépôt GitHub `mj42584/staircase_solidcraft_claude` (méthode : règles §3 et 
   - **Jeu V2 / face du cadre** (≈ 227 mm, choisi par l'utilisateur) : à revoir.
   - **Placement de l'escalier dans le projet** : tester les liaisons (joints) pour qu'il suive la répartition (piège du décalage chiffré, règles §8).
   - **Environnement à confirmer** : `cadre_longueur` 3788 vient du croquis, alors que la plateforme mesurée fait ≈ 5,51 m et que 3788 est aussi la hauteur du cadre ; sens de prolongement de `poutre_mur_longueur`.
-- **Marches et plancher en chêne** : 38 mm minimum d'après D14 ; passés à 60 mm par l'utilisateur, à confirmer en relançant le calcul (le plancher du palier n'a jamais été vérifié).
+- **Plancher du palier en chêne** : jamais vérifié (marches de 60 mm à 25 %, D29).
 - **Poutre avant** : elle reçoit les 4 limons, dont les deux intérieurs près du milieu de sa portée (taux en D14 et D15) ; le gauchissement n'est pas calculé.
-- **Stabilité** : le palier n'est stable sans contreventement que si l'arrivée en haut de V2 reprend les efforts horizontaux (D15). À reprendre quand le garde-corps sera ajouté (poussée horizontale non prise en compte).
-- **Pieds de limons V1** : modélisés (D28) avec 2 chevilles M12 alignées dans l'axe du limon, au milieu du U : une liaison plutôt articulée (le moment d'encastrement de D15 serait lourd pour ces chevilles). À vérifier au calcul (hypothèse d'appui de `portique.py`, chevilles, béton) ; références (`part_number`) des 4 platines à poser.
+- **Contreventement du palier en travers (Y)** (D29) : sans contreventement, le palier ne tient en Y que par les 4 pieds en console ; avec la poussée des mains courantes, 11 mm si la tête des pieds est articulée et ≈ 18 kN par cheville au pied des poteaux. À décider : croix de Saint-André (tirants à tendeurs) dans la face avant ou arrière, jambes de force pied / cadre, ou pieds plus raides (tête rigide et platines au sol renforcées). Moment de la poussée à hauteur de main courante non calculé (torsion des limons, platines des potelets).
+- **Pieds de limons V1** : modélisés (D28) avec 2 chevilles M12 alignées dans l'axe du limon, au milieu du U : une liaison plutôt articulée (le moment d'encastrement de D15 serait lourd pour ces chevilles). `portique.py` les prend articulés (D29) ; chevilles et béton à vérifier ; références (`part_number`) des 4 platines à poser.
 
 ## 8. Prochaines étapes
 

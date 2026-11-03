@@ -49,7 +49,7 @@ a2.legend(loc="upper left", fontsize=8)
 fig.tight_layout()
 fig.savefig(DOSSIER / "modele.png", dpi=200)
 
-ech = 50
+ech = 1000
 fig, axes = plt.subplots(1, 2, figsize=(11, 4.6), sharey=True)
 for ax, rigide in zip(axes, (True, False)):
     m, _, coins = construire(rigide)

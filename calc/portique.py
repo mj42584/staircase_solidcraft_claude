@@ -8,7 +8,7 @@ dans l'axe du limon, D28) ; haut des limons V2 articulé (boulonné à la struct
 articulés sur la poutre avant (platines boulonnées). Tête des pieds (platine boulonnée par 2 M12 sous le cadre) :
 calculée rigide puis articulée, les deux bornes. Les marches ne relient pas les limons entre eux (côté sécurité).
 Contreventement en travers (D30) : une diagonale en tube par face d'about du palier (avant et arrière, en sens
-opposés), articulée en tête d'un pied et au pied de l'autre.
+opposés), articulée aux trous des goussets soudés sur les pieds (bas d'un pied, haut de l'autre), comme le 3D.
 """
 from math import cos, isclose, sqrt, tan
 
@@ -34,6 +34,8 @@ tube_W = tube_I / (c / 2)
 diag_cote, diag_ep = 50, 3  # diagonales de contreventement, tube carré supposé
 c, t = diag_cote, diag_ep
 diag_A, diag_I = c**2 - (c - 2 * t) ** 2, (c**4 - (c - 2 * t) ** 4) / 12
+# Goussets des pieds, recopiés du 3D (CONCEPTION.md §3) : trou à 170 mm de l'angle extérieur, à mi-hauteur
+platine_pied_ep, gousset_h, gousset_trou_l, gousset_jeu_tete = 15, 120, 70, 50
 g_acier = 7.85e-5  # N/mm³
 cheville_a = 180 / 2 - 40 / 2  # chevilles des pieds : platine de 180, au milieu de la marge de 40 (± 70 mm)
 
@@ -109,8 +111,18 @@ def construire(tete_rigide=True, diagonales=True):
 
     # Diagonales : face avant du sol en -Y à la tête en +Y, face arrière en sens inverse
     if diagonales:
-        for nom, bas, haut in (("DA", "SA0", f"A{len(ys) - 1}"), ("DB", "SB1", "B0")):
-            m.add_member(nom, bas, haut, "acier", "diag")
+        # Gousset = barre rigide soudée au pied, de l'axe du pied (angle du cadre ici) au trou : 170 mm au lieu de
+        # 120 depuis l'axe réel du pied, côté sécurité pour la flexion du pied, et la diagonale du 3D (2100 en Y)
+        z_bas = platine_pied_ep + gousset_h / 2
+        z_haut = Z_c - limon_h / 2 - platine_pied_ep - gousset_jeu_tete - gousset_h / 2
+        d = poteau_cote + gousset_trou_l
+        for nom, bas, haut in (("DA", "A0", f"A{len(ys) - 1}"), ("DB", "B1", "B0")):
+            (xb, yb), (xh, yh) = coins[bas], coins[haut]
+            for k, (x, y, z) in (("b", (xb, yb, z_bas)), ("h", (xh, yh, z_haut))):
+                noeud(m, f"{nom}{k}p", x, y, z)  # sur l'axe du pied : PyNite y coupe la barre du pied
+                noeud(m, f"{nom}{k}", x, y - d * (1 if y > 0 else -1), z)
+                m.add_member(f"G{nom}{k}", f"{nom}{k}p", f"{nom}{k}", "acier", "rigide")
+            m.add_member(nom, f"{nom}b", f"{nom}h", "acier", "diag")
             m.def_releases(nom, Ryi=True, Rzi=True, Ryj=True, Rzj=True)
             charge(nom, "G", diag_A * g_acier)
 

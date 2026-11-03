@@ -45,7 +45,7 @@ X_b = X_r + palier_profondeur                  # poutre arrière
 X_a = X_r - nb_volee2 * giron                  # arrivée en haut de V2
 Z_c = nb_volee1 * hauteur_marche - palier_ep - limon_h / 2   # axe du cadre
 Y_c = jour / 2 + emmarchement + limon_b        # angles extérieurs du cadre
-dz = limon_h / 2 / cos(angle)                  # axe du limon sous la ligne de nez
+dz = limon_h / 2 / cos(angle) + limon_descente  # axe du limon sous la ligne de nez (limon_dessus, D17)
 X_0 = (dz - hauteur_marche) / tan(angle)       # pied des limons V1 au sol
 liaison_lc = 20  # mm : longueur de la barre courte qui porte le ressort de rotation marche-limon
 # Raideur en rotation marche-cornière : K_VIS (predim.py, 3 vis Ø5 par cornière, D35) ; 3e6 et 8e6 gardés comme bornes basses

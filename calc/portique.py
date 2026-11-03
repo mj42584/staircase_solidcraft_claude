@@ -48,9 +48,8 @@ Y_c = jour / 2 + emmarchement + limon_b        # angles extérieurs du cadre
 dz = limon_h / 2 / cos(angle)                  # axe du limon sous la ligne de nez
 X_0 = (dz - hauteur_marche) / tan(angle)       # pied des limons V1 au sol
 liaison_lc = 20  # mm : longueur de la barre courte qui porte le ressort de rotation marche-limon
-# Raideur en rotation marche-cornière, supposée : 4 vis à bois en ligne au milieu de l'aile, K_ser ≈ 3000 N/mm chacune,
-# bras = demi-aile : 15 mm (30×30) → 3e6 ; 25 mm (50×50×5) → 7,5e6
-K_MARCHE = (0, 3e6, 7.5e6, 1e7, 1e10)
+# Raideur en rotation marche-cornière : K_VIS (predim.py, 3 vis Ø5 par cornière, D35) ; 3e6 et 8e6 gardés comme bornes basses
+K_MARCHE = (0, 3e6, 8e6, K_VIS, 1e10)
 y_limons = {"V1": (-(jour / 2 + emmarchement + limon_b / 2), -(jour / 2 - limon_b / 2)),
             "V2": (jour / 2 - limon_b / 2, jour / 2 + emmarchement + limon_b / 2)}
 
@@ -354,6 +353,9 @@ def marches_traverses(k_marche):
         M_l = max(max(m_max(b, "Mz"), m_max(b, "My")) for b in liaisons)
         print(f"  k = {k_marche:.0e} : moment repris par une liaison marche-cornière {M_l / 1e6:5.3f} kN·m "
               f"(rotation {M_l / k_marche * 1e3:5.2f} mrad), à répartir sur les vis à bois")
+        if k_marche == K_VIS:
+            F = M_l * max(vis_x) / sum(x**2 for x in vis_x)   # vis la plus tendue, aile rigide
+            verif("Vis à bois Ø5 de la cornière (arrachement)", "traction ELU", F / 1e3, F_arrachement / 1e3, "kN")
 
 
 def _auto_controle():

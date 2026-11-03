@@ -33,7 +33,7 @@
 <ul>
   <li>des potelets 40 × 40 × 3 (5 par main courante sur V1, 3 sur V2, 4 au fond) : 73 % sur V1, 56 % et 67 % sur V2, 55 % au fond ;</li>
   <li>des 2 vis M8 de leur platine basse : 84 % au plus (V1) ;</li>
-  <li>des <span class="non">limons V1 en torsion</span>, s'ils travaillaient seuls : 331 %. Avec les marches comme traverses entre les limons (cornières 50 × 50 × 5), ils tombent à 11 % avec 3 vis à bois Ø5 par cornière (raideur de liaison calculée 7e7 N·mm/rad, plafond ; 37 % pour 8e6, 60 % pour 3e6). Les positions des vis sont supposées ; la vis la plus tendue est à 53 % de son arrachement.</li>
+  <li>des <span class="non">limons V1 en torsion</span>, s'ils travaillaient seuls : 331 %. Avec les marches comme traverses entre les limons (cornières 50 × 50 × 5), ils tombent à 11 % avec 3 vis à bois Ø5 par cornière (raideur de liaison calculée 7e7 N·mm/rad, plafond ; 37 % pour 8e6, 60 % pour 3e6). Les positions des vis sont supposées ; la vis la plus tendue est à 66 % de son arrachement (ρ<sub>k</sub> 530 kg/m³ du D30, D40).</li>
 </ul>
 <p class="cadre"><b>Vérifications locales (§6.3).</b> Platine basse des potelets : 106 % en 8 mm (effet de levier sous les vis M8), passée à 10 mm (D39) : 84 %, la vis M8 gouverne. <b>Poutre arrière du palier</b> : 98 % en torsion sous la poussée de la main courante du fond (borne haute). Le reste (soudures, boulons des diagonales, déversement, gauchissement, vibrations) passe à 52 % au plus.</p>
 <p><b>Conclusion :</b> la structure porteuse et le contreventement passent. <b>Le garde-corps passe avec les potelets 40 × 40 × 3</b>, sous réserve de la raideur des liaisons marche-cornière (3 vis à bois par cornière), qui commande la torsion des limons V1 (§6.2).</p>
@@ -90,7 +90,7 @@
 <tr><td>Diagonales</td><td>tube carré 40 × 40 × 3</td><td>A = 4,44 cm² ; I = 10,2 cm⁴ ; i = 15,2 mm</td><td>choix de l'utilisateur (D36), épaisseur <b>supposée</b> ; calculés (angles vifs)</td></tr>
 <tr><td>Potelets</td><td>tube carré 40 × 40 × 3</td><td>I = 8,5 cm⁴ ; W = 4,3 cm³ (calcul PyNite/predim, angles vifs)</td><td>D34, épaisseur supposée ; calculés (angles vifs)</td></tr>
 <tr><td>Marches</td><td>chêne 274 × 60 mm, portée 1 000 mm</td><td>W = 164,4 cm³ ; I = 493,2 cm⁴</td><td>calculés</td></tr>
-<tr><td>Cornières des marches</td><td>L 30 × 30 × 3, 200 mm, 2 par marche</td><td>1,36 kg/m</td><td>catalogue</td></tr>
+<tr><td>Cornières des marches</td><td>L 50 × 50 × 5, 200 mm, 2 par marche (D33)</td><td>3,77 kg/m</td><td>catalogue</td></tr>
 <tr><td>Boulons</td><td>M12 ; M8</td><td>A<sub>s</sub> = 84,3 mm² ; 36,6 mm²</td><td>catalogue</td></tr>
 </table>
 
@@ -105,7 +105,7 @@
 <h3>2.4 Actions</h3>
 <table border="1" cellspacing="0" cellpadding="3" width="100%">
 <tr><th>Action</th><th>Valeur</th><th>Référence</th></tr>
-<tr><td>G : poids propres</td><td>chêne 7,5 kN/m³ ; UPE 0,266 kN/m ; tube 0,149 kN/m ; cornières 5,3 N par marche ; marche complète 128,6 N ; mains courantes et potelets 65,6 kg répartis sur les 18,1 m de lignes de main courante, soit 0,036 N/mm</td><td>catalogue, masses du modèle 3D</td></tr>
+<tr><td>G : poids propres</td><td>chêne 7,5 kN/m³ ; UPE 0,266 kN/m ; tube 0,149 kN/m ; cornières 14,8 N par marche ; marche complète 138,1 N ; mains courantes et potelets 112,4 kg (mains courantes 26,6 kg, 16 potelets de volée de 3,49 kg et 8 de palier de 3,74 kg, tubes 40 × 40 × 3) répartis sur les 18,1 m de lignes de main courante, soit 0,061 N/mm</td><td>catalogue, masses du modèle 3D</td></tr>
 <tr><td>Q : exploitation répartie</td><td>q<sub>k</sub> = 2,5 kN/m² sur marches et palier</td><td>EN 1991-1-1, cat. A (escaliers), AN française</td></tr>
 <tr><td>Q : charge ponctuelle</td><td>Q<sub>k</sub> = 2 kN, vérifications locales des marches, non cumulée avec q<sub>k</sub></td><td>idem</td></tr>
 <tr><td>Poussée sur les mains courantes</td><td>q<sub>gc</sub> = 0,6 kN/m, horizontale</td><td>cat. A, AN française : validée par l'utilisateur (2026-11-03)</td></tr>
@@ -147,7 +147,7 @@
 <h3>4.2 Limons</h3>
 <p>Chaque limon est une poutre inclinée sur 2 appuis. Il porte une demi-volée, avec les charges exprimées par mètre horizontal :</p>
 <ul>
-  <li>w<sub>G</sub> = 128,6 / 2 / 274 + (0,266 + 0,036) / cos α = 0,592 N/mm, mains courantes comprises ;</li>
+  <li>w<sub>G</sub> = 138,1 / 2 / 274 + (0,266 + 0,061) / cos α = 0,640 N/mm, mains courantes comprises ;</li>
   <li>w<sub>Q</sub> = 2,5 × 1,0 / 2 = 1,25 N/mm ;</li>
   <li>à l'ELU, w = 1,35 w<sub>G</sub> + 1,5 w<sub>Q</sub> = 2,67 N/mm.</li>
 </ul>
@@ -210,7 +210,7 @@
   <li><b>Charges</b> :
     <ul>
       <li>limons, par mètre incliné : 0,464 N/mm (G) et 1,054 N/mm (Q) ;</li>
-      <li>mains courantes et potelets : 0,036 N/mm (G) sur les 4 limons et les 3 poutres latérales et arrière ;</li>
+      <li>mains courantes et potelets : 0,061 N/mm (G) sur les 4 limons et les 3 poutres latérales et arrière ;</li>
       <li>poutres avant et arrière : demi-palier 0,491 N/mm (G) et 1,25 N/mm (Q) ;</li>
       <li>poids propre des poutres latérales, des pieds et des diagonales ;</li>
       <li>défauts de verticalité : 47 N par angle à l'ELU ;</li>
@@ -289,11 +289,11 @@
     <tr><td>V1 (T = t L)</td><td class="n">4,3 kN·m</td><td class="n non">449 MPa</td><td class="n">135,7 MPa</td><td class="n non">331 %</td></tr>
     <tr><td>V2 (T = t L / 2)</td><td class="n">1,1 kN·m</td><td class="n">110 MPa</td><td class="n">135,7 MPa</td><td class="n">81 %</td></tr>
     </table>
-    C'est une borne haute. Les marches, boulonnées aux deux limons d'une volée par leurs cornières, transforment ce couple en efforts verticaux opposés dans les deux limons. Le gauchissement de l'UPE aide aussi. Essai en barres (marches comme traverses, raideur de liaison <i>k</i>) : limons V1 à 281 % pour <i>k</i> = 0, 60 % pour 3e6, 36 % pour 8e6 N·mm/rad. Avec 3 vis à bois Ø5 par cornière (en ligne, à 0 et ± 75 mm, 50 mm dans le chêne), <i>k</i> = Σ K<sub>ax</sub> x² = 7e7 N·mm/rad avec K<sub>ax</sub> = 25 d l<sub>ef</sub> = 6,25 kN/mm par vis : limons V1 11 %, V2 10 %, poutre avant 16 %, marches 12 %. La liaison reprend 0,37 kN·m, soit 2,43 kN dans la vis la plus tendue pour 4,57 kN d'arrachement (EC5 8.7, ρ<sub>k</sub> 700 kg/m³ supposé, k<sub>mod</sub> 0,8) : 53 %. <i>k</i> est un plafond (aile de 5 mm et liaison cornière-limon non comptées) ; les résultats à 8e6 restent conformes.</li>
+    C'est une borne haute. Les marches, boulonnées aux deux limons d'une volée par leurs cornières, transforment ce couple en efforts verticaux opposés dans les deux limons. Le gauchissement de l'UPE aide aussi. Essai en barres (marches comme traverses, raideur de liaison <i>k</i>) : limons V1 à 281 % pour <i>k</i> = 0, 60 % pour 3e6, 36 % pour 8e6 N·mm/rad. Avec 3 vis à bois Ø5 par cornière (en ligne, à 0 et ± 75 mm, 50 mm dans le chêne), <i>k</i> = Σ K<sub>ax</sub> x² = 7e7 N·mm/rad avec K<sub>ax</sub> = 25 d l<sub>ef</sub> = 6,25 kN/mm par vis : limons V1 11 %, V2 10 %, poutre avant 16 %, marches 12 %. La liaison reprend 0,37 kN·m, soit 2,41 kN dans la vis la plus tendue pour 3,66 kN d'arrachement (EC5 éq. 8.39, donnée pour d ≥ 6 mm, appliquée à Ø5 ; ρ<sub>k</sub> 530 kg/m³ du D30 ; k<sub>mod</sub> 0,8) : 66 %. <i>k</i> est un plafond (aile de 5 mm et liaison cornière-limon non comptées) ; les résultats à 8e6 restent conformes.</li>
 </ul>
 
 <h3>6.3 Vérifications locales (calc/assemblages.py, D38)</h3>
-<p>Assemblages, déversement, gauchissement, couple de la poussée sur les poutres du palier et vibrations, hors modèle en barres. Efforts tirés de predim.py et de portique.py (effort maximal d'une diagonale : 8,7 kN). Formules de l'EN 1993-1-8 et des poutres à parois minces, de mémoire. Hypothèses : cordons de 5 mm sur les goussets, de 3 mm aux potelets et dans les fentes des languettes, rondelles Ø16 ; réaction des limons V2 au prorata de leur portée ; fréquence propre comparée à 5 Hz (repère courant, <b>supposé</b>). UPE 220 en parois minces : centre de cisaillement à 33,2 mm de l'axe de l'âme, I<sub>w</sub> = 18,4·10⁹ mm⁶.</p>
+<p>Assemblages, déversement, gauchissement, couple de la poussée sur les poutres du palier et vibrations, hors modèle en barres. Efforts tirés de predim.py et de portique.py (effort maximal d'une diagonale : 8,7 kN). Formules de l'EN 1993-1-8 et des poutres à parois minces, de mémoire. Hypothèses : cordons de 5 mm sur les goussets, de 3 mm aux potelets et dans les fentes des languettes, rondelles Ø16 ; fréquence propre comparée à 5 Hz (repère courant, <b>supposé</b>). UPE 220 en parois minces : centre de cisaillement à 33,2 mm de l'axe de l'âme, I<sub>w</sub> = 18,4·10⁹ mm⁶.</p>
 <table border="1" cellspacing="0" cellpadding="3" width="100%">
 <tr><th>Élément</th><th>Critère</th><th>Valeur</th><th>Limite</th><th>Taux</th></tr>
 <tr><td>Soudure gousset / pied (a 3,5)</td><td>contrainte ELU</td><td class="n">48,70 MPa</td><td class="n">360,00 MPa</td><td class="n">14 %</td></tr>
@@ -310,7 +310,7 @@
 <tr><td>Poutre latérales palier, couple de la poussée</td><td>torsion ELU</td><td class="n">54,53 MPa</td><td class="n">135,68 MPa</td><td class="n">40 %</td></tr>
 <tr><td>Limon V1, fréquence propre (L 4551)</td><td>≥ 5 Hz</td><td class="n">5,00 Hz</td><td class="n">19,27 Hz</td><td class="n">26 %</td></tr>
 <tr><td>Limon V2, fréquence propre (L 2275)</td><td>≥ 5 Hz</td><td class="n">5,00 Hz</td><td class="n">77,07 Hz</td><td class="n">6 %</td></tr>
-<tr><td>Poutre avant, fréquence propre</td><td>≥ 5 Hz</td><td class="n">5,00 Hz</td><td class="n">25,30 Hz</td><td class="n">20 %</td></tr>
+<tr><td>Poutre avant, fréquence propre</td><td>≥ 5 Hz</td><td class="n">5,00 Hz</td><td class="n">28,94 Hz</td><td class="n">17 %</td></tr>
 </table>
 <p class="note">Fréquence : la « valeur » est le repère de 5 Hz et la « limite » la fréquence calculée (taux = 5 / f). Platine basse : tronçon en T à un boulon (m = 26,6 mm, n = 15 mm), le mode 2 (rupture du boulon avec effet de levier) gouverne. Poutre arrière : torsion de Saint-Venant seule, poutre tenue aux deux angles, gauchissement négligé (borne haute du cisaillement). Une seule volée chargée : combinaisons ajoutées à portique.py ; elles ne changent aucun résultat (les enveloppes restent celles des deux volées chargées). Le plancher du palier est couvert par la vérification des marches (même chêne de 60 mm, portée au plus 1 000 mm, charge mieux répartie).</p>
 
@@ -351,9 +351,21 @@
 <tr><td>I5 — 15,9 m contre ≈ 29 m de main courante</td><td>Non retenu : il y a 2 limons V1 et 2 limons V2, pas 4 de chaque. 2 × 4,64 + 2 × 2,32 + 2 × 1,00 = 15,9 m, et l'équilibre le confirme (§5.2).</td></tr>
 <tr><td>I6 — raideur « rigide » et platine de tête</td><td>Précisé : la section « rigide » sert aux excentricités de 29 mm, pas à la tête des pieds, qui est encadrée par les deux cas (§5.2).</td></tr>
 <tr><td>M1 — α<sub>h</sub> ≥ 2/3 redondant</td><td>Gardé : c'est la borne inférieure de l'EN 1993-1-1 §5.3.2.</td></tr>
-<tr><td>M4 — poids des mains courantes</td><td>Fait : 65,6 kg ajoutés en G (§2.4).</td></tr>
+<tr><td>M4 — poids des mains courantes</td><td>Fait : ajoutés en G, 112,4 kg depuis les potelets 40 × 40 × 3 (§2.4).</td></tr>
 <tr><td>M5 — poutre avant, prédimensionnement contre modèle</td><td>Fait : explication au §5.3.</td></tr>
 <tr><td>M6 — H/300</td><td>Fait : présenté comme un critère de confort (§2.5).</td></tr>
+</table>
+
+<h2>9. Suivi de la seconde revue externe (3 novembre 2026, D40)</h2>
+<table border="1" cellspacing="0" cellpadding="3" width="100%">
+<tr><th>Point</th><th>Suite</th></tr>
+<tr><td>Poids des cornières et des mains courantes différents entre le code et le rapport</td><td>Corrigé dans le rapport (§2.2, §2.4, §4.2, §5.1) : cornières 50 × 50 × 5 (D33), 112,4 kg de mains courantes et potelets (D34). Les résultats publiés venaient déjà du code : ils ne changent pas.</td></tr>
+<tr><td>Équilibre vérifié en forces seulement</td><td>Fait : portique.py vérifie aussi les moments autour de l'origine, moments nodaux des marches compris (une erreur de 10 % sur ces moments est détectée).</td></tr>
+<tr><td>M<sub>Ed</sub> lu dans la liste des résultats</td><td>Fait : predim.limons_et_poutre_avant() calcule réactions et moment ; assemblages.py ne dépend plus de l'ordre d'appel, et prend les réactions réelles des limons V2.</td></tr>
+<tr><td>Exposants de la formule d'arrachement</td><td>Gardés : l'éq. (8.39) de l'EN 1995-1-1 a bien d<sup>−0,5</sup> et l<sub>ef</sub><sup>−0,1</sup> ; commentaire ajouté (formule donnée pour d ≥ 6 mm).</td></tr>
+<tr><td>ρ<sub>k</sub> du D30</td><td>Corrigé : 530 kg/m³ (valeur caractéristique de l'EN 338, de mémoire ; 640 est la moyenne) au lieu de 700 : arrachement 53 % → 66 %.</td></tr>
+<tr><td>Tête des pieds rigide par défaut</td><td>Fait : construire() est articulé par défaut (côté sécurité). L'essai des marches comme traverses est donc fait tête articulée : écarts ≤ 2 %.</td></tr>
+<tr><td>Raideur 1e10, auto-contrôle, échelle de couleurs</td><td>Commentaire ajouté sur 1e10 ; auto-contrôle du poteau sur un modèle neuf ; échelle de couleurs de visu.py non changée (cosmétique).</td></tr>
 </table>
 
 <h2>Références</h2>

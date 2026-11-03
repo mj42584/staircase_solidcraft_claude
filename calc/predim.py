@@ -52,8 +52,10 @@ fmk_bois, E_bois, kmod, gM_bois = 30, 11000, 0.8, 1.3
 # (positions supposées). Raideur axiale 25 d l_ef par vis (Blass-Sandhaas, de mémoire), plafond : sans l'aile de 5 mm ni le limon.
 vis_d, vis_lef, vis_x = 5, 50, (-75, 0, 75)
 K_VIS = 25 * vis_d * vis_lef * sum(x**2 for x in vis_x)   # N·mm/rad, 7,0e7
-rho_k = 700   # kg/m³ chêne, supposé
-F_arrachement = 0.8 * 0.52 * vis_d**-0.5 * vis_lef**-0.1 * rho_k**0.8 * vis_d * vis_lef / 1.3   # N, EC5 8.7, kmod 0,8, gM 1,3
+rho_k = 530   # kg/m³, masse volumique caractéristique du D30 (EN 338, de mémoire ; 640 = moyenne) ; 700 avant D40
+# EC5 éq. (8.39) : f_ax,k = 0,52 d^-0,5 l_ef^-0,1 ρk^0,8 (exposants négatifs : la résistance unitaire baisse avec d et l_ef),
+# puis F = n_ef f_ax,k d l_ef ; formule donnée pour 6 ≤ d ≤ 12 mm, appliquée ici à Ø5 (ordre de grandeur)
+F_arrachement = 0.8 * 0.52 * vis_d**-0.5 * vis_lef**-0.1 * rho_k**0.8 * vis_d * vis_lef / 1.3   # N, kmod 0,8, gM 1,3
 
 # Chevilles M12 des pieds (D37) : béton C25/30 non fissuré (choix de l'utilisateur), dalle et distances au bord NON fournies ; cheville
 # non choisie : acier 8.8, hef = 70 mm supposés, formules EN 1992-4 de mémoire, à remplacer par l'ETA de la cheville retenue.
@@ -134,6 +136,25 @@ def flambement(N, L_cr, A, I):
     return chi * A * fy / gM1
 
 
+def limons_et_poutre_avant():
+    """Charges des limons (N/mm), réactions sur la poutre avant (ELU, ELS) et moment ELU de la poutre avant."""
+    marche_g = g_chene * giron * marche_epaisseur * emmarchement + equerres_g
+    w_G = marche_g / 2 / giron + (upe_g + g_gc) / cos(angle)
+    w_Q = q_k * emmarchement / 2
+    w_elu, w_els = 1.35 * w_G + 1.5 * w_Q, w_G + w_Q
+    L_h = {"V1": (nb_volee1 - 1) * giron, "V2": nb_volee2 * giron}
+    R = {v: (w_elu * L / 2, w_els * L / 2) for v, L in L_h.items()}
+    # Poutre avant du palier : reçoit les 4 limons (charges au milieu des ailes), appuis aux angles extérieurs
+    x_limons = (limon_b / 2, L_p / 2 - jour / 2 + limon_b / 2, L_p / 2 + jour / 2 - limon_b / 2, L_p - limon_b / 2)
+    w_palier_G = g_chene * palier_ep * palier_profondeur / 2 + upe_g
+    w_palier_Q = q_k * palier_profondeur / 2
+    charges = lambda i: list(zip((R["V1"][i], R["V1"][i], R["V2"][i], R["V2"][i]), x_limons))
+    w_p_elu, w_p_els = 1.35 * w_palier_G + 1.5 * w_palier_Q, w_palier_G + w_palier_Q
+    M_pa, _ = poutre(L_p, w=w_p_elu, charges=charges(0), EI=E_acier * upe_I)
+    return dict(marche_g=marche_g, w_G=w_G, w_Q=w_Q, w_elu=w_elu, w_els=w_els, L_h=L_h, R=R, x_limons=x_limons,
+                w_palier_G=w_palier_G, w_palier_Q=w_palier_Q, w_p_elu=w_p_elu, w_p_els=w_p_els, charges=charges, M_pa=M_pa)
+
+
 def calculer():
     # Marches (chêne) : portée = emmarchement, appuis simples sur les équerres (côté sécurité)
     sigma, f = marche(marche_epaisseur)
@@ -145,28 +166,17 @@ def calculer():
         ep_mini += 1
 
     # Limons : poutre inclinée sur 2 appuis, charges données par mètre horizontal, une demi-volée par limon
-    marche_g = g_chene * giron * marche_epaisseur * emmarchement + equerres_g
-    w_G = marche_g / 2 / giron + (upe_g + g_gc) / cos(angle)
-    w_Q = q_k * emmarchement / 2
-    w_elu, w_els = 1.35 * w_G + 1.5 * w_Q, w_G + w_Q
-    R = {}
-    for nom, L_h in (("V1", (nb_volee1 - 1) * giron), ("V2", nb_volee2 * giron)):
+    e = limons_et_poutre_avant()
+    R, charges, w_p_elu, w_p_els = e["R"], e["charges"], e["w_p_elu"], e["w_p_els"]
+    for nom, L_h in e["L_h"].items():
         L_s = L_h / cos(angle)
-        M = w_elu * L_h**2 / 8
-        f = 5 * w_els * cos(angle) ** 2 * L_s**4 / (384 * E_acier * upe_I)
+        M = e["w_elu"] * L_h**2 / 8
+        f = 5 * e["w_els"] * cos(angle) ** 2 * L_s**4 / (384 * E_acier * upe_I)
         verif(f"Limon {nom} UPE 220 (L = {L_s:.0f})", "contrainte ELU", M / upe_W, fy / gM0, "MPa")
         verif(f"Limon {nom} UPE 220 (L = {L_s:.0f})", "flèche ELS", f, L_s / fleche_max, "mm")
-        R[nom] = (w_elu * L_h / 2, w_els * L_h / 2)
 
-    # Poutre avant du palier : reçoit les 4 limons (charges au milieu des ailes), appuis aux angles extérieurs
-    x_limons = (limon_b / 2, L_p / 2 - jour / 2 + limon_b / 2, L_p / 2 + jour / 2 - limon_b / 2, L_p - limon_b / 2)
-    w_palier_G = g_chene * palier_ep * palier_profondeur / 2 + upe_g
-    w_palier_Q = q_k * palier_profondeur / 2
-    charges = lambda i: list(zip((R["V1"][i], R["V1"][i], R["V2"][i], R["V2"][i]), x_limons))
-    w_p_elu, w_p_els = 1.35 * w_palier_G + 1.5 * w_palier_Q, w_palier_G + w_palier_Q
-    M, _ = poutre(L_p, w=w_p_elu, charges=charges(0), EI=E_acier * upe_I)
     _, f = poutre(L_p, w=w_p_els, charges=charges(1), EI=E_acier * upe_I)
-    verif(f"Poutre avant UPE 220 (L = {L_p:.0f})", "contrainte ELU", M / upe_W, fy / gM0, "MPa")
+    verif(f"Poutre avant UPE 220 (L = {L_p:.0f})", "contrainte ELU", e["M_pa"] / upe_W, fy / gM0, "MPa")
     verif(f"Poutre avant UPE 220 (L = {L_p:.0f})", "flèche ELS", f, L_p / fleche_max, "mm")
 
     # Pieds avant : pied côté V1 (le plus chargé), libre en tête faute de contreventement → L_cr = 2 H

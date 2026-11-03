@@ -21,8 +21,8 @@ boulon_d = 12
 platine_ep = 15
 mc_h, mc_cote, mc_palier_h = 900, 45, 1000
 limon_descente = 30   # limons descendus de 30 mm en vertical (limon_dessus, D17)
-potelet_l, potelet_ep = 30, 2
-nb_potelets_v1, nb_potelets_fond = 4, 3
+potelet_l, potelet_ep = 40, 3   # 30 × 2 dans le modèle, 40 × 3 à l'essai (D34 ; épaisseur supposée)
+nb_potelets_v1, nb_potelets_v2, nb_potelets_fond = 5, 3, 4   # V1 : 5 (D32) ; fond : 3 dans le modèle, 4 à l'essai (D34)
 platine_bas_b, boulon_potelet_d = 50, 8
 platine_haut_entraxe, potelet_fond_marge = 80, 25
 
@@ -34,6 +34,10 @@ L_p = 2 * (emmarchement + limon_b) + jour   # largeur du palier hors tout = pout
 # Pas des potelets, comme dans le modèle : V1 de giron / 2 à rive_x - giron / 2 - platine_ep (en plan) ;
 # fond du palier : 2 * potelet_fond_y / (nb - 1)
 pas_potelets_v1 = ((nb_volee1 - 1) * giron - giron - platine_ep) / (nb_potelets_v1 - 1) / cos(angle)
+# V2 : ext du premier potelet (X = rive_x - 3 giron / 2) au dernier (X = X_a + giron / 2 + platine_ep) ; int du premier
+# (rive_x - platine_ep - giron / 2, D25) au même dernier
+pas_potelets_v2_ext = ((nb_volee2 - 2) * giron - platine_ep) / (nb_potelets_v2 - 1) / cos(angle)
+pas_potelets_v2_int = ((nb_volee2 - 1) * giron - 2 * platine_ep) / (nb_potelets_v2 - 1) / cos(angle)
 pas_potelets_fond = 2 * (L_p / 2 - limon_b / 2 - mc_cote / 2 - platine_haut_entraxe / 2 - potelet_fond_marge) / (nb_potelets_fond - 1)
 
 # --- Hypothèses, à faire valider par un bureau d'études
@@ -41,7 +45,7 @@ q_k = 2.5e-3          # N/mm² : escalier de logement (cat. A), AN française de
 Q_k = 2000            # N : charge ponctuelle, vérifications locales, non cumulée avec q_k
 q_gc = 0.6            # N/mm : poussée horizontale sur les mains courantes, cat. A, supposée (AN française, à confirmer)
 g_chene = 7.5e-6      # N/mm³ (0,75 g/cm³, comme le modèle)
-equerres_g = 2 * 200 * 0.0133   # N par marche : 2 cornières 30×30×3 de 200 mm (1,36 kg/m)
+equerres_g = 2 * 200 * 0.037   # N par marche : 2 cornières 50×50×5 de 200 mm (3,77 kg/m, essai D32 ; 30×30×3 : 0,0133)
 # Chêne D30 (EN 338), classe de service 1, charge de moyen terme
 fmk_bois, E_bois, kmod, gM_bois = 30, 11000, 0.8, 1.3
 # Acier S235 : nuance supposée, elle n'est pas fixée dans CONCEPTION.md
@@ -50,10 +54,10 @@ fy, E_acier, gM0, gM1 = 235, 210000, 1.0, 1.0
 upe_I, upe_W, upe_g = 26.8e6, 244e3, 0.266   # mm⁴, mm³, N/mm (26,6 kg/m)
 # Boulons classe 8.8 supposée
 fub, As_M12, As_M8, gM2 = 800, 84.3, 36.6, 1.25
-# Mains courantes et potelets : 26,6 kg de chêne + 12 × 2,006 + 7 × 2,134 kg de potelets (assembly.mass_properties,
-# CONCEPTION.md §6.4), répartis sur les lignes de main courante : 4 limons, 2 côtés et le fond du palier
+# Mains courantes et potelets : 26,6 kg de chêne + 16 × 3,489 + 8 × 3,742 kg de potelets 40 × 40 × 3 (volumes de
+# `measure` × 7,85 g/cm³, D34 ; avant : 12 × 2,006 + 7 × 2,134 en 30 × 2), répartis sur les lignes de main courante : 4 limons, 2 côtés et le fond du palier
 L_lignes = 2 * ((nb_volee1 - 1) + nb_volee2) * giron / cos(angle) + 2 * palier_profondeur + L_p
-g_gc = 9.81 * (26.6 + 12 * 2.006 + 7 * 2.134) / L_lignes   # N/mm de ligne
+g_gc = 9.81 * (26.6 + 16 * 3.489 + 8 * 3.742) / L_lignes   # N/mm de ligne
 fleche_max = 300      # L/300
 
 
@@ -156,13 +160,14 @@ def calculer():
     # bras de levier du dessus du limon (ou du plancher) à l'axe de la main courante
     c, t = potelet_l, potelet_ep
     W = (c**4 - (c - 2 * t) ** 4) / 12 / (c / 2)   # angles vifs
-    for nom, pas, h in (("V1", pas_potelets_v1, mc_h + limon_descente), ("fond", pas_potelets_fond, mc_palier_h)):
+    for nom, pas, h in (("V1", pas_potelets_v1, mc_h + limon_descente), ("V2 ext", pas_potelets_v2_ext, mc_h + limon_descente),
+                        ("V2 int", pas_potelets_v2_int, mc_h + limon_descente), ("fond", pas_potelets_fond, mc_palier_h)):
         M = 1.5 * q_gc * pas * h
         verif(f"Potelet {nom} {c}×{t} (pas {pas:.0f}, h {h:.0f})", "flexion ELU", M / W, fy / gM0, "MPa")
-        if nom == "V1":
+        if nom.startswith("V"):
             # 2 vis M8 dans l'axe du limon, platine basculant sur son bord : bras de levier b / 2, sans effet de levier
             T = M / (platine_bas_b / 2) / 2
-            verif(f"Boulons M{boulon_potelet_d} 8.8 platine potelet V1", "traction ELU", T / 1e3,
+            verif(f"Boulons M{boulon_potelet_d} 8.8 platine potelet {nom}", "traction ELU", T / 1e3,
                   0.9 * fub * As_M8 / gM2 / 1e3, "kN")
     return ep_mini
 
@@ -182,8 +187,9 @@ def _auto_controle():
     assert isclose(M, 1000**2 / 8) and isclose(f, 5 * 1000**4 / 384)
     assert isclose(reaction_gauche(1000, charges=[(1, 250)]), 0.75)
     assert round(2 * hauteur_marche + giron) == 624   # Blondel de CONCEPTION.md
-    assert isclose(pas_potelets_v1 * cos(angle), 2501.67 - 1319.33, abs_tol=0.1)   # potelets V1 relevés dans le modèle
-    assert isclose(pas_potelets_fond, 1090, abs_tol=0.1)                          # potelet_fond_y = 1 090
+    assert isclose(pas_potelets_v1 * cos(angle), (2501.67 - 1319.33) * 3 / (nb_potelets_v1 - 1), abs_tol=0.1)   # relevé à 4 potelets dans le modèle, 5 prévus
+    assert isclose(pas_potelets_v2_ext * cos(angle), 677.5, abs_tol=0.1) and isclose(pas_potelets_v2_int * cos(angle), 807.0, abs_tol=0.1)  # relevé D32
+    assert isclose(pas_potelets_fond, 2 * 1090 / (nb_potelets_fond - 1), abs_tol=0.1)                          # potelet_fond_y = 1 090
 
 
 if __name__ == "__main__":

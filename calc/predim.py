@@ -48,6 +48,12 @@ g_chene = 7.5e-6      # N/mm³ (0,75 g/cm³, comme le modèle)
 equerres_g = 2 * 200 * 0.037   # N par marche : 2 cornières 50×50×5 de 200 mm (3,77 kg/m, essai D32 ; 30×30×3 : 0,0133)
 # Chêne D30 (EN 338), classe de service 1, charge de moyen terme
 fmk_bois, E_bois, kmod, gM_bois = 30, 11000, 0.8, 1.3
+# Vis à bois de la cornière dans la marche (D35) : 3 vis par cornière, Ø5, 50 mm dans le chêne, en ligne le long du giron
+# (positions supposées). Raideur axiale 25 d l_ef par vis (Blass-Sandhaas, de mémoire), plafond : sans l'aile de 5 mm ni le limon.
+vis_d, vis_lef, vis_x = 5, 50, (-75, 0, 75)
+K_VIS = 25 * vis_d * vis_lef * sum(x**2 for x in vis_x)   # N·mm/rad, 7,0e7
+rho_k = 700   # kg/m³ chêne, supposé
+F_arrachement = 0.8 * 0.52 * vis_d**-0.5 * vis_lef**-0.1 * rho_k**0.8 * vis_d * vis_lef / 1.3   # N, EC5 8.7, kmod 0,8, gM 1,3
 # Acier S235 : nuance supposée, elle n'est pas fixée dans CONCEPTION.md
 fy, E_acier, gM0, gM1 = 235, 210000, 1.0, 1.0
 # UPE 220, catalogue EN 10365, flexion autour de l'axe fort

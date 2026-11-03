@@ -6,7 +6,7 @@ Installer : pip install PyNiteFEA. Lancer : python3 calc/portique.py
 Appuis : pieds encastrés au sol (platine à 4 chevilles) ; bas des limons V1 articulé (2 chevilles alignées
 dans l'axe du limon, D28) ; haut des limons V2 articulé (boulonné à la structure supérieure) ; limons
 articulés sur la poutre avant (platines boulonnées). Tête des pieds (platine boulonnée par 2 M12 sous le cadre) :
-calculée rigide puis articulée, les deux bornes. Les marches ne relient pas les limons entre eux (côté sécurité).
+calculée rigide puis articulée, les deux bornes. Les marches ne relient pas les limons entre eux (côté sécurité), sauf dans l'essai marches_traverses() (D32).
 Contreventement en travers (D30) : une diagonale en tube par face d'about du palier (avant et arrière, en sens
 opposés), articulée aux trous des goussets soudés sur les pieds (bas d'un pied, haut de l'autre), comme le 3D.
 """
@@ -47,6 +47,10 @@ Z_c = nb_volee1 * hauteur_marche - palier_ep - limon_h / 2   # axe du cadre
 Y_c = jour / 2 + emmarchement + limon_b        # angles extérieurs du cadre
 dz = limon_h / 2 / cos(angle)                  # axe du limon sous la ligne de nez
 X_0 = (dz - hauteur_marche) / tan(angle)       # pied des limons V1 au sol
+liaison_lc = 20  # mm : longueur de la barre courte qui porte le ressort de rotation marche-limon
+# Raideur en rotation marche-cornière, supposée : 4 vis à bois en ligne au milieu de l'aile, K_ser ≈ 3000 N/mm chacune,
+# bras = demi-aile : 15 mm (30×30) → 3e6 ; 25 mm (50×50×5) → 7,5e6
+K_MARCHE = (0, 3e6, 7.5e6, 1e7, 1e10)
 y_limons = {"V1": (-(jour / 2 + emmarchement + limon_b / 2), -(jour / 2 - limon_b / 2)),
             "V2": (jour / 2 - limon_b / 2, jour / 2 + emmarchement + limon_b / 2)}
 
@@ -68,7 +72,9 @@ def noeud(m, nom, x, y, z):
     return m.add_node(nom, x, z, y)  # PyNite veut Y vertical : (x, y, z) → (x, z, y)
 
 
-def construire(tete_rigide=True, diagonales=True):
+def construire(tete_rigide=True, diagonales=True, k_marche=None):
+    """k_marche : None = modèle sans couple ni marches ; 0 = couple de la poussée sur les limons, sans marches ;
+    > 0 = marches de chêne entre les deux limons de chaque volée, liées par un ressort de rotation (N·mm/rad)."""
     m = nouveau_modele()
     tot = {}  # charges appliquées par (cas, direction PyNite), pour le contrôle d'équilibre
 
@@ -150,6 +156,9 @@ def construire(tete_rigide=True, diagonales=True):
             charge(nom, "Q", wl_Q)
             charge(nom, "GCY", q_gc, "FZ")
 
+    if k_marche is not None:
+        marches_et_couples(m, k_marche)
+
     # Poussée sur les mains courantes, toutes dans le sens des défauts de verticalité (côté sécurité), appliquée
     # à l'axe des barres : en travers (Y) sur les 4 limons et les poutres latérales, en long (X) sur la poutre arrière.
     # shortcut: pas de moment dû à la hauteur de la main courante ; ordre de grandeur dans torsion_limons()
@@ -183,13 +192,51 @@ def construire(tete_rigide=True, diagonales=True):
     return m, poutres_avant, coins
 
 
+def marches_et_couples(m, k_marche):
+    """Couple de la poussée sur les limons (cas GCY) et, si k_marche > 0, les marches comme traverses.
+
+    Les nœuds sont posés sur l'axe de chaque limon au milieu de chaque marche (PyNite y coupe la barre). Le couple
+    q_gc × bras est réparti en moments nodaux autour de X (poussée +Y de PyNite à la hauteur de la main courante,
+    même bras que torsion_limons()). Chaque bout de marche tient au limon par une barre courte dont la raideur en
+    flexion E I / lc = k_marche représente la cornière soudée + les vis à bois, la marche est une poutre de chêne
+    entre les deux. shortcut: marche à la hauteur de l'axe du limon, tout le couple repris aux nœuds des marches
+    (bras vertical, pas de cos), ressort identique autour de X et de la verticale ; à affiner si le résultat est limite.
+    """
+    bras = mc_h + limon_descente + limon_h / 2
+    if k_marche > 0:
+        m.add_material("chene", E_bois, E_bois / 16, 0.3, g_chene)  # G ≈ E / 16 : supposé
+        m.add_section("marche", giron * marche_epaisseur, marche_epaisseur * giron**3 / 12,
+                      giron * marche_epaisseur**3 / 12, giron * marche_epaisseur**3 / 3 * (1 - 0.63 * marche_epaisseur / giron))
+        I_l = k_marche * liaison_lc / E_acier
+        m.add_section("liaison", 1e6, I_l, I_l, 1e10)  # rigide en traction, cisaillement et torsion, souple en flexion
+    bouts = {"V1": ((X_0, 0), (X_r + excentricite, Z_c)), "V2": ((X_r + excentricite, Z_c), (X_a, hauteur_totale - dz))}
+    xs = {"V1": [(j + 0.5) * giron for j in range(nb_volee1 - 1)],
+          "V2": [X_r - (j + 0.5) * giron for j in range(nb_volee2)]}
+    for volee, (y1, y2) in y_limons.items():
+        (xa, za), (xb, zb) = bouts[volee]
+        L_ax = ((xb - xa) ** 2 + (zb - za) ** 2) ** 0.5
+        for j, x in enumerate(xs[volee]):
+            z = za + (x - xa) * (zb - za) / (xb - xa)
+            for s, (y, sens) in enumerate(((y1, 1), (y2, -1))):
+                n = f"M{volee}{j}_{s}"
+                noeud(m, n, x, y, z)
+                m.add_node_load(n, "MX", q_gc * L_ax / len(xs[volee]) * bras, case="GCY")
+                if k_marche > 0:
+                    noeud(m, n + "e", x, y + sens * liaison_lc, z)
+                    m.add_member(n + "r", n, n + "e", "acier", "liaison")
+            if k_marche > 0:
+                m.add_member(f"M{volee}{j}", f"M{volee}{j}_0e", f"M{volee}{j}_1e", "chene", "marche")
+
+
 def equilibre(m, tot):
     """Somme des réactions + charges appliquées = 0, dans les 3 directions, pour chaque combinaison."""
     for nom, combo in m.load_combos.items():
-        for d in ("FX", "FY", "FZ"):
-            F = sum(f * tot.get((cas, d), 0.0) for cas, f in combo.factors.items())
+        # tolérance rapportée à la plus forte composante de la combinaison (bruit des ressorts raides sur une
+        # direction sans charge : 1e-3 N pour 1e5 N)
+        Fd = {d: sum(f * tot.get((cas, d), 0.0) for cas, f in combo.factors.items()) for d in ("FX", "FY", "FZ")}
+        for d, F in Fd.items():
             R = sum(getattr(n, f"Rxn{d}").get(nom, 0.0) for n in m.nodes.values())
-            assert isclose(F + R, 0, abs_tol=1e-6 * max(abs(F), 1e3)), (nom, d, F, R)
+            assert isclose(F + R, 0, abs_tol=1e-6 * max(*map(abs, Fd.values()), 1e3)), (nom, d, F, R)
 
 
 def resultats(m, poutres_avant, coins, tete_rigide=True):
@@ -281,6 +328,34 @@ def torsion_limons():
         verif(f"Limons {v} seuls (T = {T / 1e6:.1f} kN·m)", "torsion ELU", T * limon_tf / upe_J, fy / sqrt(3) / gM0, "MPa")
 
 
+def marches_traverses(k_marche):
+    """Torsion des limons et de la poutre avant, flexion des marches et moment des liaisons, poussée en travers (GCY)."""
+    m, poutres_avant, _ = construire(k_marche=k_marche)
+    gcy = [c for c in m.load_combos if c.startswith("ELU_GCY")]
+
+    def t_max(barre):
+        return max(max(abs(m.members[barre].max_torque(c)), abs(m.members[barre].min_torque(c))) for c in gcy)
+
+    for v in ("V1", "V2"):
+        T = max(t_max(f"L{v}{s}") for s in (0, 1))
+        verif(f"Limons {v}, k = {k_marche:.0e}", "torsion ELU", T * limon_tf / upe_J, fy / sqrt(3) / gM0, "MPa")
+    T = max(t_max(b) for b in poutres_avant)
+    verif(f"Poutre avant, k = {k_marche:.0e}", "torsion ELU", T * limon_tf / upe_J, fy / sqrt(3) / gM0, "MPa")
+    if k_marche > 0:
+        def m_max(barre, axe):
+            return max(max(abs(m.members[barre].max_moment(axe, c)), abs(m.members[barre].min_moment(axe, c)))
+                       for c in gcy)
+
+        marches = [b for b in m.members if b[0] == "M" and b[-1].isdigit() and "_" not in b]
+        sigma = max(m_max(b, "Mz") / (giron * marche_epaisseur**2 / 6) + m_max(b, "My") / (marche_epaisseur * giron**2 / 6)
+                    for b in marches)
+        verif(f"Marches chêne {marche_epaisseur} mm, k = {k_marche:.0e}", "flexion ELU", sigma, kmod * fmk_bois / gM_bois, "MPa")
+        liaisons = [b for b in m.members if b.endswith("r") and "_" in b]
+        M_l = max(max(m_max(b, "Mz"), m_max(b, "My")) for b in liaisons)
+        print(f"  k = {k_marche:.0e} : moment repris par une liaison marche-cornière {M_l / 1e6:5.3f} kN·m "
+              f"(rotation {M_l / k_marche * 1e3:5.2f} mrad), à répartir sur les vis à bois")
+
+
 def _auto_controle():
     # Axe fort bien affecté : poutre UPE sur 2 appuis, flèche = 5 w L⁴ / 384 E I
     m = nouveau_modele()
@@ -317,5 +392,12 @@ if __name__ == "__main__":
         resultats(*construire(tete_rigide), tete_rigide)
         print()
         afficher()
-    print("\nNon calculé : déversement, gauchissement (torsion non uniforme), marches comme traverses entre limons,"
-          " assemblages (soudures, platines, résistance des chevilles), vibrations, chargement alterné d'une seule volée.")
+    print("\n=== Marches comme traverses entre limons, poussée en travers (essai, D32) ===")
+    print("k = raideur en rotation de la liaison marche-limon, N·mm/rad, SUPPOSÉE (0 = limons seuls, couple repris par"
+          " le cadre ; 1e10 ≈ rigide)")
+    for k_marche in K_MARCHE:
+        lignes.clear()
+        marches_traverses(k_marche)
+        afficher()
+    print("\nNon calculé : déversement, gauchissement (torsion non uniforme), couple de la poussée sur les poutres du"
+          " palier, assemblages (soudures, platines, résistance des chevilles), vibrations, chargement alterné d'une seule volée.")

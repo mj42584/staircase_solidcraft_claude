@@ -22,7 +22,7 @@ platine_ep = 15
 mc_h, mc_cote, mc_palier_h = 900, 45, 1000
 limon_descente = 30   # limons descendus de 30 mm en vertical (limon_dessus, D17)
 potelet_l, potelet_ep = 30, 2
-nb_potelets_v1, nb_potelets_fond = 4, 3
+nb_potelets_v1, nb_potelets_fond = 5, 3   # V1 : 4 dans le modèle, 5 à l'essai (D32)
 platine_bas_b, boulon_potelet_d = 50, 8
 platine_haut_entraxe, potelet_fond_marge = 80, 25
 
@@ -41,7 +41,7 @@ q_k = 2.5e-3          # N/mm² : escalier de logement (cat. A), AN française de
 Q_k = 2000            # N : charge ponctuelle, vérifications locales, non cumulée avec q_k
 q_gc = 0.6            # N/mm : poussée horizontale sur les mains courantes, cat. A, supposée (AN française, à confirmer)
 g_chene = 7.5e-6      # N/mm³ (0,75 g/cm³, comme le modèle)
-equerres_g = 2 * 200 * 0.0133   # N par marche : 2 cornières 30×30×3 de 200 mm (1,36 kg/m)
+equerres_g = 2 * 200 * 0.037   # N par marche : 2 cornières 50×50×5 de 200 mm (3,77 kg/m, essai D32 ; 30×30×3 : 0,0133)
 # Chêne D30 (EN 338), classe de service 1, charge de moyen terme
 fmk_bois, E_bois, kmod, gM_bois = 30, 11000, 0.8, 1.3
 # Acier S235 : nuance supposée, elle n'est pas fixée dans CONCEPTION.md
@@ -182,7 +182,7 @@ def _auto_controle():
     assert isclose(M, 1000**2 / 8) and isclose(f, 5 * 1000**4 / 384)
     assert isclose(reaction_gauche(1000, charges=[(1, 250)]), 0.75)
     assert round(2 * hauteur_marche + giron) == 624   # Blondel de CONCEPTION.md
-    assert isclose(pas_potelets_v1 * cos(angle), 2501.67 - 1319.33, abs_tol=0.1)   # potelets V1 relevés dans le modèle
+    assert isclose(pas_potelets_v1 * cos(angle), (2501.67 - 1319.33) * 3 / (nb_potelets_v1 - 1), abs_tol=0.1)   # relevé à 4 potelets dans le modèle, 5 prévus
     assert isclose(pas_potelets_fond, 1090, abs_tol=0.1)                          # potelet_fond_y = 1 090
 
 

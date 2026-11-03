@@ -18,11 +18,23 @@ palier_ep = marche_epaisseur
 limon_h, limon_b, limon_tw, limon_tf = 220, 85, 6.5, 12
 poteau_cote, poteau_ep = 100, 5
 boulon_d = 12
+platine_ep = 15
+mc_h, mc_cote, mc_palier_h = 900, 45, 1000
+limon_descente = 30   # limons descendus de 30 mm en vertical (limon_dessus, D17)
+potelet_l, potelet_ep = 30, 2
+nb_potelets_v1, nb_potelets_fond = 4, 3
+platine_bas_b, boulon_potelet_d = 50, 8
+platine_haut_entraxe, potelet_fond_marge = 80, 25
 
 hauteur_marche = hauteur_totale / nb_contremarches
 nb_volee2 = nb_contremarches - nb_volee1
 angle = atan(hauteur_marche / giron)
 jour = 2 * limon_b + jeu_limons
+L_p = 2 * (emmarchement + limon_b) + jour   # largeur du palier hors tout = poutre avant
+# Pas des potelets, comme dans le modèle : V1 de giron / 2 à rive_x - giron / 2 - platine_ep (en plan) ;
+# fond du palier : 2 * potelet_fond_y / (nb - 1)
+pas_potelets_v1 = ((nb_volee1 - 1) * giron - giron - platine_ep) / (nb_potelets_v1 - 1) / cos(angle)
+pas_potelets_fond = 2 * (L_p / 2 - limon_b / 2 - mc_cote / 2 - platine_haut_entraxe / 2 - potelet_fond_marge) / (nb_potelets_fond - 1)
 
 # --- Hypothèses, à faire valider par un bureau d'études
 q_k = 2.5e-3          # N/mm² : escalier de logement (cat. A), AN française de l'EN 1991-1-1
@@ -37,7 +49,11 @@ fy, E_acier, gM0, gM1 = 235, 210000, 1.0, 1.0
 # UPE 220, catalogue EN 10365, flexion autour de l'axe fort
 upe_I, upe_W, upe_g = 26.8e6, 244e3, 0.266   # mm⁴, mm³, N/mm (26,6 kg/m)
 # Boulons classe 8.8 supposée
-fub, As_M12, gM2 = 800, 84.3, 1.25
+fub, As_M12, As_M8, gM2 = 800, 84.3, 36.6, 1.25
+# Mains courantes et potelets : 26,6 kg de chêne + 12 × 2,006 + 7 × 2,134 kg de potelets (assembly.mass_properties,
+# CONCEPTION.md §6.4), répartis sur les lignes de main courante : 4 limons, 2 côtés et le fond du palier
+L_lignes = 2 * ((nb_volee1 - 1) + nb_volee2) * giron / cos(angle) + 2 * palier_profondeur + L_p
+g_gc = 9.81 * (26.6 + 12 * 2.006 + 7 * 2.134) / L_lignes   # N/mm de ligne
 fleche_max = 300      # L/300
 
 
@@ -103,7 +119,7 @@ def calculer():
 
     # Limons : poutre inclinée sur 2 appuis, charges données par mètre horizontal, une demi-volée par limon
     marche_g = g_chene * giron * marche_epaisseur * emmarchement + equerres_g
-    w_G = marche_g / 2 / giron + upe_g / cos(angle)
+    w_G = marche_g / 2 / giron + (upe_g + g_gc) / cos(angle)
     w_Q = q_k * emmarchement / 2
     w_elu, w_els = 1.35 * w_G + 1.5 * w_Q, w_G + w_Q
     R = {}
@@ -116,7 +132,6 @@ def calculer():
         R[nom] = (w_elu * L_h / 2, w_els * L_h / 2)
 
     # Poutre avant du palier : reçoit les 4 limons (charges au milieu des ailes), appuis aux angles extérieurs
-    L_p = 2 * (emmarchement + limon_b) + jour
     x_limons = (limon_b / 2, L_p / 2 - jour / 2 + limon_b / 2, L_p / 2 + jour / 2 - limon_b / 2, L_p - limon_b / 2)
     w_palier_G = g_chene * palier_ep * palier_profondeur / 2 + upe_g
     w_palier_Q = q_k * palier_profondeur / 2
@@ -136,6 +151,19 @@ def calculer():
 
     # Boulons des platines côté palier : 2 boulons en cisaillement par platine
     verif(f"Boulons M{boulon_d} 8.8 platine V1", "cisaillement ELU", R["V1"][0] / 2 / 1e3, 0.6 * fub * As_M12 / gM2 / 1e3, "kN")
+
+    # Potelets en console sous la poussée des mains courantes : un pas de main courante par potelet,
+    # bras de levier du dessus du limon (ou du plancher) à l'axe de la main courante
+    c, t = potelet_l, potelet_ep
+    W = (c**4 - (c - 2 * t) ** 4) / 12 / (c / 2)   # angles vifs
+    for nom, pas, h in (("V1", pas_potelets_v1, mc_h + limon_descente), ("fond", pas_potelets_fond, mc_palier_h)):
+        M = 1.5 * q_gc * pas * h
+        verif(f"Potelet {nom} {c}×{t} (pas {pas:.0f}, h {h:.0f})", "flexion ELU", M / W, fy / gM0, "MPa")
+        if nom == "V1":
+            # 2 vis M8 dans l'axe du limon, platine basculant sur son bord : bras de levier b / 2, sans effet de levier
+            T = M / (platine_bas_b / 2) / 2
+            verif(f"Boulons M{boulon_potelet_d} 8.8 platine potelet V1", "traction ELU", T / 1e3,
+                  0.9 * fub * As_M8 / gM2 / 1e3, "kN")
     return ep_mini
 
 
@@ -154,6 +182,8 @@ def _auto_controle():
     assert isclose(M, 1000**2 / 8) and isclose(f, 5 * 1000**4 / 384)
     assert isclose(reaction_gauche(1000, charges=[(1, 250)]), 0.75)
     assert round(2 * hauteur_marche + giron) == 624   # Blondel de CONCEPTION.md
+    assert isclose(pas_potelets_v1 * cos(angle), 2501.67 - 1319.33, abs_tol=0.1)   # potelets V1 relevés dans le modèle
+    assert isclose(pas_potelets_fond, 1090, abs_tol=0.1)                          # potelet_fond_y = 1 090
 
 
 if __name__ == "__main__":
@@ -164,4 +194,5 @@ if __name__ == "__main__":
     afficher()
     print(f"\nÉpaisseur mini des marches chêne pour passer : {ep_mini} mm")
     print("Non calculé : stabilité d'ensemble / contreventement, torsion de la poutre avant (UPE chargé"
-          " sur l'âme), déversement, soudures, pression diamétrale, vibrations, fluage du chêne.")
+          " sur l'âme), déversement, soudures, pression diamétrale, effet de levier et aile du limon sous les"
+          " platines des potelets, vibrations, fluage du chêne.")

@@ -21,20 +21,21 @@
 
 <h1>Rapport de calcul — Escalier gab</h1>
 <p>Escalier droit à demi-tour, acier et chêne, palier autoporté sur 4 pieds.<br>
-2 novembre 2026 · dépôt <i>mj42584/staircase_solidcraft_claude</i>, branche <i>contreventement-palier</i> (PR #36) · scripts <i>calc/predim.py</i>, <i>calc/portique.py</i>, <i>calc/rapport/figures.py</i></p>
+3 novembre 2026 (version du 2 novembre complétée : diagonales du palier, revue externe) · dépôt <i>mj42584/staircase_solidcraft_claude</i>, branche <i>diagonales-palier</i> (PR #37) · scripts <i>calc/predim.py</i>, <i>calc/portique.py</i>, <i>calc/rapport/figures.py</i></p>
 
 <p class="cadre"><b>Statut du document.</b> Ce rapport donne des <b>ordres de grandeur</b>, établis par un agent (Claude) à partir du modèle 3D et de scripts Python. Ce n'est pas une note de calcul : il ne remplace pas la vérification et la validation par un bureau d'études avant fabrication. Les valeurs marquées <b>supposé</b> n'ont pas été fournies et sont à confirmer.</p>
 
 <h2>Synthèse</h2>
-<p>Sous les charges verticales, toutes les pièces travaillent à 31 % au plus de leur résistance. Les marches en chêne de 60 mm passent à 25 %.</p>
-<p><b>Dans le sens de la pente (X)</b>, le palier est tenu par les limons, qui font bracon entre la dalle et l'arrivée : déplacement 0,04 mm.</p>
-<p><b>En travers (Y), rien ne contrevente le palier.</b> Seuls les 4 pieds, encastrés au sol et travaillant en console, le retiennent. Sous la poussée sur les mains courantes, le palier se déplace de :</p>
+<p>Sous les charges verticales, la structure acier travaille à 31 % au plus de sa résistance. Les marches en chêne de 60 mm passent à 25 %.</p>
+<p><b>Stabilité du palier.</b> En long (X), les limons font bracon entre la dalle et l'arrivée : déplacement 0,04 mm. En travers (Y), deux diagonales en tube 50 × 50 × 3 (une par face d'about du palier, D30) le tiennent. Il se déplace de 0,28 à 0,29 mm, soit 4 % de la limite. Sans ces diagonales, le déplacement atteignait 11,5 mm (141 %).</p>
+<p><b>Chevilles.</b> Avec les diagonales, chaque cheville M12 reçoit au plus 1,8 kN de traction et 1,6 kN de cisaillement (pieds de poteau). Aux pieds des limons V1, c'est 3,6 kN de cisaillement, sans traction. La résistance des chevilles n'est pas connue : elle est à prendre dans la fiche technique (ETA) de la cheville choisie, selon le béton de la dalle.</p>
+<p class="cadre"><b>Points non conformes : le garde-corps.</b> La poussée de 0,6 kN/m à hauteur de main courante (valeur supposée) dépasse la résistance :</p>
 <ul>
-  <li>3,2 mm si la tête des pieds est rigide (40 % de la limite H/300 = 8,2 mm) ;</li>
-  <li><span class="non">11,5 mm</span> si elle est articulée (141 %, non conforme).</li>
+  <li>des <span class="non">potelets 30 × 30 × 2</span> : 255 % sur les volées, 213 % au fond du palier ;</li>
+  <li>des <span class="non">2 vis M8</span> de leur platine basse : 111 % ;</li>
+  <li>des <span class="non">limons V1 en torsion</span>, s'ils travaillaient seuls : 331 %. C'est une borne haute, car les marches relient les deux limons d'une volée. Ce lien n'est pas modélisé.</li>
 </ul>
-<p>La platine de tête actuelle, boulonnée par 2 M12, se situe entre ces deux cas. Le moment au pied des poteaux atteint 2,9 à 5,2 kN·m, soit environ 10 à 18 kN de traction par cheville M12.</p>
-<p><b>Conclusion : un contreventement du palier en travers est nécessaire</b>, par exemple une croix de Saint-André entre les pieds (§7).</p>
+<p><b>Conclusion :</b> la structure porteuse et le contreventement passent. <b>Le garde-corps est à reprendre</b> (section, pas et fixation des potelets) avant fabrication, et la torsion des limons est à vérifier avec les marches (§6 et §7).</p>
 
 <h2>1. Objet et description de l'ouvrage</h2>
 <p>Escalier intérieur d'une grange, pour un usage de logement. Deux volées sont séparées par un palier intermédiaire sans différence de niveau.</p>
@@ -69,6 +70,11 @@
 <tr><td>Hauteur des pieds (sol → dessous de la platine de tête)</td><td class="n">2 328,6 mm</td><td>calculée</td></tr>
 <tr><td>Platines des pieds (tête et sol)</td><td class="n">180 × 180 × 15 mm</td><td>choix ; marge de 40 mm <b>supposée</b></td></tr>
 <tr><td>Fixation au sol des pieds</td><td>4 chevilles M12 à ± 70 mm de l'axe</td><td>modèle 3D ; chevilles <b>supposées</b></td></tr>
+<tr><td>Chevilles : référence, résistance, béton</td><td>non fournis</td><td><b>à fournir</b> : la résistance n'est pas vérifiée (§5.4)</td></tr>
+<tr><td>Contreventement en travers</td><td>2 diagonales, une par face d'about, articulées entre la tête d'un pied et le pied de l'autre, L = 3 460 mm</td><td>choix de l'utilisateur (D30) ; pas encore dans le modèle 3D</td></tr>
+<tr><td>Potelets de volée : pas ; bras de levier</td><td class="n">1 182 mm en plan (1 403 en pente) ; 930 mm</td><td>modèle 3D (4 par main courante V1) ; levier = 900 mm + descente de 30 mm des limons</td></tr>
+<tr><td>Potelets du fond du palier : pas ; bras de levier</td><td class="n">1 090 mm ; 1 000 mm</td><td>modèle 3D (3 potelets)</td></tr>
+<tr><td>Platine basse des potelets</td><td>130 × 50 × 8 mm, 2 vis M8 dans l'axe du limon, entraxe 100 mm</td><td>choix de l'utilisateur</td></tr>
 <tr><td>Fixation en tête des pieds</td><td>2 boulons M12 sous l'aile basse du cadre</td><td>choix de l'utilisateur (D11)</td></tr>
 <tr><td>Pied des limons V1</td><td>platine au sol de 200 mm, 2 chevilles M12 alignées dans l'axe du limon</td><td>choix (D28) ; chevilles <b>supposées</b></td></tr>
 <tr><td>Liaison limons / poutre avant ; limons V2 / arrivée</td><td>platine d'about de 15 mm, 2 boulons M12</td><td>choix de l'utilisateur</td></tr>
@@ -80,9 +86,11 @@
 <tr><td>Limons, cadre du palier</td><td>UPE 220 (h 220, b 85, t<sub>w</sub> 6,5, t<sub>f</sub> 12)</td><td>A = 33,9 cm² ; I<sub>y</sub> = 2 680 cm⁴ ; W<sub>y</sub> = 244 cm³ ; 26,6 kg/m</td><td>catalogue EN 10365</td></tr>
 <tr><td></td><td></td><td>I<sub>z</sub> = 244 cm⁴ ; W<sub>z</sub> = 42,4 cm³ ; J = 11,6 cm⁴ ; centre de cisaillement à 32 mm du dos de l'âme</td><td>calculés en parois minces, sans congés</td></tr>
 <tr><td>Pieds</td><td>tube carré 100 × 100 × 5</td><td>A = 19,0 cm² ; I = 286,6 cm⁴ ; W = 57,3 cm³ ; J = 428,7 cm⁴ ; i = 38,8 mm</td><td>calculés (angles vifs)</td></tr>
+<tr><td>Diagonales</td><td>tube carré 50 × 50 × 3</td><td>A = 5,64 cm² ; I = 20,9 cm⁴ ; i = 19,2 mm</td><td><b>supposé</b> ; calculés (angles vifs)</td></tr>
+<tr><td>Potelets</td><td>tube carré 30 × 30 × 2</td><td>I = 2,94 cm⁴ ; W = 1,96 cm³</td><td>choix de l'utilisateur ; calculés (angles vifs)</td></tr>
 <tr><td>Marches</td><td>chêne 274 × 60 mm, portée 1 000 mm</td><td>W = 164,4 cm³ ; I = 493,2 cm⁴</td><td>calculés</td></tr>
 <tr><td>Cornières des marches</td><td>L 30 × 30 × 3, 200 mm, 2 par marche</td><td>1,36 kg/m</td><td>catalogue</td></tr>
-<tr><td>Boulons</td><td>M12</td><td>A<sub>s</sub> = 84,3 mm²</td><td>catalogue</td></tr>
+<tr><td>Boulons</td><td>M12 ; M8</td><td>A<sub>s</sub> = 84,3 mm² ; 36,6 mm²</td><td>catalogue</td></tr>
 </table>
 
 <h3>2.3 Matériaux</h3>
@@ -90,19 +98,19 @@
 <tr><th>Matériau</th><th>Valeurs</th><th>Statut</th></tr>
 <tr><td>Acier des profilés et platines</td><td>S235 : f<sub>y</sub> = 235 MPa ; E = 210 000 MPa ; G = E / 2,6 ; γ<sub>M0</sub> = γ<sub>M1</sub> = 1,0 ; 78,5 kN/m³</td><td><b>nuance supposée</b></td></tr>
 <tr><td>Chêne des marches et du plancher</td><td>D30 (EN 338) : f<sub>m,k</sub> = 30 MPa ; E = 11 000 MPa ; k<sub>mod</sub> = 0,8 (moyen terme, classe de service 1) ; γ<sub>M</sub> = 1,3 → f<sub>m,d</sub> = 18,46 MPa ; 7,5 kN/m³</td><td>classe <b>supposée</b></td></tr>
-<tr><td>Boulons</td><td>classe 8.8 : f<sub>ub</sub> = 800 MPa ; γ<sub>M2</sub> = 1,25 → F<sub>v,Rd</sub> = 0,6 f<sub>ub</sub> A<sub>s</sub> / γ<sub>M2</sub> = 32,4 kN</td><td>classe <b>supposée</b></td></tr>
+<tr><td>Boulons</td><td>classe 8.8 : f<sub>ub</sub> = 800 MPa ; γ<sub>M2</sub> = 1,25 → M12 : F<sub>v,Rd</sub> = 0,6 f<sub>ub</sub> A<sub>s</sub> / γ<sub>M2</sub> = 32,4 kN ; M8 : F<sub>t,Rd</sub> = 0,9 f<sub>ub</sub> A<sub>s</sub> / γ<sub>M2</sub> = 21,1 kN</td><td>classe <b>supposée</b></td></tr>
 </table>
 
 <h3>2.4 Actions</h3>
 <table border="1" cellspacing="0" cellpadding="3" width="100%">
 <tr><th>Action</th><th>Valeur</th><th>Référence</th></tr>
-<tr><td>G : poids propres</td><td>chêne 7,5 kN/m³ ; UPE 0,266 kN/m ; tube 0,149 kN/m ; cornières 5,3 N par marche ; marche complète 128,6 N</td><td>catalogue, masse volumique du modèle 3D</td></tr>
+<tr><td>G : poids propres</td><td>chêne 7,5 kN/m³ ; UPE 0,266 kN/m ; tube 0,149 kN/m ; cornières 5,3 N par marche ; marche complète 128,6 N ; mains courantes et potelets 65,6 kg répartis sur les 18,1 m de lignes de main courante, soit 0,036 N/mm</td><td>catalogue, masses du modèle 3D</td></tr>
 <tr><td>Q : exploitation répartie</td><td>q<sub>k</sub> = 2,5 kN/m² sur marches et palier</td><td>EN 1991-1-1, cat. A (escaliers), AN française</td></tr>
 <tr><td>Q : charge ponctuelle</td><td>Q<sub>k</sub> = 2 kN, vérifications locales des marches, non cumulée avec q<sub>k</sub></td><td>idem</td></tr>
 <tr><td>Poussée sur les mains courantes</td><td>q<sub>gc</sub> = 0,6 kN/m, horizontale</td><td>cat. A, AN française : <b>supposée</b>, à confirmer</td></tr>
 <tr><td>Défauts de verticalité</td><td>φ = φ<sub>0</sub> α<sub>h</sub> α<sub>m</sub> = 1/200 × 1,0 × 0,79 = 1/253, en forces horizontales aux 4 angles du palier</td><td>EN 1993-1-1 §5.3.2</td></tr>
 </table>
-<p class="note">Non retenus : neige et vent (intérieur), séisme, poids des mains courantes et potelets (≈ 75 kg en tout, &lt; 7 % du poids propre), charges de montage.</p>
+<p class="note">Non retenus : neige et vent (intérieur), séisme, charges de montage.</p>
 
 <h3>2.5 Combinaisons et critères</h3>
 <table border="1" cellspacing="0" cellpadding="3" width="100%">
@@ -115,7 +123,7 @@
   <li>contraintes ≤ f<sub>y</sub> / γ<sub>M0</sub> (flexion) et f<sub>y</sub> / (√3 γ<sub>M0</sub>) (torsion de Saint-Venant) ;</li>
   <li>flambement des pieds par la courbe c (EN 1993-1-1 §6.3.1) ;</li>
   <li>flèches ≤ L/300 ;</li>
-  <li>déplacement horizontal du palier ≤ H/300 = 2 453,6 / 300 = 8,2 mm (H = hauteur de l'axe du cadre).</li>
+  <li>déplacement horizontal du palier ≤ H/300 = 2 453,6 / 300 = 8,2 mm (H = hauteur de l'axe du cadre). C'est un critère de confort choisi pour ce calcul, pas une exigence de norme : à confirmer avec le maître d'ouvrage.</li>
 </ul>
 
 <h2>3. Méthode</h2>
@@ -124,7 +132,7 @@
   <li><b>Prédimensionnement</b> (<i>calc/predim.py</i>, bibliothèque standard Python). Chaque pièce y est isolée et calculée à la main, sur deux appuis simples (§4).</li>
   <li><b>Modèle en barres 3D</b> (<i>calc/portique.py</i>, PyNite 3.2, calcul élastique au premier ordre). Les pieds, le cadre et les limons y sont assemblés, ce qui donne la stabilité d'ensemble, la torsion de la poutre avant et les efforts aux appuis (§5).</li>
 </ol>
-<p>Chaque script vérifie ses formules au lancement par des cas connus : poutre sur deux appuis (flèche 5wL⁴/384EI, moment wL²/8), poteau comprimé (signe de l'effort normal), Blondel.</p>
+<p>Chaque script vérifie ses formules au lancement par des cas connus : poutre sur deux appuis (flèche 5wL⁴/384EI, moment wL²/8), poteau comprimé (signe de l'effort normal), Blondel, pas des potelets relevé dans le modèle 3D. Le modèle en barres vérifie aussi l'équilibre de chaque combinaison (§5.2).</p>
 
 <h2>4. Prédimensionnement</h2>
 
@@ -138,44 +146,56 @@
 <h3>4.2 Limons</h3>
 <p>Chaque limon est une poutre inclinée sur 2 appuis. Il porte une demi-volée, avec les charges exprimées par mètre horizontal :</p>
 <ul>
-  <li>w<sub>G</sub> = 128,6 / 2 / 274 + 0,266 / cos α = 0,550 N/mm ;</li>
+  <li>w<sub>G</sub> = 128,6 / 2 / 274 + (0,266 + 0,036) / cos α = 0,592 N/mm, mains courantes comprises ;</li>
   <li>w<sub>Q</sub> = 2,5 × 1,0 / 2 = 1,25 N/mm ;</li>
-  <li>à l'ELU, w = 1,35 w<sub>G</sub> + 1,5 w<sub>Q</sub> = 2,62 N/mm.</li>
+  <li>à l'ELU, w = 1,35 w<sub>G</sub> + 1,5 w<sub>Q</sub> = 2,67 N/mm.</li>
 </ul>
 <p>Le moment vaut M = wL<sub>h</sub>² / 8, et la flèche se calcule sur la portée inclinée.</p>
 
 <h3>4.3 Poutre avant du palier</h3>
-<p>UPE 220 de 2 440 mm sur 2 appuis aux angles. Elle porte un demi-palier (w<sub>G</sub> = 0,491 N/mm, w<sub>Q</sub> = 1,25 N/mm) et les 4 réactions de limons au milieu de leurs ailes : 5,02 kN par limon V1 et 2,51 kN par limon V2 à l'ELU.</p>
+<p>UPE 220 de 2 440 mm sur 2 appuis aux angles. Elle porte un demi-palier (w<sub>G</sub> = 0,491 N/mm, w<sub>Q</sub> = 1,25 N/mm) et les 4 réactions de limons au milieu de leurs ailes : 5,13 kN par limon V1 et 2,56 kN par limon V2 à l'ELU.</p>
 
 <h3>4.4 Pieds et boulons</h3>
 <ul>
-  <li><b>Pied le plus chargé</b> : N = 11,9 kN à l'ELU. Il est vérifié en flambement libre en tête (L<sub>cr</sub> = 2H = 4 687 mm, courbe c), puisque le palier n'est pas contreventé.</li>
+  <li><b>Pied le plus chargé</b> : N = 12,1 kN à l'ELU. Il est vérifié en flambement libre en tête (L<sub>cr</sub> = 2H = 4 687 mm, courbe c), comme si le palier n'était pas contreventé (côté sécurité). H = 2 344 mm est la hauteur réelle du pied, du sol au dessous du cadre. Le modèle en barres prend H = 2 454 mm, jusqu'à l'axe du cadre, ce qui est plus long et donc aussi côté sécurité.</li>
   <li><b>Boulons des platines côté palier</b> : 2 M12 par platine, en cisaillement sous la réaction d'un limon V1.</li>
 </ul>
 
-<h3>4.5 Résultats</h3>
+<h3>4.5 Potelets du garde-corps</h3>
+<p>Chaque potelet est une console encastrée sur sa platine basse. Il reçoit la poussée d'un pas de main courante, à hauteur de main courante :</p>
+<ul>
+  <li><b>volées</b> : M = 1,5 × 0,6 × 1,403 m × 0,930 m = 1,17 kN·m, d'où σ = M / W = 599 MPa ;</li>
+  <li><b>fond du palier</b> : M = 1,5 × 0,6 × 1,090 × 1,000 = 0,98 kN·m, d'où σ = 500 MPa ;</li>
+  <li><b>vis M8 de la platine basse</b> (volées) : les 2 vis sont dans l'axe du limon et la poussée est en travers. La platine bascule sur son bord, avec un bras de levier de 50 / 2 = 25 mm, d'où T = 1,17 / 0,025 / 2 = 23,5 kN par vis. L'effet de levier (<i>prying</i>) n'est pas compté.</li>
+</ul>
+<p>Avec le module plastique (2,36 cm³, section de classe 1), le potelet resterait à 212 %. Il ne passe pas, même si la poussée réelle était plus faible que la valeur supposée.</p>
+
+<h3>4.6 Résultats</h3>
 <table border="1" cellspacing="0" cellpadding="3" width="100%">
 <tr><th>Élément</th><th>Critère</th><th>Valeur</th><th>Limite</th><th>Taux</th></tr>
 <tr><td>Marche chêne 60 mm</td><td>contrainte ELU</td><td class="n">4,69 MPa</td><td class="n">18,46 MPa</td><td class="n">25 %</td></tr>
 <tr><td>Marche chêne 60 mm</td><td>flèche ELS</td><td class="n">0,80 mm</td><td class="n">3,33 mm</td><td class="n">24 %</td></tr>
-<tr><td>Limon V1 (L = 4 551)</td><td>contrainte ELU</td><td class="n">19,7 MPa</td><td class="n">235 MPa</td><td class="n">8 %</td></tr>
-<tr><td>Limon V1</td><td>flèche ELS</td><td class="n">1,27 mm</td><td class="n">15,17 mm</td><td class="n">8 %</td></tr>
-<tr><td>Limon V2 (L = 2 275)</td><td>contrainte ELU</td><td class="n">4,9 MPa</td><td class="n">235 MPa</td><td class="n">2 %</td></tr>
+<tr><td>Limon V1 (L = 4 551)</td><td>contrainte ELU</td><td class="n">20,2 MPa</td><td class="n">235 MPa</td><td class="n">9 %</td></tr>
+<tr><td>Limon V1</td><td>flèche ELS</td><td class="n">1,30 mm</td><td class="n">15,17 mm</td><td class="n">9 %</td></tr>
+<tr><td>Limon V2 (L = 2 275)</td><td>contrainte ELU</td><td class="n">5,0 MPa</td><td class="n">235 MPa</td><td class="n">2 %</td></tr>
 <tr><td>Limon V2</td><td>flèche ELS</td><td class="n">0,08 mm</td><td class="n">7,58 mm</td><td class="n">1 %</td></tr>
-<tr><td>Poutre avant (L = 2 440)</td><td>contrainte ELU</td><td class="n">26,2 MPa</td><td class="n">235 MPa</td><td class="n">11 %</td></tr>
-<tr><td>Poutre avant</td><td>flèche ELS</td><td class="n">0,43 mm</td><td class="n">8,13 mm</td><td class="n">5 %</td></tr>
-<tr><td>Pied 100×5 (H = 2 344)</td><td>flambement ELU</td><td class="n">11,9 kN</td><td class="n">176,4 kN</td><td class="n">7 %</td></tr>
-<tr><td>Boulons M12 8.8, platine V1</td><td>cisaillement ELU</td><td class="n">2,51 kN</td><td class="n">32,4 kN</td><td class="n">8 %</td></tr>
+<tr><td>Poutre avant (L = 2 440)</td><td>contrainte ELU</td><td class="n">26,6 MPa</td><td class="n">235 MPa</td><td class="n">11 %</td></tr>
+<tr><td>Poutre avant</td><td>flèche ELS</td><td class="n">0,44 mm</td><td class="n">8,13 mm</td><td class="n">5 %</td></tr>
+<tr><td>Pied 100×5 (H = 2 344)</td><td>flambement ELU</td><td class="n">12,1 kN</td><td class="n">176,4 kN</td><td class="n">7 %</td></tr>
+<tr><td>Boulons M12 8.8, platine V1</td><td>cisaillement ELU</td><td class="n">2,57 kN</td><td class="n">32,4 kN</td><td class="n">8 %</td></tr>
+<tr><td><b>Potelet de volée 30×2</b> (pas 1 403, h 930)</td><td>flexion ELU</td><td class="n non">599 MPa</td><td class="n">235 MPa</td><td class="n non">255 %</td></tr>
+<tr><td><b>Vis M8 8.8, platine basse de potelet</b></td><td>traction ELU</td><td class="n non">23,5 kN</td><td class="n">21,1 kN</td><td class="n non">111 %</td></tr>
+<tr><td><b>Potelet du fond 30×2</b> (pas 1 090, h 1 000)</td><td>flexion ELU</td><td class="n non">500 MPa</td><td class="n">235 MPa</td><td class="n non">213 %</td></tr>
 </table>
-<p>Pièce par pièce, tout passe largement. Les marches de 60 mm ont de la réserve : le minimum trouvé le 27 octobre était de 38 mm. Le prédimensionnement ne dit rien de la stabilité d'ensemble, d'où le modèle en barres.</p>
+<p>Pièce par pièce, la structure porteuse passe largement. Le garde-corps ne passe pas. Les marches de 60 mm ont de la réserve : le minimum trouvé le 27 octobre était de 38 mm. Le prédimensionnement ne dit rien de la stabilité d'ensemble, d'où le modèle en barres.</p>
 
 <h2>5. Modèle en barres 3D</h2>
 
 <h3>5.1 Modèle</h3>
 <p><img src="modele.png" width="640" height="268" alt="Schéma du modèle en barres"></p>
-<p class="note">Figure 1 — Barres du modèle. Carrés : encastrements (pieds au sol). Ronds : articulations (pied des limons V1, arrivée des limons V2).</p>
+<p class="note">Figure 1 — Barres du modèle. Carrés : encastrements (pieds au sol). Ronds : articulations (pied des limons V1, arrivée des limons V2). Les deux diagonales sont dans les faces avant et arrière du palier.</p>
 <ul>
-  <li><b>Barres</b> : 4 pieds (tube) ; cadre du palier (4 UPE à l'axe, angles rigides, poutre avant découpée aux 4 limons) ; 4 limons (UPE), de la dalle ou de l'arrivée jusqu'à la poutre avant. Une liaison rigide courte (29 mm) représente l'excentricité entre le dos de l'âme, où appuient les platines, et le centre de cisaillement de la poutre avant.</li>
+  <li><b>Barres</b> : 4 pieds (tube) ; cadre du palier (4 UPE à l'axe, angles rigides, poutre avant découpée aux 4 limons) ; 4 limons (UPE), de la dalle ou de l'arrivée jusqu'à la poutre avant. Une liaison rigide courte (29 mm) représente l'excentricité entre le dos de l'âme, où appuient les platines, et le centre de cisaillement de la poutre avant. <b>2 diagonales</b> (tube 50 × 50 × 3), articulées aux deux bouts : en face avant, du pied côté V1 à la tête du pied côté V2 ; en face arrière, en sens inverse.</li>
   <li><b>Appuis</b> :
     <ul>
       <li>pieds encastrés au sol (platine à 4 chevilles) ;</li>
@@ -188,10 +208,12 @@
   <li><b>Charges</b> :
     <ul>
       <li>limons, par mètre incliné : 0,464 N/mm (G) et 1,054 N/mm (Q) ;</li>
+      <li>mains courantes et potelets : 0,036 N/mm (G) sur les 4 limons et les 3 poutres latérales et arrière ;</li>
       <li>poutres avant et arrière : demi-palier 0,491 N/mm (G) et 1,25 N/mm (Q) ;</li>
-      <li>poids propre des poutres latérales et des pieds ;</li>
-      <li>défauts de verticalité : 45 N par angle à l'ELU ;</li>
-      <li>poussée des mains courantes : 0,6 kN/m, toutes dans le même sens et dans le sens des défauts. En travers, elle s'applique aux 4 limons et aux 2 poutres latérales (15,9 m de main courante) ; en long, à la poutre arrière. Elle est appliquée à l'axe des barres.</li>
+      <li>poids propre des poutres latérales, des pieds et des diagonales ;</li>
+      <li>défauts de verticalité : 47 N par angle à l'ELU ;</li>
+      <li>poussée des mains courantes : 0,6 kN/m, toutes dans le même sens et dans le sens des défauts. En travers, elle s'applique aux 4 limons et aux 2 poutres latérales, soit 2 × 4,64 + 2 × 2,32 + 2 × 1,00 = 15,9 m de barres ; en long, à la poutre arrière. Elle est appliquée à l'axe des barres. Le couple dû à la hauteur de la main courante n'est pas dans le modèle. Son ordre de grandeur est au §6.</li>
+      <li>combinaisons : poussée et défauts dans les deux sens ; pour le soulèvement des pieds, G est aussi pris favorable (1,0 G + 1,5 GC + H).</li>
     </ul>
   </li>
   <li><b>Simplifications</b> :
@@ -207,80 +229,114 @@
 
 <h3>5.2 Contrôles du modèle</h3>
 <ul>
-  <li><b>Équilibre</b> : la somme des réactions verticales vaut 45,8 kN à l'ELU (1,35 G + 1,5 Q), égale aux charges appliquées. La somme des réactions en travers vaut 14,51 kN pour l'ELU de la poussée, égale à 1,5 × 0,6 × 15,92 m + 0,18 kN de défauts.</li>
-  <li><b>Raideur en travers, à la main</b> : un pied en console a une raideur de 3EI/H³ = 122 N/mm (tête articulée) ou 12EI/H³ = 489 N/mm (tête rigide, cadre indéformable). Pour 4 pieds : 489 ou 1 956 N/mm. Le palier reçoit environ 5,5 kN à l'ELS, d'où 11,2 mm et 2,8 mm, à comparer à 11,5 et 3,2 mm donnés par le modèle (le cadre et les limons ajoutent un peu de souplesse).</li>
-  <li><b>Conditionnement numérique</b> : la raideur des liaisons « rigide » est limitée à 400 fois celle de l'UPE. Au-delà, le solveur rejette le système, mal conditionné par la grande souplesse du palier en travers. On a vérifié que ce n'est pas un mécanisme : la plus petite valeur propre de la matrice de raideur vaut environ 41 N/mm, pour le mode « palier qui glisse en Y ».</li>
+  <li><b>Équilibre, vérifié par le script</b> : pour chaque combinaison et dans les 3 directions, la somme des réactions égale les charges appliquées (assertion dans <i>portique.py</i>). Par exemple, 47,1 kN en vertical à l'ELU (1,35 G + 1,5 Q). En travers, 14,51 kN pour l'ELU de la poussée, soit 1,5 × 0,6 × 15,92 m + 0,19 kN de défauts.</li>
+  <li><b>Raideur en travers, à la main</b> : une diagonale a une raideur horizontale EA cos²θ / L = 210 000 × 564 × 0,705² / 3 460 = 17,0 kN/mm, soit 34 kN/mm pour deux. Sous les 5,5 kN qui arrivent au palier à l'ELS, cela donne 0,16 mm si les deux diagonales se partagent l'effort. Le modèle donne 0,29 mm, parce que la diagonale tendue en prend les trois quarts (5,8 kN contre 1,9 kN dans la diagonale comprimée) : 0,24 mm pour elle seule. Le reste vient du cadre et des pieds.</li>
+  <li><b>Conditionnement numérique</b> : la raideur des liaisons « rigide » (excentricités de 29 mm) est limitée à 400 fois celle de l'UPE. Sans les diagonales, le solveur rejetait des valeurs plus grandes, parce que le palier était très souple en travers. Ce cas tête rigide est une borne haute de raideur de la tête des pieds ; la platine réelle (2 M12) est plus proche de l'articulation. Avec les diagonales, les deux cas donnent presque les mêmes résultats.</li>
 </ul>
 
 <h3>5.3 Résultats</h3>
 <table border="1" cellspacing="0" cellpadding="3" width="100%">
 <tr><th>Élément</th><th>Critère</th><th>Tête rigide</th><th>Taux</th><th>Tête articulée</th><th>Taux</th><th>Limite</th></tr>
-<tr><td>Palier, en long (X)</td><td>déplacement ELS</td><td class="n">0,04 mm</td><td class="n">0 %</td><td class="n">0,04 mm</td><td class="n">0 %</td><td class="n">8,2 mm</td></tr>
-<tr><td><b>Palier, en travers (Y)</b></td><td>déplacement ELS</td><td class="n">3,24 mm</td><td class="n">40 %</td><td class="n non">11,53 mm</td><td class="n non">141 %</td><td class="n">8,2 mm</td></tr>
-<tr><td>Poutre avant</td><td>flexion forte + faible ELU</td><td class="n">24,2 MPa</td><td class="n">10 %</td><td class="n">19,5 MPa</td><td class="n">8 %</td><td class="n">235 MPa</td></tr>
-<tr><td>Poutre avant</td><td>torsion ELU</td><td class="n">14,8 MPa</td><td class="n">11 %</td><td class="n">14,6 MPa</td><td class="n">11 %</td><td class="n">135,7 MPa</td></tr>
-<tr><td>Pieds 100×5</td><td>N / N<sub>b,Rd</sub> + M / M<sub>Rd</sub> ELU</td><td class="n">0,23</td><td class="n">23 %</td><td class="n">0,42</td><td class="n">42 %</td><td class="n">1,00</td></tr>
-<tr><td>Limons V1</td><td>flexion forte + faible ELU</td><td class="n">73,3 MPa</td><td class="n">31 %</td><td class="n">73,3 MPa</td><td class="n">31 %</td><td class="n">235 MPa</td></tr>
-<tr><td>Limons V2</td><td>flexion forte + faible ELU</td><td class="n">18,3 MPa</td><td class="n">8 %</td><td class="n">18,2 MPa</td><td class="n">8 %</td><td class="n">235 MPa</td></tr>
+<tr><td>Palier, en long (X)</td><td>déplacement ELS</td><td class="n">0,04 mm</td><td class="n">0 %</td><td class="n">0,04 mm</td><td class="n">1 %</td><td class="n">8,2 mm</td></tr>
+<tr><td><b>Palier, en travers (Y)</b></td><td>déplacement ELS</td><td class="n">0,28 mm</td><td class="n">3 %</td><td class="n">0,29 mm</td><td class="n">4 %</td><td class="n">8,2 mm</td></tr>
+<tr><td>Poutre avant</td><td>flexion forte + faible ELU</td><td class="n">19,1 MPa</td><td class="n">8 %</td><td class="n">19,7 MPa</td><td class="n">8 %</td><td class="n">235 MPa</td></tr>
+<tr><td>Poutre avant</td><td>torsion ELU</td><td class="n">15,2 MPa</td><td class="n">11 %</td><td class="n">15,0 MPa</td><td class="n">11 %</td><td class="n">135,7 MPa</td></tr>
+<tr><td>Pieds 100×5</td><td>N / N<sub>b,Rd</sub> + M / M<sub>Rd</sub> ELU</td><td class="n">0,06</td><td class="n">6 %</td><td class="n">0,04</td><td class="n">4 %</td><td class="n">1,00</td></tr>
+<tr><td>Diagonales 50×3 (L = 3 460)</td><td>flambement ELU</td><td class="n">8,4 kN</td><td class="n">30 %</td><td class="n">8,7 kN</td><td class="n">31 %</td><td class="n">28,0 kN</td></tr>
+<tr><td>Diagonales 50×3</td><td>traction ELU</td><td class="n">8,4 kN</td><td class="n">6 %</td><td class="n">8,8 kN</td><td class="n">7 %</td><td class="n">132,5 kN</td></tr>
+<tr><td>Limons V1</td><td>flexion forte + faible ELU</td><td class="n">73,7 MPa</td><td class="n">31 %</td><td class="n">73,7 MPa</td><td class="n">31 %</td><td class="n">235 MPa</td></tr>
+<tr><td>Limons V2</td><td>flexion forte + faible ELU</td><td class="n">18,4 MPa</td><td class="n">8 %</td><td class="n">18,4 MPa</td><td class="n">8 %</td><td class="n">235 MPa</td></tr>
 </table>
-<p class="note">Pieds : flambement avec L<sub>cr</sub> = H si la tête est rigide, 2H si elle est articulée, puisque le palier n'est pas tenu en travers. Limons V1 : M<sub>y</sub> = 5,0 kN·m (charges verticales) et M<sub>z</sub> = 2,4 kN·m (poussée en travers, axe faible). Ce sont les plus sollicités. Les limons V1 sont comprimés (jusqu'à 11 kN, bracon) et les limons V2 tendus (jusqu'à 10 kN).</p>
+<p class="note">Pieds : flambement avec L<sub>cr</sub> = H, le palier étant tenu en travers. Diagonales : flambement sur toute leur longueur, courbe c ; le jeu des trous des goussets n'est pas compté. Limons V1 : M<sub>y</sub> = 5,0 kN·m (charges verticales) et M<sub>z</sub> = 2,4 kN·m (poussée en travers, axe faible) ; ce sont les plus sollicités. La poutre avant est moins chargée que dans le prédimensionnement (19 à 20 MPa contre 26,6 MPa), car ses angles soudés aux poutres latérales la rendent continue : le moment en travée baisse. En échange, elle travaille en torsion (11 %).</p>
 
-<h3>5.4 Efforts aux appuis (enveloppe ELU)</h3>
+<h3>5.4 Efforts aux appuis et chevilles (enveloppe ELU)</h3>
 <table border="1" cellspacing="0" cellpadding="3" width="100%">
 <tr><th>Appui</th><th>Nombre</th><th>N vertical</th><th>V horizontal</th><th>M</th></tr>
-<tr><td>Pied de poteau, tête rigide</td><td class="n">4</td><td class="n">8,4 kN</td><td class="n">2,3 kN</td><td class="n">2,9 kN·m</td></tr>
-<tr><td>Pied de poteau, tête articulée</td><td class="n">4</td><td class="n">8,5 kN</td><td class="n">2,1 kN</td><td class="n">5,2 kN·m</td></tr>
-<tr><td>Pied de limon V1 (articulé)</td><td class="n">2</td><td class="n">9,5 kN</td><td class="n">7,1 kN</td><td class="n">0</td></tr>
-<tr><td>Arrivée limon V2 (articulée)</td><td class="n">2</td><td class="n">7,2 kN</td><td class="n">7,2 kN</td><td class="n">0</td></tr>
+<tr><td>Pied de poteau, tête rigide</td><td class="n">4</td><td class="n">13,2 kN</td><td class="n">6,1 kN</td><td class="n">0,30 kN·m</td></tr>
+<tr><td>Pied de poteau, tête articulée</td><td class="n">4</td><td class="n">13,3 kN</td><td class="n">6,2 kN</td><td class="n">0,13 kN·m</td></tr>
+<tr><td>Pied de limon V1 (articulé)</td><td class="n">2</td><td class="n">9,7 kN</td><td class="n">7,2 kN</td><td class="n">0</td></tr>
+<tr><td>Arrivée limon V2 (articulée)</td><td class="n">2</td><td class="n">7,4 kN</td><td class="n">7,3 kN</td><td class="n">0</td></tr>
 </table>
-<p>Dans le cas de la poussée en travers (ELU), l'effort de 14,5 kN se répartit ainsi : 8,2 kN dans les 4 pieds, 4,2 kN dans les 2 pieds de limons V1 et 2,1 kN dans les 2 arrivées V2. Les deux dernières parts viennent de la poussée appliquée directement sur les limons ; elles ne tiennent pas le palier.</p>
-<p><b>Chevilles des pieds, ordre de grandeur</b> : 2 rangées de 2 chevilles espacées de 140 mm. La traction par cheville vaut environ M / (0,14 × 2) : <b>≈ 10 kN</b> si la tête est rigide, <b>≈ 18 kN</b> si elle est articulée. La compression des pieds (3 à 8 kN) n'est pas déduite. C'est beaucoup pour des chevilles M12 courantes : à vérifier avec la fiche technique de la cheville et le béton de la dalle.</p>
+<p>Soulèvement maximal d'un pied de poteau : 4,2 kN, au pied de la diagonale tendue, avec G favorable.</p>
+<p><b>Chevilles M12, efforts par cheville</b>. On suppose une platine rigide qui tourne autour de son centre, sans compter le béton comprimé, ce qui va dans le sens de la sécurité. La traction vaut T = −N/4 + (|M<sub>x</sub>| + |M<sub>y</sub>|) / (4 × 70 mm). Les maxima de T et de V sont pris séparément, sur toutes les combinaisons.</p>
+<table border="1" cellspacing="0" cellpadding="3" width="100%">
+<tr><th>Appui</th><th>Chevilles</th><th>Traction T</th><th>Cisaillement V</th><th>Résistance</th></tr>
+<tr><td>Pied de poteau</td><td class="n">4, à ± 70 mm</td><td class="n">1,8 kN</td><td class="n">1,6 kN</td><td rowspan="2"><b>non fournie</b> : ETA de la cheville et béton de la dalle à donner ; taux non calculé</td></tr>
+<tr><td>Pied de limon V1</td><td class="n">2, dans l'axe du limon</td><td class="n">0</td><td class="n">3,6 kN</td></tr>
+</table>
+<p>Sans les diagonales, ces chevilles auraient reçu 10 à 18 kN de traction (version du 2 novembre).</p>
 
 <h3>5.5 Déformée sous la poussée en travers</h3>
 <p><img src="deformee_travers.png" width="640" height="268" alt="Déformée en travers"></p>
-<p class="note">Figure 2 — Vue de face, ELS de la poussée en travers, déformée amplifiée 50 fois. Les nœuds sont reliés par des droites. Le palier glisse latéralement en entraînant le haut des pieds.</p>
+<p class="note">Figure 2 — Vue de face, ELS de la poussée en travers, déformée amplifiée 1 000 fois. Les nœuds sont reliés par des droites. Le palier ne bouge que de 0,3 mm. Ce qui se voit surtout, c'est la flexion des limons sur leur axe faible sous la poussée.</p>
 
-<h2>6. Analyse : contreventement du palier</h2>
+<h2>6. Analyse</h2>
+<h3>6.1 Contreventement du palier</h3>
 <ul>
   <li><b>En long (X)</b> : les limons V1 (comprimés) et V2 (tendus) forment un triangle avec la dalle et la plateforme d'arrivée. Ils tiennent le palier quelle que soit la liaison des pieds : 0,04 mm.</li>
-  <li><b>En travers (Y)</b> : les limons sont articulés aux deux bouts et très souples sur leur axe faible. Ils ne retiennent rien. Le cadre est rigide dans son plan mais n'est pas appuyé au mur. Il ne reste que la flexion des 4 pieds en console :
-    <ul>
-      <li>si la platine de tête transmet un moment, le palier se déplace de 3,2 mm, ce qui passe ;</li>
-      <li>si elle ne le transmet pas, il se déplace de 11,5 mm, ce qui ne passe pas ;</li>
-      <li>dans les deux cas, le pied de chaque poteau reprend 3 à 5 kN·m sur une platine de 180 mm à 4 chevilles M12.</li>
-    </ul>
-  </li>
+  <li><b>En travers (Y)</b> : les limons sont articulés aux deux bouts et très souples sur leur axe faible ; ils ne retiennent rien. Sans contreventement, seuls les 4 pieds en console tenaient le palier : 3,2 mm avec une tête rigide, 11,5 mm (non conforme) avec une tête articulée, et 10 à 18 kN de traction par cheville. Avec les 2 diagonales (D30), le déplacement tombe à 0,3 mm. Les pieds ne travaillent presque plus en flexion, et la liaison en tête des pieds n'a plus d'effet notable.</li>
 </ul>
-<p>La platine de tête actuelle (2 M12 placés sous les deux UPE de l'angle, aile de 12 mm) ne peut pas être considérée comme rigide sans vérification. Elle est plus proche de l'articulation. Les calculs du 27 octobre trouvaient le palier stable parce qu'ils supposaient les pieds des limons V1 encastrés et ne comptaient pas la poussée sur les mains courantes ; ce n'est plus le cas (D28).</p>
+
+<h3>6.2 Poussée à hauteur de main courante</h3>
+<p>Le modèle applique la poussée à l'axe des barres. En réalité, elle s'exerce à 930 mm au-dessus du limon (1 000 mm au palier). Le couple qui en résulte passe par les potelets et leur platine, puis il fait tourner les limons :</p>
+<ul>
+  <li><b>potelets</b> : 255 % (volées) et 213 % (fond du palier) en flexion, 111 % pour les vis M8 (§4.5). Le garde-corps tel qu'il est dessiné ne reprend pas 0,6 kN/m ;</li>
+  <li><b>torsion des limons</b>, ordre de grandeur hors modèle : couple réparti t = 1,5 × 0,6 × (930 + 110) = 0,94 kN·m/m jusqu'au centre de cisaillement, à mi-hauteur du limon. On prend les appuis du modèle : V1 libre en torsion au pied (chevilles dans l'axe), V2 tenu aux deux bouts. Un limon qui travaillerait seul en torsion de Saint-Venant (τ = T t<sub>f</sub> / J) donnerait :
+    <table border="1" cellspacing="0" cellpadding="3">
+    <tr><th>Limon</th><th>T</th><th>τ</th><th>Limite</th><th>Taux</th></tr>
+    <tr><td>V1 (T = t L)</td><td class="n">4,3 kN·m</td><td class="n non">449 MPa</td><td class="n">135,7 MPa</td><td class="n non">331 %</td></tr>
+    <tr><td>V2 (T = t L / 2)</td><td class="n">1,1 kN·m</td><td class="n">110 MPa</td><td class="n">135,7 MPa</td><td class="n">81 %</td></tr>
+    </table>
+    C'est une borne haute. Les marches, boulonnées aux deux limons d'une volée par leurs cornières, transforment ce couple en efforts verticaux opposés dans les deux limons. Le gauchissement de l'UPE aide aussi. Le résultat n'est donc pas négligeable, mais il ne suffit pas pour conclure. Il faut le modéliser (marches comme traverses entre les limons, couple aux potelets), ou le supprimer à la source en reprenant le garde-corps.</li>
+</ul>
 
 <h2>7. Conclusion et recommandations</h2>
 <ol>
   <li><b>Charges verticales</b> : la structure acier et les marches de 60 mm passent avec une large réserve (31 % au plus).</li>
-  <li><b>Stabilité dans le sens des volées</b> : assurée par les limons.</li>
-  <li><b>Stabilité en travers : à contreventer.</b> Trois pistes, à choisir puis à calculer :
+  <li><b>Stabilité</b> : assurée en long par les limons, et en travers par les 2 diagonales 50 × 50 × 3 (31 % au flambement). Il reste à les dessiner dans le modèle 3D, avec leurs goussets ou platines en tête de pied et au sol, et à contrôler leur passage sous les limons.</li>
+  <li><b>Chevilles</b> : au plus 1,8 kN de traction et 3,6 kN de cisaillement par cheville. C'est faible pour des M12, mais à confirmer avec l'ETA de la cheville choisie et le béton de la dalle.</li>
+  <li><b>Garde-corps : à reprendre avant fabrication</b> (bloquant). Pistes, à chiffrer :
     <ul>
-      <li><b>croix de Saint-André</b> (tirants ronds ou fers plats avec tendeurs) entre les pieds, dans la face avant ou arrière du palier. C'est la plus légère : elle reprend l'effort en traction et décharge les pieds et leurs chevilles. Elle demande une face dégagée sur le site ;</li>
-      <li><b>jambes de force</b> entre les pieds et le cadre, dans les deux plans des faces avant et arrière. Elles rigidifient les nœuds en tête et laissent le passage libre, mais le moment reste dans les platines au sol ;</li>
-      <li><b>pieds encastrés en tête</b> (platine plus épaisse, 4 boulons, raidisseurs) <b>et platines au sol renforcées</b> (plus grandes, chevilles plus fortes). Pas de pièce en plus, mais ce sont les assemblages les plus lourds.</li>
+      <li>potelets plus forts : par exemple, un tube 50 × 50 × 4 au même pas donnerait environ 1,17 kN·m / 10,5 cm³ ≈ 112 MPa (angles vifs), ordre de grandeur à vérifier ;</li>
+      <li>potelets plus rapprochés ;</li>
+      <li>platine basse plus large, avec les vis de part et d'autre du potelet en travers, ou fixation sur le côté du limon ;</li>
+      <li>et la torsion des limons, à vérifier avec les marches (§6.2).</li>
     </ul>
   </li>
-  <li><b>À confirmer</b> : nuance d'acier, classe du chêne et des boulons, chevilles et béton de la dalle, et la valeur de 0,6 kN/m de poussée sur les mains courantes.</li>
+  <li><b>À confirmer</b> : nuance d'acier, classe du chêne et des boulons, référence des chevilles et béton de la dalle, valeur de 0,6 kN/m de poussée sur les mains courantes, critère H/300.</li>
 </ol>
 
 <h3>Non calculé</h3>
 <ul>
-  <li>moment de la poussée à hauteur de main courante (≈ 0,9 à 1 m au-dessus des limons) : torsion des limons et du cadre, platines et boulons des potelets ;</li>
-  <li>assemblages : soudures, platines (épaisseur, pression diamétrale), chevilles et béton ;</li>
-  <li>déversement des UPE, flambement des limons comprimés, torsion non uniforme (gauchissement), effets du second ordre ;</li>
+  <li>assemblages : soudures, platines (épaisseur, pression diamétrale), goussets des diagonales, effet de levier sous les platines des potelets et flexion locale de l'aile des limons, résistance des chevilles et béton ;</li>
+  <li>torsion des limons avec les marches comme traverses ; déversement des UPE, flambement des limons comprimés, torsion non uniforme (gauchissement), effets du second ordre ;</li>
   <li>vibrations, fluage du chêne, chargement d'une seule volée, plancher du palier ;</li>
-  <li>la plateforme d'arrivée, supposée reprendre 7,2 kN par limon V2 sans se déplacer.</li>
+  <li>la plateforme d'arrivée, supposée reprendre 7,4 kN par limon V2 sans se déplacer.</li>
 </ul>
+
+<h2>8. Suivi de la revue externe du 3 novembre 2026</h2>
+<p>Une relecture externe (DeepSeek) de la version du 2 novembre a relevé les points suivants. Ce qu'il en est fait :</p>
+<table border="1" cellspacing="0" cellpadding="3" width="100%">
+<tr><th>Point</th><th>Suite</th></tr>
+<tr><td>B1 — chevilles non calculées</td><td>Fait : efforts par cheville calculés par le script (§5.4). La résistance n'est pas vérifiée : il manque la référence de la cheville et le béton.</td></tr>
+<tr><td>B2 — contreventement non calculé</td><td>Fait : 2 diagonales en tube calculées (D30, §5 et §6.1).</td></tr>
+<tr><td>I1 — équilibre hors script</td><td>Fait : assertion d'équilibre dans <i>portique.py</i>, pour chaque combinaison et dans les 3 directions.</td></tr>
+<tr><td>I2 — valeur propre hors script</td><td>Retirée du rapport : elle concernait le palier sans diagonales.</td></tr>
+<tr><td>I3 — moment de la poussée à hauteur de main courante</td><td>Fait : ordre de grandeur (§6.2). Il n'est pas négligeable : les potelets et leurs vis ne passent pas, et la torsion des limons est à modéliser.</td></tr>
+<tr><td>I4 — L<sub>cr</sub> différent dans les deux scripts</td><td>Gardé : la longueur à l'axe du cadre est plus grande, donc côté sécurité (§4.4).</td></tr>
+<tr><td>I5 — 15,9 m contre ≈ 29 m de main courante</td><td>Non retenu : il y a 2 limons V1 et 2 limons V2, pas 4 de chaque. 2 × 4,64 + 2 × 2,32 + 2 × 1,00 = 15,9 m, et l'équilibre le confirme (§5.2).</td></tr>
+<tr><td>I6 — raideur « rigide » et platine de tête</td><td>Précisé : la section « rigide » sert aux excentricités de 29 mm, pas à la tête des pieds, qui est encadrée par les deux cas (§5.2).</td></tr>
+<tr><td>M1 — α<sub>h</sub> ≥ 2/3 redondant</td><td>Gardé : c'est la borne inférieure de l'EN 1993-1-1 §5.3.2.</td></tr>
+<tr><td>M4 — poids des mains courantes</td><td>Fait : 65,6 kg ajoutés en G (§2.4).</td></tr>
+<tr><td>M5 — poutre avant, prédimensionnement contre modèle</td><td>Fait : explication au §5.3.</td></tr>
+<tr><td>M6 — H/300</td><td>Fait : présenté comme un critère de confort (§2.5).</td></tr>
+</table>
 
 <h2>Références</h2>
 <ul>
   <li>NF EN 1990, NF EN 1991-1-1 et son annexe nationale ; NF EN 1993-1-1 (acier) ; NF EN 1995-1-1 (bois) ; EN 338 (classes du bois) ; EN 10365 (UPE).</li>
   <li><b>Scripts</b> : <i>calc/predim.py</i> et <i>calc/portique.py</i>, qui produisent les résultats ; <i>calc/rapport/figures.py</i>, qui produit les figures. Python 3.13 (prédimensionnement) ; PyNite 3.2 dans un environnement <i>uv</i> temporaire, sous Python 3.14.</li>
-  <li><b>Décisions de conception</b> : <i>CONCEPTION.md</i>, D11 (palier), D14 et D15 (calculs du 27 octobre, remplacés par ce rapport), D28 (pied des limons V1), D29 (ce calcul).</li>
+  <li><b>Décisions de conception</b> : <i>CONCEPTION.md</i>, D11 (palier), D14 et D15 (calculs du 27 octobre, remplacés par ce rapport), D28 (pied des limons V1), D29 (ce calcul), D30 (diagonales du palier).</li>
 </ul>
 
 </body>

@@ -7,6 +7,8 @@ Appuis : pieds encastrés au sol (platine à 4 chevilles) ; bas des limons V1 ar
 dans l'axe du limon, D28) ; haut des limons V2 articulé (boulonné à la structure supérieure) ; limons
 articulés sur la poutre avant (platines boulonnées). Tête des pieds (platine boulonnée par 2 M12 sous le cadre) :
 calculée rigide puis articulée, les deux bornes. Les marches ne relient pas les limons entre eux (côté sécurité).
+Contreventement en travers (D30) : une diagonale en tube par face d'about du palier (avant et arrière, en sens
+opposés), articulée en tête d'un pied et au pied de l'autre.
 """
 from math import cos, isclose, sqrt, tan
 
@@ -29,6 +31,9 @@ c, t = poteau_cote, poteau_ep
 tube_A, tube_I = c**2 - (c - 2 * t) ** 2, (c**4 - (c - 2 * t) ** 4) / 12
 tube_J = (c - t) ** 3 * t  # tube carré mince : 4 Am² t / périmètre moyen
 tube_W = tube_I / (c / 2)
+diag_cote, diag_ep = 50, 3  # diagonales de contreventement, tube carré supposé
+c, t = diag_cote, diag_ep
+diag_A, diag_I = c**2 - (c - 2 * t) ** 2, (c**4 - (c - 2 * t) ** 4) / 12
 g_acier = 7.85e-5  # N/mm³
 
 # --- Géométrie (repère de CONCEPTION.md, Z vers le haut)
@@ -49,6 +54,7 @@ def nouveau_modele():
     # PyNite : local z = axe fort d'une barre non verticale quand Y est vertical
     m.add_section("UPE", upe_A, upe_Iz, upe_I, upe_J)
     m.add_section("tube", tube_A, tube_I, tube_I, tube_J)
+    m.add_section("diag", diag_A, diag_I, diag_I, (diag_cote - diag_ep) ** 3 * diag_ep)
     m.add_section("rigide", 1e6, 1e10, 1e10, 1e10)  # 400 × l'UPE : au-delà, le solveur rejette le système mal conditionné
     return m
 
@@ -57,7 +63,7 @@ def noeud(m, nom, x, y, z):
     return m.add_node(nom, x, z, y)  # PyNite veut Y vertical : (x, y, z) → (x, z, y)
 
 
-def construire(tete_rigide=True):
+def construire(tete_rigide=True, diagonales=True):
     m = nouveau_modele()
     tot = {"G": 0.0, "Q": 0.0}
 
@@ -91,6 +97,13 @@ def construire(tete_rigide=True):
         if not tete_rigide:
             m.def_releases(f"T{haut}", Ryj=True, Rzj=True)
         charge(f"T{haut}", "G", tube_A * g_acier)
+
+    # Diagonales : face avant du sol en -Y à la tête en +Y, face arrière en sens inverse
+    if diagonales:
+        for nom, bas, haut in (("DA", "SA0", f"A{len(ys) - 1}"), ("DB", "SB1", "B0")):
+            m.add_member(nom, bas, haut, "acier", "diag")
+            m.def_releases(nom, Ryi=True, Rzi=True, Ryj=True, Rzj=True)
+            charge(nom, "G", diag_A * g_acier)
 
     # Limons : charges par mètre horizontal ramenées à la longueur inclinée
     marche_g = g_chene * giron * marche_epaisseur * emmarchement + equerres_g
@@ -131,19 +144,23 @@ def construire(tete_rigide=True):
         m.add_node_load(coin, "FX", H, case="HX")
         m.add_node_load(coin, "FZ", H, case="HY")
     r = (tot["G"] + tot["Q"]) / (1.35 * tot["G"] + 1.5 * tot["Q"])  # même défaut, sous charges ELS
+    # Poussée et défauts dans les deux sens ; « _sou » : G favorable, pour le soulèvement des chevilles
     for d in ("X", "Y"):
-        m.add_load_combo(f"ELU_{d}", {"G": 1.35, "Q": 1.5, f"H{d}": 1.0})
-        m.add_load_combo(f"ELS_{d}", {"G": 1.0, "Q": 1.0, f"H{d}": r})
-        m.add_load_combo(f"ELU_GC{d}", {"G": 1.35, f"GC{d}": 1.5, "Q": 1.05, f"H{d}": 1.0})
-        m.add_load_combo(f"ELS_GC{d}", {"G": 1.0, f"GC{d}": 1.0, "Q": 0.7, f"H{d}": r})
+        for s, sens in ((1, ""), (-1, "-")):
+            m.add_load_combo(f"ELU_{d}{sens}", {"G": 1.35, "Q": 1.5, f"H{d}": s})
+            m.add_load_combo(f"ELS_{d}{sens}", {"G": 1.0, "Q": 1.0, f"H{d}": s * r})
+            m.add_load_combo(f"ELU_GC{d}{sens}", {"G": 1.35, f"GC{d}": 1.5 * s, "Q": 1.05, f"H{d}": s})
+            m.add_load_combo(f"ELU_GC{d}{sens}_sou", {"G": 1.0, f"GC{d}": 1.5 * s, f"H{d}": s})
+            m.add_load_combo(f"ELS_GC{d}{sens}", {"G": 1.0, f"GC{d}": s, "Q": 0.7, f"H{d}": s * r})
     # shortcut: Q partout en même temps, pas de chargement alterné d'une seule volée ; à ajouter si une vérif est limite
     m.analyze(check_statics=False)
     return m, poutres_avant, coins
 
 
 def resultats(m, poutres_avant, coins, tete_rigide=True):
-    elu = ("ELU_X", "ELU_Y", "ELU_GCX", "ELU_GCY")
-    els = ("ELS_X", "ELS_Y", "ELS_GCX", "ELS_GCY")
+    elu = [c for c in m.load_combos if c.startswith("ELU")]
+    els = [c for c in m.load_combos if c.startswith("ELS")]
+    diagonales = "DA" in m.members
     # Stabilité : déplacement horizontal du palier, en long (X) et en travers (Y)
     for d, ddl in (("X", "DX"), ("Y", "DZ")):
         u = max(abs(getattr(m.nodes[n], ddl)[c]) for n in coins for c in els)
@@ -158,9 +175,9 @@ def resultats(m, poutres_avant, coins, tete_rigide=True):
     verif("Poutre avant UPE 220", "flexion ELU", sigma, fy / gM0, "MPa")
     verif("Poutre avant UPE 220", "torsion ELU", T * limon_tf / upe_J, fy / sqrt(3) / gM0, "MPa")
 
-    # Pieds : flambement + flexion ; le palier n'est pas tenu en travers : L_cr = H (tête rigide), 2 H (articulée)
+    # Pieds : flambement + flexion ; L_cr = H si le palier est contreventé ou la tête rigide, 2 H sinon
     H = Z_c
-    N_b = flambement(1, (1 if tete_rigide else 2) * H, tube_A, tube_I)
+    N_b = flambement(1, (1 if tete_rigide or diagonales else 2) * H, tube_A, tube_I)
     taux = 0.0
     for p in (f"T{n}" for n in coins):
         for c in elu:
@@ -169,6 +186,14 @@ def resultats(m, poutres_avant, coins, tete_rigide=True):
             M = max(M, max(abs(m.members[p].min_moment(a, c)) for a in ("My", "Mz")))
             taux = max(taux, N / N_b + M / (tube_W * fy / gM0))
     verif(f"Pieds tube {poteau_cote}×{poteau_ep}", "N + M ELU", taux, 1.0, "taux")
+
+    if diagonales:
+        L = m.members["DA"].L()
+        Nc = max(m.members[d].max_axial(c) for d in ("DA", "DB") for c in elu)
+        Nt = -min(m.members[d].min_axial(c) for d in ("DA", "DB") for c in elu)
+        verif(f"Diagonales tube {diag_cote}×{diag_ep} (L = {L:.0f})", "flambement ELU", Nc / 1e3,
+              flambement(1, L, diag_A, diag_I) / 1e3, "kN")
+        verif(f"Diagonales tube {diag_cote}×{diag_ep}", "traction ELU", Nt / 1e3, diag_A * fy / gM0 / 1e3, "kN")
 
     # Limons : flexion forte (charges verticales) + faible (poussée des mains courantes)
     def m_max(barre, axe, c):
@@ -190,6 +215,8 @@ def resultats(m, poutres_avant, coins, tete_rigide=True):
         V = max(sqrt(n[k].RxnFX[c] ** 2 + n[k].RxnFZ[c] ** 2) for k in noeuds for c in elu) / 1e3
         M = max(sqrt(n[k].RxnMX[c] ** 2 + n[k].RxnMZ[c] ** 2) for k in noeuds for c in elu) / 1e6
         print(f"  {nom:24} N = {N:5.2f}   V = {V:5.2f}   M = {M:5.2f}")
+    soul = -min(m.nodes[f"S{n}"].RxnFY[c] for n in coins for c in elu) / 1e3
+    print(f"  Soulèvement maxi d'un pied de poteau : {max(soul, 0):5.2f} kN (G favorable : « _sou »)")
 
 
 def _auto_controle():

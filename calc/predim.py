@@ -43,7 +43,7 @@ pas_potelets_fond = 2 * (L_p / 2 - limon_b / 2 - mc_cote / 2 - platine_haut_entr
 # --- Hypothèses, à faire valider par un bureau d'études
 q_k = 2.5e-3          # N/mm² : escalier de logement (cat. A), AN française de l'EN 1991-1-1
 Q_k = 2000            # N : charge ponctuelle, vérifications locales, non cumulée avec q_k
-q_gc = 0.6            # N/mm : poussée horizontale sur les mains courantes, cat. A, supposée (AN française, à confirmer)
+q_gc = 0.6            # N/mm : poussée horizontale sur les mains courantes, cat. A (AN française), validée par l'utilisateur le 2026-11-03
 g_chene = 7.5e-6      # N/mm³ (0,75 g/cm³, comme le modèle)
 equerres_g = 2 * 200 * 0.037   # N par marche : 2 cornières 50×50×5 de 200 mm (3,77 kg/m, essai D32 ; 30×30×3 : 0,0133)
 # Chêne D30 (EN 338), classe de service 1, charge de moyen terme

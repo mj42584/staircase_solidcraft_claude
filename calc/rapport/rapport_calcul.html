@@ -29,13 +29,13 @@
 <p>Sous les charges verticales, la structure acier travaille à 32 % au plus de sa résistance. Les marches en chêne de 60 mm passent à 25 %.</p>
 <p><b>Stabilité du palier.</b> En long (X), les limons font bracon entre la dalle et l'arrivée : déplacement 0,04 mm. En travers (Y), deux diagonales en tube 40 × 40 × 3 (une par face d'about du palier, D30) le tiennent. Il se déplace de 0,31 à 0,37 mm, soit 4 % de la limite. Sans ces diagonales, le déplacement atteignait 11,5 mm (141 %).</p>
 <p><b>Chevilles.</b> Avec les diagonales, chaque cheville M12 reçoit au plus 2,3 kN de traction et 1,5 kN de cisaillement (pieds de poteau). Aux pieds des limons V1, c'est 3,7 kN de cisaillement, sans traction. Avec un béton C25/30 non fissuré et une cheville M12 8.8 supposée (hef 70 mm, formules de l'EN 1992-4 de mémoire, ni dalle ni distances au bord fournies), le taux le plus élevé est de 16 % (cône de béton en traction). La cheville réelle est à vérifier avec son ETA.</p>
-<p class="cadre"><b>Points à confirmer : le garde-corps.</b> Avec les potelets renforcés (D32, D34), la poussée de 0,6 kN/m à hauteur de main courante (valeur supposée) passe, avec peu de réserve sur les vis M8. Reste non conforme :</p>
+<p class="cadre"><b>Garde-corps.</b> Avec les potelets renforcés (D32, D34), la poussée de 0,6 kN/m à hauteur de main courante (valeur validée par l'utilisateur) passe, avec peu de réserve sur les vis M8. Reste non conforme :</p>
 <ul>
   <li>des potelets 40 × 40 × 3 (5 par main courante sur V1, 3 sur V2, 4 au fond) : 73 % sur V1, 56 % et 67 % sur V2, 55 % au fond ;</li>
   <li>des 2 vis M8 de leur platine basse : 84 % au plus (V1) ;</li>
   <li>des <span class="non">limons V1 en torsion</span>, s'ils travaillaient seuls : 331 %. Avec les marches comme traverses entre les limons (cornières 50 × 50 × 5), ils tombent à 11 % avec 3 vis à bois Ø5 par cornière (raideur de liaison calculée 7e7 N·mm/rad, plafond ; 37 % pour 8e6, 60 % pour 3e6). Les positions des vis sont supposées ; la vis la plus tendue est à 53 % de son arrachement.</li>
 </ul>
-<p><b>Conclusion :</b> la structure porteuse et le contreventement passent. <b>Le garde-corps passe avec les potelets 40 × 40 × 3</b>, sous réserve de la poussée supposée (0,6 kN/m) et de la raideur des liaisons marche-cornière (3 vis à bois par cornière), qui commande la torsion des limons V1 (§6.2).</p>
+<p><b>Conclusion :</b> la structure porteuse et le contreventement passent. <b>Le garde-corps passe avec les potelets 40 × 40 × 3</b>, sous réserve de la raideur des liaisons marche-cornière (3 vis à bois par cornière), qui commande la torsion des limons V1 (§6.2).</p>
 
 <h2>1. Objet et description de l'ouvrage</h2>
 <p>Escalier intérieur d'une grange, pour un usage de logement. Deux volées sont séparées par un palier intermédiaire sans différence de niveau.</p>
@@ -107,7 +107,7 @@
 <tr><td>G : poids propres</td><td>chêne 7,5 kN/m³ ; UPE 0,266 kN/m ; tube 0,149 kN/m ; cornières 5,3 N par marche ; marche complète 128,6 N ; mains courantes et potelets 65,6 kg répartis sur les 18,1 m de lignes de main courante, soit 0,036 N/mm</td><td>catalogue, masses du modèle 3D</td></tr>
 <tr><td>Q : exploitation répartie</td><td>q<sub>k</sub> = 2,5 kN/m² sur marches et palier</td><td>EN 1991-1-1, cat. A (escaliers), AN française</td></tr>
 <tr><td>Q : charge ponctuelle</td><td>Q<sub>k</sub> = 2 kN, vérifications locales des marches, non cumulée avec q<sub>k</sub></td><td>idem</td></tr>
-<tr><td>Poussée sur les mains courantes</td><td>q<sub>gc</sub> = 0,6 kN/m, horizontale</td><td>cat. A, AN française : <b>supposée</b>, à confirmer</td></tr>
+<tr><td>Poussée sur les mains courantes</td><td>q<sub>gc</sub> = 0,6 kN/m, horizontale</td><td>cat. A, AN française : validée par l'utilisateur (2026-11-03)</td></tr>
 <tr><td>Défauts de verticalité</td><td>φ = φ<sub>0</sub> α<sub>h</sub> α<sub>m</sub> = 1/200 × 1,0 × 0,79 = 1/253, en forces horizontales aux 4 angles du palier</td><td>EN 1993-1-1 §5.3.2</td></tr>
 </table>
 <p class="note">Non retenus : neige et vent (intérieur), séisme, charges de montage.</p>
@@ -281,7 +281,7 @@
 <h3>6.2 Poussée à hauteur de main courante</h3>
 <p>Le modèle applique la poussée à l'axe des barres. En réalité, elle s'exerce à 930 mm au-dessus du limon (1 000 mm au palier). Le couple qui en résulte passe par les potelets et leur platine, puis il fait tourner les limons :</p>
 <ul>
-  <li><b>potelets</b> 40×3 : 73 % au plus en flexion, 84 % pour les vis M8 (§4.5). Ils reprennent 0,6 kN/m (valeur supposée) ;</li>
+  <li><b>potelets</b> 40×3 : 73 % au plus en flexion, 84 % pour les vis M8 (§4.5). Ils reprennent 0,6 kN/m (valeur validée) ;</li>
   <li><b>torsion des limons</b>, ordre de grandeur hors modèle : couple réparti t = 1,5 × 0,6 × (930 + 110) = 0,94 kN·m/m jusqu'au centre de cisaillement, à mi-hauteur du limon. On prend les appuis du modèle : V1 libre en torsion au pied (chevilles dans l'axe), V2 tenu aux deux bouts. Un limon qui travaillerait seul en torsion de Saint-Venant (τ = T t<sub>f</sub> / J) donnerait :
     <table border="1" cellspacing="0" cellpadding="3">
     <tr><th>Limon</th><th>T</th><th>τ</th><th>Limite</th><th>Taux</th></tr>

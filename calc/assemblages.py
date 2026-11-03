@@ -72,14 +72,14 @@ def calculer():
     taux = N / flambement(1, L_d, p.diag_A, p.diag_I) + N * 5 / (1 - N / N_cr) / (W_d * fy / gM1)
     verif("Diagonale, excentricité 5 mm", "N + M ELU", taux, 1.0, "taux")
 
-    # --- Platine basse des potelets (8 mm) et aile du limon sous les 2 vis M8 (tronçon en T, effet de levier)
+    # --- Platine basse des potelets (platine_bas_ep) et aile du limon sous les 2 vis M8 (tronçon en T, effet de levier)
     c_ = potelet_l
     M_pot = 1.5 * q_gc * pas_potelets_v1 * (mc_h + limon_descente)
     T = M_pot / (platine_bas_b / 2) / 2   # comme predim.py
     B_t = 0.9 * fub * As_M8 / gM2
     m_pl = 100 / 2 - c_ / 2 - 0.8 * 3 * sqrt(2)   # vis à 50 mm de l'axe, cordon de 3 mm au pied du tube, supposé
-    verif("Platine basse potelet 8 mm (levier)", "traction ELU", T / 1e3,
-          tstub(T, 8, m_pl, 15, platine_bas_b, B_t) / 1e3, "kN")
+    verif(f"Platine basse potelet {platine_bas_ep} mm (levier)", "traction ELU", T / 1e3,
+          tstub(T, platine_bas_ep, m_pl, 15, platine_bas_b, B_t) / 1e3, "kN")
     m_ai = 36 - limon_tw / 2   # vis à ≈ 36 mm du dos de l'âme (CONCEPTION §7)
     verif("Aile du limon 12 mm sous vis M8", "traction ELU", T / 1e3,
           tstub(T, limon_tf, m_ai, limon_b - 36, 100 / 2, B_t) / 1e3, "kN")

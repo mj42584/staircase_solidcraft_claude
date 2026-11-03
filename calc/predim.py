@@ -23,7 +23,7 @@ mc_h, mc_cote, mc_palier_h = 900, 45, 1000
 limon_descente = 30   # limons descendus de 30 mm en vertical (limon_dessus, D17)
 potelet_l, potelet_ep = 40, 3   # 30 × 2 dans le modèle, 40 × 3 à l'essai (D34 ; épaisseur supposée)
 nb_potelets_v1, nb_potelets_v2, nb_potelets_fond = 5, 3, 4   # V1 : 5 (D32) ; fond : 3 dans le modèle, 4 à l'essai (D34)
-platine_bas_b, boulon_potelet_d = 50, 8
+platine_bas_b, platine_bas_ep, boulon_potelet_d = 50, 10, 8   # platine basse 10 mm depuis D39 (8 avant)
 platine_haut_entraxe, potelet_fond_marge = 80, 25
 
 hauteur_marche = hauteur_totale / nb_contremarches

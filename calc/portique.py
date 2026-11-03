@@ -153,6 +153,7 @@ def construire(tete_rigide=True, diagonales=True, k_marche=None):
                 m.def_releases(nom, Ryi=True, Rzi=True)
             charge(nom, "G", wl_G)
             charge(nom, "Q", wl_Q)
+            charge(nom, f"Q{volee}", wl_Q)  # copie par volée : retranchée pour charger une seule volée
             charge(nom, "GCY", q_gc, "FZ")
 
     if k_marche is not None:
@@ -185,7 +186,12 @@ def construire(tete_rigide=True, diagonales=True, k_marche=None):
             m.add_load_combo(f"ELU_GC{d}{sens}", {"G": 1.35, f"GC{d}": 1.5 * s, "Q": 1.05, f"H{d}": s})
             m.add_load_combo(f"ELU_GC{d}{sens}_sou", {"G": 1.0, f"GC{d}": 1.5 * s, f"H{d}": s})
             m.add_load_combo(f"ELS_GC{d}{sens}", {"G": 1.0, f"GC{d}": s, "Q": 0.7, f"H{d}": s * r})
-    # shortcut: Q partout en même temps, pas de chargement alterné d'une seule volée ; à ajouter si une vérif est limite
+    # Une seule volée chargée (l'autre et le palier gardent Q ou non) : Q moins la copie de la volée déchargée
+    for d in ("X", "Y"):
+        for s, sens in ((1, ""), (-1, "-")):
+            for seul, autre in (("V1", "V2"), ("V2", "V1")):
+                m.add_load_combo(f"ELU_{d}{sens}_{seul}seul", {"G": 1.35, "Q": 1.5, f"Q{autre}": -1.5, f"H{d}": s})
+                m.add_load_combo(f"ELS_{d}{sens}_{seul}seul", {"G": 1.0, "Q": 1.0, f"Q{autre}": -1.0, f"H{d}": s * r})
     m.analyze(check_statics=False)  # la table de PyNite est remplacée par l'assertion d'équilibre qui suit
     equilibre(m, tot)
     return m, poutres_avant, coins
@@ -410,5 +416,5 @@ if __name__ == "__main__":
         lignes.clear()
         marches_traverses(k_marche)
         afficher()
-    print("\nNon calculé : déversement, gauchissement (torsion non uniforme), couple de la poussée sur les poutres du"
-          " palier, assemblages (soudures, platines, résistance des chevilles), vibrations, chargement alterné d'une seule volée.")
+    print("\nUne seule volée chargée : combinaisons « _V1seul » / « _V2seul » comprises dans les enveloppes ci-dessus (D38)."
+          "\nVoir assemblages.py : soudures, boulons, platines, déversement, gauchissement, couple sur le palier, vibrations.")

@@ -35,6 +35,7 @@
   <li>des 2 vis M8 de leur platine basse : 84 % au plus (V1) ;</li>
   <li>des <span class="non">limons V1 en torsion</span>, s'ils travaillaient seuls : 331 %. Avec les marches comme traverses entre les limons (cornières 50 × 50 × 5), ils tombent à 11 % avec 3 vis à bois Ø5 par cornière (raideur de liaison calculée 7e7 N·mm/rad, plafond ; 37 % pour 8e6, 60 % pour 3e6). Les positions des vis sont supposées ; la vis la plus tendue est à 53 % de son arrachement.</li>
 </ul>
+<p class="cadre"><b>Vérifications locales (§6.3) : 2 points limites.</b> <span class="non">Platine basse des potelets 8 mm</span> : 106 % (effet de levier sous les vis M8) ; à 10 mm, elle passe à 84 % (la vis M8 gouverne alors). <b>Poutre arrière du palier</b> : 98 % en torsion sous la poussée de la main courante du fond (borne haute). Le reste (soudures, boulons des diagonales, déversement, gauchissement, vibrations) passe à 52 % au plus.</p>
 <p><b>Conclusion :</b> la structure porteuse et le contreventement passent. <b>Le garde-corps passe avec les potelets 40 × 40 × 3</b>, sous réserve de la raideur des liaisons marche-cornière (3 vis à bois par cornière), qui commande la torsion des limons V1 (§6.2).</p>
 
 <h2>1. Objet et description de l'ouvrage</h2>
@@ -291,6 +292,28 @@
     C'est une borne haute. Les marches, boulonnées aux deux limons d'une volée par leurs cornières, transforment ce couple en efforts verticaux opposés dans les deux limons. Le gauchissement de l'UPE aide aussi. Essai en barres (marches comme traverses, raideur de liaison <i>k</i>) : limons V1 à 281 % pour <i>k</i> = 0, 60 % pour 3e6, 36 % pour 8e6 N·mm/rad. Avec 3 vis à bois Ø5 par cornière (en ligne, à 0 et ± 75 mm, 50 mm dans le chêne), <i>k</i> = Σ K<sub>ax</sub> x² = 7e7 N·mm/rad avec K<sub>ax</sub> = 25 d l<sub>ef</sub> = 6,25 kN/mm par vis : limons V1 11 %, V2 10 %, poutre avant 16 %, marches 12 %. La liaison reprend 0,37 kN·m, soit 2,43 kN dans la vis la plus tendue pour 4,57 kN d'arrachement (EC5 8.7, ρ<sub>k</sub> 700 kg/m³ supposé, k<sub>mod</sub> 0,8) : 53 %. <i>k</i> est un plafond (aile de 5 mm et liaison cornière-limon non comptées) ; les résultats à 8e6 restent conformes.</li>
 </ul>
 
+<h3>6.3 Vérifications locales (calc/assemblages.py, D38)</h3>
+<p>Assemblages, déversement, gauchissement, couple de la poussée sur les poutres du palier et vibrations, hors modèle en barres. Efforts tirés de predim.py et de portique.py (effort maximal d'une diagonale : 8,7 kN). Formules de l'EN 1993-1-8 et des poutres à parois minces, de mémoire. Hypothèses : cordons de 5 mm sur les goussets, de 3 mm aux potelets et dans les fentes des languettes, rondelles Ø16 ; réaction des limons V2 au prorata de leur portée ; fréquence propre comparée à 5 Hz (repère courant, <b>supposé</b>). UPE 220 en parois minces : centre de cisaillement à 33,2 mm de l'axe de l'âme, I<sub>w</sub> = 18,4·10⁹ mm⁶.</p>
+<table border="1" cellspacing="0" cellpadding="3" width="100%">
+<tr><th>Élément</th><th>Critère</th><th>Valeur</th><th>Limite</th><th>Taux</th></tr>
+<tr><td>Soudure gousset / pied (a 3,5)</td><td>contrainte ELU</td><td class="n">48,70 MPa</td><td class="n">360,00 MPa</td><td class="n">14 %</td></tr>
+<tr><td>Boulon M12 8.8 diagonale</td><td>cisaillement ELU</td><td class="n">8,72 kN</td><td class="n">32,37 kN</td><td class="n">27 %</td></tr>
+<tr><td>Languette 10 mm, pression diamétrale</td><td>ELU</td><td class="n">8,72 kN</td><td class="n">56,78 kN</td><td class="n">15 %</td></tr>
+<tr><td>Languette 10 mm, section nette</td><td>traction ELU</td><td class="n">8,72 kN</td><td class="n">67,39 kN</td><td class="n">13 %</td></tr>
+<tr><td>Soudure languette / tube (a 2,1)</td><td>cisaillement ELU</td><td class="n">12,98 MPa</td><td class="n">207,85 MPa</td><td class="n">6 %</td></tr>
+<tr><td>Diagonale, excentricité 5 mm</td><td>N + M ELU</td><td class="n">0,52 taux</td><td class="n">1,00 taux</td><td class="n">52 %</td></tr>
+<tr><td>Platine basse potelet 8 mm (levier)</td><td>traction ELU</td><td class="n non">17,61 kN</td><td class="n">16,64 kN</td><td class="n non">106 %</td></tr>
+<tr><td>Aile du limon 12 mm sous vis M8</td><td>traction ELU</td><td class="n">17,61 kN</td><td class="n">21,08 kN</td><td class="n">84 %</td></tr>
+<tr><td>Poutre avant, déversement (L 2440)</td><td>flexion ELU</td><td class="n">6,60 kN·m</td><td class="n">38,32 kN·m</td><td class="n">17 %</td></tr>
+<tr><td>Poutre avant, flexion + gauchissement</td><td>contrainte ELU</td><td class="n">45,49 MPa</td><td class="n">235,00 MPa</td><td class="n">19 %</td></tr>
+<tr><td>Poutre arrière palier, couple de la poussée</td><td>torsion ELU</td><td class="n">133,05 MPa</td><td class="n">135,68 MPa</td><td class="n">98 %</td></tr>
+<tr><td>Poutre latérales palier, couple de la poussée</td><td>torsion ELU</td><td class="n">54,53 MPa</td><td class="n">135,68 MPa</td><td class="n">40 %</td></tr>
+<tr><td>Limon V1, fréquence propre (L 4551)</td><td>≥ 5 Hz</td><td class="n">5,00 Hz</td><td class="n">19,27 Hz</td><td class="n">26 %</td></tr>
+<tr><td>Limon V2, fréquence propre (L 2275)</td><td>≥ 5 Hz</td><td class="n">5,00 Hz</td><td class="n">77,07 Hz</td><td class="n">6 %</td></tr>
+<tr><td>Poutre avant, fréquence propre</td><td>≥ 5 Hz</td><td class="n">5,00 Hz</td><td class="n">25,30 Hz</td><td class="n">20 %</td></tr>
+</table>
+<p class="note">Fréquence : la « valeur » est le repère de 5 Hz et la « limite » la fréquence calculée (taux = 5 / f). Platine basse : tronçon en T à un boulon (m = 26,6 mm, n = 15 mm), le mode 2 (rupture du boulon avec effet de levier) gouverne. Poutre arrière : torsion de Saint-Venant seule, poutre tenue aux deux angles, gauchissement négligé (borne haute du cisaillement). Une seule volée chargée : combinaisons ajoutées à portique.py ; elles ne changent aucun résultat (les enveloppes restent celles des deux volées chargées). Le plancher du palier est couvert par la vérification des marches (même chêne de 60 mm, portée au plus 1 000 mm, charge mieux répartie).</p>
+
 <h2>7. Conclusion et recommandations</h2>
 <ol>
   <li><b>Charges verticales</b> : la structure acier et les marches de 60 mm passent avec une large réserve (32 % au plus).</li>
@@ -304,15 +327,15 @@
       <li>et la torsion des limons, à vérifier avec les marches (§6.2).</li>
     </ul>
   </li>
+  <li><b>Vérifications locales</b> (§6.3) : platine basse des potelets à porter de 8 à 10 mm (106 % → 84 %, la vis M8 gouverne) ; torsion de la poutre arrière à 98 % (borne haute, gauchissement et plancher non comptés) : à affiner ou à renforcer (raidisseurs aux potelets du fond, plancher vissé au cadre).</li>
   <li><b>À confirmer</b> : nuance d'acier, classe du chêne et des boulons, référence des chevilles et béton de la dalle, valeur de 0,6 kN/m de poussée sur les mains courantes, critère H/300.</li>
 </ol>
 
 <h3>Non calculé</h3>
 <ul>
-  <li>assemblages : soudures, platines (épaisseur, pression diamétrale), goussets des diagonales, effet de levier sous les platines des potelets et flexion locale de l'aile des limons, résistance des chevilles et béton ;</li>
-  <li>torsion des limons avec les marches comme traverses ; déversement des UPE, flambement des limons comprimés, torsion non uniforme (gauchissement), effets du second ordre ;</li>
-  <li>vibrations, fluage du chêne, chargement d'une seule volée, plancher du palier ;</li>
-  <li>la plateforme d'arrivée, supposée reprendre 7,4 kN par limon V2 sans se déplacer.</li>
+  <li>paroi du pied sous le gousset, trous de la poutre avant (section nette), soudures des platines d'about et des pieds ;</li>
+  <li>flambement des limons comprimés, effets du second ordre, torsion avec gauchissement des limons et de la poutre arrière ;</li>
+  <li>fluage du chêne ; la plateforme d'arrivée, supposée reprendre 7,4 kN par limon V2 sans se déplacer.</li>
 </ul>
 
 <h2>8. Suivi de la revue externe du 3 novembre 2026</h2>

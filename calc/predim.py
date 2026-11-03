@@ -222,6 +222,5 @@ if __name__ == "__main__":
           f"Blondel {2 * hauteur_marche + giron:.0f}")
     afficher()
     print(f"\nÉpaisseur mini des marches chêne pour passer : {ep_mini} mm")
-    print("Non calculé : stabilité d'ensemble / contreventement, torsion de la poutre avant (UPE chargé"
-          " sur l'âme), déversement, soudures, pression diamétrale, effet de levier et aile du limon sous les"
-          " platines des potelets, vibrations, fluage du chêne.")
+    print("Stabilité, torsion : portique.py ; assemblages, déversement, gauchissement, vibrations : assemblages.py."
+          " Non calculé : fluage du chêne.")

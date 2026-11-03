@@ -21,8 +21,8 @@ boulon_d = 12
 platine_ep = 15
 mc_h, mc_cote, mc_palier_h = 900, 45, 1000
 limon_descente = 30   # limons descendus de 30 mm en vertical (limon_dessus, D17)
-potelet_l, potelet_ep = 30, 2
-nb_potelets_v1, nb_potelets_fond = 5, 3   # V1 : 4 dans le modèle, 5 à l'essai (D32)
+potelet_l, potelet_ep = 40, 3   # 30 × 2 dans le modèle, 40 × 3 à l'essai (D34 ; épaisseur supposée)
+nb_potelets_v1, nb_potelets_fond = 5, 4   # V1 : 5 (D32) ; fond : 3 dans le modèle, 4 à l'essai (D34)
 platine_bas_b, boulon_potelet_d = 50, 8
 platine_haut_entraxe, potelet_fond_marge = 80, 25
 
@@ -183,7 +183,7 @@ def _auto_controle():
     assert isclose(reaction_gauche(1000, charges=[(1, 250)]), 0.75)
     assert round(2 * hauteur_marche + giron) == 624   # Blondel de CONCEPTION.md
     assert isclose(pas_potelets_v1 * cos(angle), (2501.67 - 1319.33) * 3 / (nb_potelets_v1 - 1), abs_tol=0.1)   # relevé à 4 potelets dans le modèle, 5 prévus
-    assert isclose(pas_potelets_fond, 1090, abs_tol=0.1)                          # potelet_fond_y = 1 090
+    assert isclose(pas_potelets_fond, 2 * 1090 / (nb_potelets_fond - 1), abs_tol=0.1)                          # potelet_fond_y = 1 090
 
 
 if __name__ == "__main__":

@@ -310,8 +310,17 @@ def resultats(m, poutres_avant, coins, tete_rigide=True):
     V_l = max(sqrt(n[k].RxnFX[c] ** 2 + n[k].RxnFZ[c] ** 2) / 2 for k in appuis["Pied de limon V1 (×2)"] for c in elu)
     print(f"  Chevilles M12, par cheville (enveloppes séparées) : pieds de poteau T = {max(T_p, 0) / 1e3:5.2f}"
           f"  V = {V_p / 1e3:5.2f} kN ; pieds de limons V1 T = {max(T_l, 0) / 1e3:5.2f}  V = {V_l / 1e3:5.2f} kN")
-    print("  Résistance des chevilles : à prendre dans l'ETA de la cheville choisie, selon le béton de la dalle"
-          " (non fournis)")
+    print("  Résistance des chevilles : C25/30 non fissuré, hef 70 mm, acier 8.8, EN 1992-4 de mémoire, dalle et bords supposés"
+          " (à remplacer par l'ETA de la cheville)")
+    for nom, T, V in (("pieds de poteau", T_p, V_p), ("pieds de limons V1", T_l, V_l)):
+        T, V = max(T, 0), V
+        verif(f"Chevilles {nom}", "traction : cône", T / 1e3, N_Rd_c / 1e3, "kN")
+        verif(f"Chevilles {nom}", "traction : acier", T / 1e3, N_Rd_s / 1e3, "kN")
+        verif(f"Chevilles {nom}", "cisaillement : acier", V / 1e3, V_Rd_s / 1e3, "kN")
+        verif(f"Chevilles {nom}", "cisaillement : levier", V / 1e3, V_Rd_cp / 1e3, "kN")
+        verif(f"Chevilles {nom}", "interaction béton", (T / N_Rd_c) ** 1.5 + (V / V_Rd_cp) ** 1.5, 1.0, "taux")
+        c1 = next(c for c in range(30, 1000, 5) if V_Rd_bord(c) >= V)
+        print(f"  Chevilles {nom} : cisaillement vers un bord, distance au bord pour la résistance seule ≈ {c1} mm ; l'ETA impose une distance minimale c_min (ordre de 100 mm), non fournie")
 
 
 def torsion_limons():

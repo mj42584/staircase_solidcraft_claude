@@ -28,7 +28,7 @@
 <h2>Synthèse</h2>
 <p>Sous les charges verticales, la structure acier travaille à 32 % au plus de sa résistance. Les marches en chêne de 60 mm passent à 25 %.</p>
 <p><b>Stabilité du palier.</b> En long (X), les limons font bracon entre la dalle et l'arrivée : déplacement 0,04 mm. En travers (Y), deux diagonales en tube 40 × 40 × 3 (une par face d'about du palier, D30) le tiennent. Il se déplace de 0,31 à 0,37 mm, soit 4 % de la limite. Sans ces diagonales, le déplacement atteignait 11,5 mm (141 %).</p>
-<p><b>Chevilles.</b> Avec les diagonales, chaque cheville M12 reçoit au plus 2,3 kN de traction et 1,5 kN de cisaillement (pieds de poteau). Aux pieds des limons V1, c'est 3,7 kN de cisaillement, sans traction. La résistance des chevilles n'est pas connue : elle est à prendre dans la fiche technique (ETA) de la cheville choisie, selon le béton de la dalle.</p>
+<p><b>Chevilles.</b> Avec les diagonales, chaque cheville M12 reçoit au plus 2,3 kN de traction et 1,5 kN de cisaillement (pieds de poteau). Aux pieds des limons V1, c'est 3,7 kN de cisaillement, sans traction. Avec un béton C25/30 non fissuré et une cheville M12 8.8 supposée (hef 70 mm, formules de l'EN 1992-4 de mémoire, ni dalle ni distances au bord fournies), le taux le plus élevé est de 16 % (cône de béton en traction). La cheville réelle est à vérifier avec son ETA.</p>
 <p class="cadre"><b>Points à confirmer : le garde-corps.</b> Avec les potelets renforcés (D32, D34), la poussée de 0,6 kN/m à hauteur de main courante (valeur supposée) passe, avec peu de réserve sur les vis M8. Reste non conforme :</p>
 <ul>
   <li>des potelets 40 × 40 × 3 (5 par main courante sur V1, 3 sur V2, 4 au fond) : 73 % sur V1, 56 % et 67 % sur V2, 55 % au fond ;</li>
@@ -262,7 +262,7 @@
 <p><b>Chevilles M12, efforts par cheville</b>. On suppose une platine rigide qui tourne autour de son centre, sans compter le béton comprimé, ce qui va dans le sens de la sécurité. La traction vaut T = −N/4 + (|M<sub>x</sub>| + |M<sub>y</sub>|) / (4 × 70 mm). Les maxima de T et de V sont pris séparément, sur toutes les combinaisons.</p>
 <table border="1" cellspacing="0" cellpadding="3" width="100%">
 <tr><th>Appui</th><th>Chevilles</th><th>Traction T</th><th>Cisaillement V</th><th>Résistance</th></tr>
-<tr><td>Pied de poteau</td><td class="n">4, à ± 70 mm</td><td class="n">2,3 kN</td><td class="n">1,5 kN</td><td rowspan="2"><b>non fournie</b> : ETA de la cheville et béton de la dalle à donner ; taux non calculé</td></tr>
+<tr><td>Pied de poteau</td><td class="n">4, à ± 70 mm</td><td class="n">2,3 kN</td><td class="n">1,5 kN</td><td rowspan="2">cône de béton 12,4 kN (16 % au poteau) ; acier 45 kN en traction, 27 kN en cisaillement ; levier 24,9 kN (15 % au pied de limon) ; interaction ≤ 8 % ; <b>hypothèses</b> : C25/30 non fissuré, hef 70 mm, loin des bords</td></tr>
 <tr><td>Pied de limon V1</td><td class="n">2, dans l'axe du limon</td><td class="n">0</td><td class="n">3,7 kN</td></tr>
 </table>
 <p>Sans les diagonales, ces chevilles auraient reçu 10 à 18 kN de traction (version du 2 novembre).</p>
@@ -295,7 +295,7 @@
 <ol>
   <li><b>Charges verticales</b> : la structure acier et les marches de 60 mm passent avec une large réserve (32 % au plus).</li>
   <li><b>Stabilité</b> : assurée en long par les limons, et en travers par les 2 diagonales 40 × 40 × 3 (46 % au flambement). Il reste à les dessiner dans le modèle 3D, avec leurs goussets ou platines en tête de pied et au sol, et à contrôler leur passage sous les limons.</li>
-  <li><b>Chevilles</b> : au plus 2,3 kN de traction et 3,7 kN de cisaillement par cheville. C'est faible pour des M12, mais à confirmer avec l'ETA de la cheville choisie et le béton de la dalle.</li>
+  <li><b>Chevilles</b> : au plus 2,3 kN de traction et 3,7 kN de cisaillement par cheville. Le taux le plus élevé est de 16 % (cône de béton), avec des hypothèses non confirmées (C25/30, hef 70 mm, distances au bord). À confirmer avec l'ETA de la cheville choisie, l'épaisseur de la dalle et les distances au bord.</li>
   <li><b>Garde-corps : passe avec les potelets 40×3</b>, sous réserve de la poussée supposée et de <i>k</i>. Pistes si la marge est jugée trop faible :
     <ul>
       <li>potelets plus forts : par exemple, un tube 50 × 50 × 4 au même pas donnerait environ 1,17 kN·m / 10,5 cm³ ≈ 112 MPa (angles vifs), ordre de grandeur à vérifier ;</li>

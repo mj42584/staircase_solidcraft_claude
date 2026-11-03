@@ -35,7 +35,7 @@
   <li>des 2 vis M8 de leur platine basse : 84 % au plus (V1) ;</li>
   <li>des <span class="non">limons V1 en torsion</span>, s'ils travaillaient seuls : 331 %. Avec les marches comme traverses entre les limons (cornières 50 × 50 × 5), ils tombent à 11 % avec 3 vis à bois Ø5 par cornière (raideur de liaison calculée 7e7 N·mm/rad, plafond ; 37 % pour 8e6, 60 % pour 3e6). Les positions des vis sont supposées ; la vis la plus tendue est à 53 % de son arrachement.</li>
 </ul>
-<p class="cadre"><b>Vérifications locales (§6.3) : 2 points limites.</b> <span class="non">Platine basse des potelets 8 mm</span> : 106 % (effet de levier sous les vis M8) ; à 10 mm, elle passe à 84 % (la vis M8 gouverne alors). <b>Poutre arrière du palier</b> : 98 % en torsion sous la poussée de la main courante du fond (borne haute). Le reste (soudures, boulons des diagonales, déversement, gauchissement, vibrations) passe à 52 % au plus.</p>
+<p class="cadre"><b>Vérifications locales (§6.3).</b> Platine basse des potelets : 106 % en 8 mm (effet de levier sous les vis M8), passée à 10 mm (D39) : 84 %, la vis M8 gouverne. <b>Poutre arrière du palier</b> : 98 % en torsion sous la poussée de la main courante du fond (borne haute). Le reste (soudures, boulons des diagonales, déversement, gauchissement, vibrations) passe à 52 % au plus.</p>
 <p><b>Conclusion :</b> la structure porteuse et le contreventement passent. <b>Le garde-corps passe avec les potelets 40 × 40 × 3</b>, sous réserve de la raideur des liaisons marche-cornière (3 vis à bois par cornière), qui commande la torsion des limons V1 (§6.2).</p>
 
 <h2>1. Objet et description de l'ouvrage</h2>
@@ -75,7 +75,7 @@
 <tr><td>Contreventement en travers</td><td>2 diagonales, une par face d'about, articulées entre la tête d'un pied et le pied de l'autre, L = 3 460 mm</td><td>choix de l'utilisateur (D30) ; pas encore dans le modèle 3D</td></tr>
 <tr><td>Potelets de volée : pas ; bras de levier</td><td class="n">887 mm en plan (1 052 en pente) ; 930 mm</td><td>modèle 3D (5 par main courante V1) ; levier = 900 mm + descente de 30 mm des limons</td></tr>
 <tr><td>Potelets du fond du palier : pas ; bras de levier</td><td class="n">727 mm ; 1 000 mm</td><td>modèle 3D (4 potelets, D34)</td></tr>
-<tr><td>Platine basse des potelets</td><td>130 × 50 × 8 mm, 2 vis M8 dans l'axe du limon, entraxe 100 mm</td><td>choix de l'utilisateur</td></tr>
+<tr><td>Platine basse des potelets</td><td>130 × 50 × 10 mm (8 avant D39), 2 vis M8 dans l'axe du limon, entraxe 100 mm</td><td>choix de l'utilisateur</td></tr>
 <tr><td>Fixation en tête des pieds</td><td>2 boulons M12 sous l'aile basse du cadre</td><td>choix de l'utilisateur (D11)</td></tr>
 <tr><td>Pied des limons V1</td><td>platine au sol de 200 mm, 2 chevilles M12 alignées dans l'axe du limon</td><td>choix (D28) ; chevilles <b>supposées</b></td></tr>
 <tr><td>Liaison limons / poutre avant ; limons V2 / arrivée</td><td>platine d'about de 15 mm, 2 boulons M12</td><td>choix de l'utilisateur</td></tr>
@@ -302,7 +302,7 @@
 <tr><td>Languette 10 mm, section nette</td><td>traction ELU</td><td class="n">8,72 kN</td><td class="n">67,39 kN</td><td class="n">13 %</td></tr>
 <tr><td>Soudure languette / tube (a 2,1)</td><td>cisaillement ELU</td><td class="n">12,98 MPa</td><td class="n">207,85 MPa</td><td class="n">6 %</td></tr>
 <tr><td>Diagonale, excentricité 5 mm</td><td>N + M ELU</td><td class="n">0,52 taux</td><td class="n">1,00 taux</td><td class="n">52 %</td></tr>
-<tr><td>Platine basse potelet 8 mm (levier)</td><td>traction ELU</td><td class="n non">17,61 kN</td><td class="n">16,64 kN</td><td class="n non">106 %</td></tr>
+<tr><td>Platine basse potelet 10 mm (levier, D39)</td><td>traction ELU</td><td class="n">17,61 kN</td><td class="n">21,08 kN</td><td class="n">84 %</td></tr>
 <tr><td>Aile du limon 12 mm sous vis M8</td><td>traction ELU</td><td class="n">17,61 kN</td><td class="n">21,08 kN</td><td class="n">84 %</td></tr>
 <tr><td>Poutre avant, déversement (L 2440)</td><td>flexion ELU</td><td class="n">6,60 kN·m</td><td class="n">38,32 kN·m</td><td class="n">17 %</td></tr>
 <tr><td>Poutre avant, flexion + gauchissement</td><td>contrainte ELU</td><td class="n">45,49 MPa</td><td class="n">235,00 MPa</td><td class="n">19 %</td></tr>
@@ -327,7 +327,7 @@
       <li>et la torsion des limons, à vérifier avec les marches (§6.2).</li>
     </ul>
   </li>
-  <li><b>Vérifications locales</b> (§6.3) : platine basse des potelets à porter de 8 à 10 mm (106 % → 84 %, la vis M8 gouverne) ; torsion de la poutre arrière à 98 % (borne haute, gauchissement et plancher non comptés) : à affiner ou à renforcer (raidisseurs aux potelets du fond, plancher vissé au cadre).</li>
+  <li><b>Vérifications locales</b> (§6.3) : platine basse des potelets passée de 8 à 10 mm (D39 : 106 % → 84 %, la vis M8 gouverne) ; torsion de la poutre arrière à 98 % (borne haute, gauchissement et plancher non comptés) : à affiner ou à renforcer (raidisseurs aux potelets du fond, plancher vissé au cadre).</li>
   <li><b>À confirmer</b> : nuance d'acier, classe du chêne et des boulons, référence des chevilles et béton de la dalle, valeur de 0,6 kN/m de poussée sur les mains courantes, critère H/300.</li>
 </ol>
 

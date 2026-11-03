@@ -27,8 +27,8 @@
 
 <h2>Synthèse</h2>
 <p>Sous les charges verticales, la structure acier travaille à 32 % au plus de sa résistance. Les marches en chêne de 60 mm passent à 25 %.</p>
-<p><b>Stabilité du palier.</b> En long (X), les limons font bracon entre la dalle et l'arrivée : déplacement 0,04 mm. En travers (Y), deux diagonales en tube 50 × 50 × 3 (une par face d'about du palier, D30) le tiennent. Il se déplace de 0,27 à 0,32 mm, soit 4 % de la limite. Sans ces diagonales, le déplacement atteignait 11,5 mm (141 %).</p>
-<p><b>Chevilles.</b> Avec les diagonales, chaque cheville M12 reçoit au plus 2,4 kN de traction et 1,6 kN de cisaillement (pieds de poteau). Aux pieds des limons V1, c'est 3,7 kN de cisaillement, sans traction. La résistance des chevilles n'est pas connue : elle est à prendre dans la fiche technique (ETA) de la cheville choisie, selon le béton de la dalle.</p>
+<p><b>Stabilité du palier.</b> En long (X), les limons font bracon entre la dalle et l'arrivée : déplacement 0,04 mm. En travers (Y), deux diagonales en tube 40 × 40 × 3 (une par face d'about du palier, D30) le tiennent. Il se déplace de 0,31 à 0,37 mm, soit 4 % de la limite. Sans ces diagonales, le déplacement atteignait 11,5 mm (141 %).</p>
+<p><b>Chevilles.</b> Avec les diagonales, chaque cheville M12 reçoit au plus 2,3 kN de traction et 1,5 kN de cisaillement (pieds de poteau). Aux pieds des limons V1, c'est 3,7 kN de cisaillement, sans traction. La résistance des chevilles n'est pas connue : elle est à prendre dans la fiche technique (ETA) de la cheville choisie, selon le béton de la dalle.</p>
 <p class="cadre"><b>Points à confirmer : le garde-corps.</b> Avec les potelets renforcés (D32, D34), la poussée de 0,6 kN/m à hauteur de main courante (valeur supposée) passe, avec peu de réserve sur les vis M8. Reste non conforme :</p>
 <ul>
   <li>des potelets 40 × 40 × 3 (5 par main courante sur V1, 3 sur V2, 4 au fond) : 73 % sur V1, 56 % et 67 % sur V2, 55 % au fond ;</li>
@@ -86,7 +86,7 @@
 <tr><td>Limons, cadre du palier</td><td>UPE 220 (h 220, b 85, t<sub>w</sub> 6,5, t<sub>f</sub> 12)</td><td>A = 33,9 cm² ; I<sub>y</sub> = 2 680 cm⁴ ; W<sub>y</sub> = 244 cm³ ; 26,6 kg/m</td><td>catalogue EN 10365</td></tr>
 <tr><td></td><td></td><td>I<sub>z</sub> = 244 cm⁴ ; W<sub>z</sub> = 42,4 cm³ ; J = 11,6 cm⁴ ; centre de cisaillement à 32 mm du dos de l'âme</td><td>calculés en parois minces, sans congés</td></tr>
 <tr><td>Pieds</td><td>tube carré 100 × 100 × 5</td><td>A = 19,0 cm² ; I = 286,6 cm⁴ ; W = 57,3 cm³ ; J = 428,7 cm⁴ ; i = 38,8 mm</td><td>calculés (angles vifs)</td></tr>
-<tr><td>Diagonales</td><td>tube carré 50 × 50 × 3</td><td>A = 5,64 cm² ; I = 20,9 cm⁴ ; i = 19,2 mm</td><td><b>supposé</b> ; calculés (angles vifs)</td></tr>
+<tr><td>Diagonales</td><td>tube carré 40 × 40 × 3</td><td>A = 4,44 cm² ; I = 10,2 cm⁴ ; i = 15,2 mm</td><td>choix de l'utilisateur (D36), épaisseur <b>supposée</b> ; calculés (angles vifs)</td></tr>
 <tr><td>Potelets</td><td>tube carré 40 × 40 × 3</td><td>I = 8,5 cm⁴ ; W = 4,3 cm³ (calcul PyNite/predim, angles vifs)</td><td>D34, épaisseur supposée ; calculés (angles vifs)</td></tr>
 <tr><td>Marches</td><td>chêne 274 × 60 mm, portée 1 000 mm</td><td>W = 164,4 cm³ ; I = 493,2 cm⁴</td><td>calculés</td></tr>
 <tr><td>Cornières des marches</td><td>L 30 × 30 × 3, 200 mm, 2 par marche</td><td>1,36 kg/m</td><td>catalogue</td></tr>
@@ -231,7 +231,7 @@
 <h3>5.2 Contrôles du modèle</h3>
 <ul>
   <li><b>Équilibre, vérifié par le script</b> : pour chaque combinaison et dans les 3 directions, la somme des réactions égale les charges appliquées (assertion dans <i>portique.py</i>). Par exemple, 47,1 kN en vertical à l'ELU (1,35 G + 1,5 Q). En travers, 14,51 kN pour l'ELU de la poussée, soit 1,5 × 0,6 × 15,92 m + 0,19 kN de défauts.</li>
-  <li><b>Raideur en travers, à la main</b> : une diagonale a une raideur horizontale EA cos²θ / L = 210 000 × 564 × 0,705² / 3 460 = 17,0 kN/mm, soit 34 kN/mm pour deux. Sous les 5,5 kN qui arrivent au palier à l'ELS, cela donne 0,16 mm si les deux diagonales se partagent l'effort. Le modèle donne 0,29 mm, parce que la diagonale tendue en prend les trois quarts (5,8 kN contre 1,9 kN dans la diagonale comprimée) : 0,24 mm pour elle seule. Le reste vient du cadre et des pieds.</li>
+  <li><b>Raideur en travers, à la main</b> : une diagonale a une raideur horizontale EA cos²θ / L = 210 000 × 444 × 0,70² / 3 001 = 15,2 kN/mm, soit 30 kN/mm pour deux. Sous les 5,5 kN qui arrivent au palier à l'ELS, cela donne 0,18 mm si les deux diagonales se partagent l'effort. Le modèle donne 0,31 à 0,37 mm : la diagonale tendue prend l'essentiel de l'effort, et le cadre et les pieds ajoutent leur souplesse.</li>
   <li><b>Conditionnement numérique</b> : la raideur des liaisons « rigide » (excentricités de 29 mm) est limitée à 400 fois celle de l'UPE. Sans les diagonales, le solveur rejetait des valeurs plus grandes, parce que le palier était très souple en travers. Ce cas tête rigide est une borne haute de raideur de la tête des pieds ; la platine réelle (2 M12) est plus proche de l'articulation. Avec les diagonales, les deux cas donnent presque les mêmes résultats.</li>
 </ul>
 
@@ -239,12 +239,12 @@
 <table border="1" cellspacing="0" cellpadding="3" width="100%">
 <tr><th>Élément</th><th>Critère</th><th>Tête rigide</th><th>Taux</th><th>Tête articulée</th><th>Taux</th><th>Limite</th></tr>
 <tr><td>Palier, en long (X)</td><td>déplacement ELS</td><td class="n">0,04 mm</td><td class="n">1 %</td><td class="n">0,04 mm</td><td class="n">1 %</td><td class="n">8,2 mm</td></tr>
-<tr><td><b>Palier, en travers (Y)</b></td><td>déplacement ELS</td><td class="n">0,27 mm</td><td class="n">3 %</td><td class="n">0,32 mm</td><td class="n">4 %</td><td class="n">8,2 mm</td></tr>
+<tr><td><b>Palier, en travers (Y)</b></td><td>déplacement ELS</td><td class="n">0,31 mm</td><td class="n">4 %</td><td class="n">0,37 mm</td><td class="n">5 %</td><td class="n">8,2 mm</td></tr>
 <tr><td>Poutre avant</td><td>flexion forte + faible ELU</td><td class="n">19,4 MPa</td><td class="n">8 %</td><td class="n">20,0 MPa</td><td class="n">9 %</td><td class="n">235 MPa</td></tr>
 <tr><td>Poutre avant</td><td>torsion ELU</td><td class="n">15,7 MPa</td><td class="n">12 %</td><td class="n">15,5 MPa</td><td class="n">11 %</td><td class="n">135,7 MPa</td></tr>
 <tr><td>Pieds 100×5</td><td>N / N<sub>b,Rd</sub> + M / M<sub>Rd</sub> ELU</td><td class="n">0,09</td><td class="n">9 %</td><td class="n">0,14</td><td class="n">14 %</td><td class="n">1,00</td></tr>
-<tr><td>Diagonales 50×3 (L = 3 001)</td><td>flambement ELU</td><td class="n">8,4 kN</td><td class="n">24 %</td><td class="n">8,9 kN</td><td class="n">25 %</td><td class="n">35,4 kN</td></tr>
-<tr><td>Diagonales 50×3</td><td>traction ELU</td><td class="n">8,5 kN</td><td class="n">6 %</td><td class="n">9,0 kN</td><td class="n">7 %</td><td class="n">132,5 kN</td></tr>
+<tr><td>Diagonales 40×3 (L = 3 001)</td><td>flambement ELU</td><td class="n">8,0 kN</td><td class="n">43 %</td><td class="n">8,6 kN</td><td class="n">46 %</td><td class="n">18,7 kN</td></tr>
+<tr><td>Diagonales 40×3</td><td>traction ELU</td><td class="n">8,2 kN</td><td class="n">8 %</td><td class="n">8,7 kN</td><td class="n">8 %</td><td class="n">104,3 kN</td></tr>
 <tr><td>Limons V1</td><td>flexion forte + faible ELU</td><td class="n">74,2 MPa</td><td class="n">32 %</td><td class="n">74,2 MPa</td><td class="n">32 %</td><td class="n">235 MPa</td></tr>
 <tr><td>Limons V2</td><td>flexion forte + faible ELU</td><td class="n">18,5 MPa</td><td class="n">8 %</td><td class="n">18,5 MPa</td><td class="n">8 %</td><td class="n">235 MPa</td></tr>
 </table>
@@ -262,7 +262,7 @@
 <p><b>Chevilles M12, efforts par cheville</b>. On suppose une platine rigide qui tourne autour de son centre, sans compter le béton comprimé, ce qui va dans le sens de la sécurité. La traction vaut T = −N/4 + (|M<sub>x</sub>| + |M<sub>y</sub>|) / (4 × 70 mm). Les maxima de T et de V sont pris séparément, sur toutes les combinaisons.</p>
 <table border="1" cellspacing="0" cellpadding="3" width="100%">
 <tr><th>Appui</th><th>Chevilles</th><th>Traction T</th><th>Cisaillement V</th><th>Résistance</th></tr>
-<tr><td>Pied de poteau</td><td class="n">4, à ± 70 mm</td><td class="n">2,4 kN</td><td class="n">1,6 kN</td><td rowspan="2"><b>non fournie</b> : ETA de la cheville et béton de la dalle à donner ; taux non calculé</td></tr>
+<tr><td>Pied de poteau</td><td class="n">4, à ± 70 mm</td><td class="n">2,3 kN</td><td class="n">1,5 kN</td><td rowspan="2"><b>non fournie</b> : ETA de la cheville et béton de la dalle à donner ; taux non calculé</td></tr>
 <tr><td>Pied de limon V1</td><td class="n">2, dans l'axe du limon</td><td class="n">0</td><td class="n">3,7 kN</td></tr>
 </table>
 <p>Sans les diagonales, ces chevilles auraient reçu 10 à 18 kN de traction (version du 2 novembre).</p>
@@ -294,8 +294,8 @@
 <h2>7. Conclusion et recommandations</h2>
 <ol>
   <li><b>Charges verticales</b> : la structure acier et les marches de 60 mm passent avec une large réserve (32 % au plus).</li>
-  <li><b>Stabilité</b> : assurée en long par les limons, et en travers par les 2 diagonales 50 × 50 × 3 (25 % au flambement). Il reste à les dessiner dans le modèle 3D, avec leurs goussets ou platines en tête de pied et au sol, et à contrôler leur passage sous les limons.</li>
-  <li><b>Chevilles</b> : au plus 2,4 kN de traction et 3,7 kN de cisaillement par cheville. C'est faible pour des M12, mais à confirmer avec l'ETA de la cheville choisie et le béton de la dalle.</li>
+  <li><b>Stabilité</b> : assurée en long par les limons, et en travers par les 2 diagonales 40 × 40 × 3 (46 % au flambement). Il reste à les dessiner dans le modèle 3D, avec leurs goussets ou platines en tête de pied et au sol, et à contrôler leur passage sous les limons.</li>
+  <li><b>Chevilles</b> : au plus 2,3 kN de traction et 3,7 kN de cisaillement par cheville. C'est faible pour des M12, mais à confirmer avec l'ETA de la cheville choisie et le béton de la dalle.</li>
   <li><b>Garde-corps : passe avec les potelets 40×3</b>, sous réserve de la poussée supposée et de <i>k</i>. Pistes si la marge est jugée trop faible :
     <ul>
       <li>potelets plus forts : par exemple, un tube 50 × 50 × 4 au même pas donnerait environ 1,17 kN·m / 10,5 cm³ ≈ 112 MPa (angles vifs), ordre de grandeur à vérifier ;</li>

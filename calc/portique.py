@@ -31,7 +31,7 @@ c, t = poteau_cote, poteau_ep
 tube_A, tube_I = c**2 - (c - 2 * t) ** 2, (c**4 - (c - 2 * t) ** 4) / 12
 tube_J = (c - t) ** 3 * t  # tube carré mince : 4 Am² t / périmètre moyen
 tube_W = tube_I / (c / 2)
-diag_cote, diag_ep = 50, 3  # diagonales de contreventement, tube carré supposé
+diag_cote, diag_ep = 40, 3  # diagonales de contreventement, tube carré (40 × 40 × 3, D36 ; épaisseur supposée)
 c, t = diag_cote, diag_ep
 diag_A, diag_I = c**2 - (c - 2 * t) ** 2, (c**4 - (c - 2 * t) ** 4) / 12
 # Goussets des pieds, recopiés du 3D (CONCEPTION.md §3) : trou à 170 mm de l'angle extérieur, à mi-hauteur

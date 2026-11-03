@@ -91,7 +91,8 @@ def calculer():
     lam = sqrt(upe_W * fy / M_cr)
     phi = 0.5 * (1 + 0.76 * (lam - 0.2) + lam**2)   # courbe d (h / b > 2)
     chi = min(1.0, 1 / (phi + sqrt(phi**2 - lam**2)))
-    M_ed = next(v for e, c, v, *_ in lignes if e.startswith("Poutre avant") and c == "contrainte ELU") * upe_W
+    ef = limons_et_poutre_avant()
+    M_ed = ef["M_pa"]
     verif(f"Poutre avant, déversement (L {L:.0f})", "flexion ELU", M_ed / 1e6, chi * upe_W * fy / gM1 / 1e6, "kN·m")
     # Limons : marches fixées à chaque giron, longueur libre ≈ pas_volee → déversement sans objet
     L = giron / cos(angle)
@@ -101,9 +102,8 @@ def calculer():
     # --- Gauchissement de la poutre avant : couples R × e des 4 limons (appui sur le dos de l'âme, e = e0 - tw / 2),
     # appuis à fourche (rotation bloquée, gauchissement libre), différences finies
     e = e0 - limon_tw / 2
-    R_v1 = next(v for e_, c, v, *_ in lignes if e_.startswith("Boulons M12") and c == "cisaillement ELU") * 2e3
-    R_v2 = R_v1 * nb_volee2 / (nb_volee1 - 1)   # réaction proportionnelle à la portée en plan, ordre de grandeur
-    x_l = (limon_b / 2, L_p / 2 - jour / 2 + limon_b / 2, L_p / 2 + jour / 2 - limon_b / 2, L_p - limon_b / 2)
+    R_v1, R_v2 = ef["R"]["V1"][0], ef["R"]["V2"][0]
+    x_l = ef["x_limons"]
     n_ = 400
     x = np.linspace(0, L_p, n_ + 1)
     dx = x[1] - x[0]
@@ -142,19 +142,15 @@ def calculer():
         verif(f"Limon {nom}, fréquence propre (L {L_s:.0f})", "≥ 5 Hz", 5, f, "Hz")
     # Palier : flèche de la poutre avant sous G + 0,3 Q et les réactions des limons, f ≈ 17,75 / √δ (δ en mm)
     _, d = poutre(L_p, w=g_chene * palier_ep * palier_profondeur / 2 + upe_g + 0.3 * q_k * palier_profondeur / 2,
-                  charges=[(R_v1 / 1.4, xi) for xi in x_l], EI=E_acier * upe_I)
+                  charges=[(ef["R"][v][1], xi) for v, xi in zip(("V1", "V1", "V2", "V2"), x_l)], EI=E_acier * upe_I)
     verif("Poutre avant, fréquence propre", "≥ 5 Hz", 5, 17.75 / sqrt(d), "Hz")
 
 
 if __name__ == "__main__":
-    import predim
-    predim.calculer()   # remplit lignes (réactions, poutre avant) avant les vérifications locales
-    base = len(lignes)
     calculer()
-    del lignes[:base]
     print(f"UPE 220 : e0 = {e0:.1f} mm de l'axe de l'âme, Iw = {upe_Iw / 1e9:.2f}e9 mm⁶, ω max = {omega_max:.0f} mm²")
     afficher()
     print("\nHypothèses : cordons de 5 mm (gousset) et de 3 mm (potelets, languettes), positions des vis et des boulons"
-          " d'après CONCEPTION.md, rondelles Ø16 ; R des limons V2 au prorata de la portée ; repère vibratoire 5 Hz."
+          " d'après CONCEPTION.md, rondelles Ø16 ; repère vibratoire 5 Hz."
           "\nNon calculé : paroi du pied sous le gousset, jarret de la poutre avant aux trous, plancher (couvert par la"
           " marche : même chêne 60 mm, portée ≤ 1 000 mm, charge mieux répartie).")

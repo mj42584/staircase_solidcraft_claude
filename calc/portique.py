@@ -49,7 +49,7 @@ dz = limon_h / 2 / cos(angle) + limon_descente  # axe du limon sous la ligne de 
 X_0 = (dz - hauteur_marche) / tan(angle)       # pied des limons V1 au sol
 liaison_lc = 20  # mm : longueur de la barre courte qui porte le ressort de rotation marche-limon
 # Raideur en rotation marche-cornière : K_VIS (predim.py, 3 vis Ø5 par cornière, D35) ; 3e6 et 8e6 gardés comme bornes basses
-K_MARCHE = (0, 3e6, 8e6, K_VIS, 1e10)
+K_MARCHE = (0, 3e6, 8e6, K_VIS, 1e10)  # 1e10 ≈ encastrement : barre de liaison I = 9,5e5 mm⁴, résolu sans alerte
 y_limons = {"V1": (-(jour / 2 + emmarchement + limon_b / 2), -(jour / 2 - limon_b / 2)),
             "V2": (jour / 2 - limon_b / 2, jour / 2 + emmarchement + limon_b / 2)}
 
@@ -71,8 +71,9 @@ def noeud(m, nom, x, y, z):
     return m.add_node(nom, x, z, y)  # PyNite veut Y vertical : (x, y, z) → (x, z, y)
 
 
-def construire(tete_rigide=True, diagonales=True, k_marche=None):
-    """k_marche : None = modèle sans couple ni marches ; 0 = couple de la poussée sur les limons, sans marches ;
+def construire(tete_rigide=False, diagonales=True, k_marche=None):
+    """tete_rigide : False par défaut (articulée, côté sécurité, plus proche de la platine à 2 M12) ; True = borne raide.
+    k_marche : None = modèle sans couple ni marches ; 0 = couple de la poussée sur les limons, sans marches ;
     > 0 = marches de chêne entre les deux limons de chaque volée, liées par un ressort de rotation (N·mm/rad)."""
     m = nouveau_modele()
     tot = {}  # charges appliquées par (cas, direction PyNite), pour le contrôle d'équilibre
@@ -81,11 +82,14 @@ def construire(tete_rigide=True, diagonales=True, k_marche=None):
         """Charge répartie w, positive vers le bas pour FY, dans le sens de l'axe sinon."""
         w = -w if d == "FY" else w
         m.add_member_dist_load(barre, d, w, w, case=cas)
-        tot[cas, d] = tot.get((cas, d), 0.0) + w * m.members[barre].L()
+        b = m.members[barre]
+        milieu = [(getattr(b.i_node, a) + getattr(b.j_node, a)) / 2 for a in "XYZ"]
+        cumul(tot, cas, d, w * b.L(), milieu)
 
     def force(noeud_, cas, F, d):
         m.add_node_load(noeud_, d, F, case=cas)
-        tot[cas, d] = tot.get((cas, d), 0.0) + F
+        n = m.nodes[noeud_]
+        cumul(tot, cas, d, F, (n.X, n.Y, n.Z))
 
     # Cadre du palier : poutre avant coupée aux 4 limons, angles soudés (rigides)
     ys = [-Y_c, *y_limons["V1"], *y_limons["V2"], Y_c]
@@ -157,7 +161,7 @@ def construire(tete_rigide=True, diagonales=True, k_marche=None):
             charge(nom, "GCY", q_gc, "FZ")
 
     if k_marche is not None:
-        marches_et_couples(m, k_marche)
+        marches_et_couples(m, k_marche, tot)
 
     # Poussée sur les mains courantes, toutes dans le sens des défauts de verticalité (côté sécurité), appliquée
     # à l'axe des barres : en travers (Y) sur les 4 limons et les poutres latérales, en long (X) sur la poutre arrière.
@@ -197,7 +201,7 @@ def construire(tete_rigide=True, diagonales=True, k_marche=None):
     return m, poutres_avant, coins
 
 
-def marches_et_couples(m, k_marche):
+def marches_et_couples(m, k_marche, tot):
     """Couple de la poussée sur les limons (cas GCY) et, si k_marche > 0, les marches comme traverses.
 
     Les nœuds sont posés sur l'axe de chaque limon au milieu de chaque marche (PyNite y coupe la barre). Le couple
@@ -225,7 +229,9 @@ def marches_et_couples(m, k_marche):
             for s, (y, sens) in enumerate(((y1, 1), (y2, -1))):
                 n = f"M{volee}{j}_{s}"
                 noeud(m, n, x, y, z)
-                m.add_node_load(n, "MX", q_gc * L_ax / len(xs[volee]) * bras, case="GCY")
+                M_n = q_gc * L_ax / len(xs[volee]) * bras
+                m.add_node_load(n, "MX", M_n, case="GCY")
+                tot["GCY", "MX"] = tot.get(("GCY", "MX"), 0.0) + M_n
                 if k_marche > 0:
                     noeud(m, n + "e", x, y + sens * liaison_lc, z)
                     m.add_member(n + "r", n, n + "e", "acier", "liaison")
@@ -233,9 +239,32 @@ def marches_et_couples(m, k_marche):
                 m.add_member(f"M{volee}{j}", f"M{volee}{j}_0e", f"M{volee}{j}_1e", "chene", "marche")
 
 
+def cumul(tot, cas, d, F, r):
+    """Ajoute la force F (direction d, PyNite) au point r à tot, avec son moment autour de l'origine."""
+    tot[cas, d] = tot.get((cas, d), 0.0) + F
+    Fv = {"FX": (F, 0, 0), "FY": (0, F, 0), "FZ": (0, 0, F)}[d]
+    for k, Mk in zip(("MX", "MY", "MZ"), moment(r, Fv)):
+        tot[cas, k] = tot.get((cas, k), 0.0) + Mk
+
+
+def moment(r, F):
+    return (r[1] * F[2] - r[2] * F[1], r[2] * F[0] - r[0] * F[2], r[0] * F[1] - r[1] * F[0])
+
+
 def equilibre(m, tot):
-    """Somme des réactions + charges appliquées = 0, dans les 3 directions, pour chaque combinaison."""
+    """Somme des réactions + charges appliquées = 0 en forces (3 directions) et en moments autour de l'origine
+    (charges réparties à leur résultante, moments nodaux de marches_et_couples() compris), pour chaque combinaison."""
     for nom, combo in m.load_combos.items():
+        M_ap = [sum(f * tot.get((cas, k), 0.0) for cas, f in combo.factors.items()) for k in ("MX", "MY", "MZ")]
+        M_r = [0.0, 0.0, 0.0]
+        for n in m.nodes.values():
+            R = [getattr(n, f"Rxn{d}").get(nom, 0.0) for d in ("FX", "FY", "FZ")]
+            for i, (Mi, Ri) in enumerate(zip(moment((n.X, n.Y, n.Z), R),
+                                             (getattr(n, f"Rxn{k}").get(nom, 0.0) for k in ("MX", "MY", "MZ")))):
+                M_r[i] += Mi + Ri
+        ref = max(*map(abs, M_ap), 1e6)
+        for k, a, r_ in zip(("MX", "MY", "MZ"), M_ap, M_r):
+            assert isclose(a + r_, 0, abs_tol=1e-5 * ref), (nom, k, a, r_)
         # tolérance rapportée à la plus forte composante de la combinaison (bruit des ressorts raides sur une
         # direction sans charge : 1e-3 N pour 1e5 N)
         Fd = {d: sum(f * tot.get((cas, d), 0.0) for cas, f in combo.factors.items()) for d in ("FX", "FY", "FZ")}
@@ -386,10 +415,14 @@ def _auto_controle():
     m.analyze()
     assert isclose(-m.members["p"].min_deflection("dy", "C"), 5 * 4000**4 / (384 * E_acier * upe_I), rel_tol=1e-3)
     assert isclose(-m.members["p"].min_moment("Mz", "C"), 4000**2 / 8, rel_tol=1e-3)  # moment positif = négatif dans PyNite
-    # Signe de l'effort normal : un poteau comprimé a un effort normal positif
+    # Signe de l'effort normal : un poteau comprimé a un effort normal positif (modèle neuf)
+    m = nouveau_modele()
+    m.add_node("a", 0, 0, 0)
+    m.def_support("a", True, True, True, True, True, True)
     m.add_node("h", 0, 1000, 0)
     m.add_member("c", "a", "h", "acier", "tube")
     m.add_node_load("h", "FY", -1000, case="G")
+    m.add_load_combo("C", {"G": 1})
     m.analyze()
     assert isclose(m.members["c"].max_axial("C"), 1000, rel_tol=1e-3)
     assert 2.3e6 < upe_Iz < 2.6e6 and 25 < e_cc < 40  # ordres de grandeur d'un UPE 220

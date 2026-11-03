@@ -54,6 +54,23 @@ vis_d, vis_lef, vis_x = 5, 50, (-75, 0, 75)
 K_VIS = 25 * vis_d * vis_lef * sum(x**2 for x in vis_x)   # N·mm/rad, 7,0e7
 rho_k = 700   # kg/m³ chêne, supposé
 F_arrachement = 0.8 * 0.52 * vis_d**-0.5 * vis_lef**-0.1 * rho_k**0.8 * vis_d * vis_lef / 1.3   # N, EC5 8.7, kmod 0,8, gM 1,3
+
+# Chevilles M12 des pieds (D37) : béton C25/30 non fissuré (choix de l'utilisateur), dalle et distances au bord NON fournies ; cheville
+# non choisie : acier 8.8, hef = 70 mm supposés, formules EN 1992-4 de mémoire, à remplacer par l'ETA de la cheville retenue.
+fck_beton, hef, As_ch, fuk_ch = 25, 70, 84.3, 800
+gM_ch_acier_N, gM_ch_acier_V, gM_ch_beton = 1.5, 1.25, 1.8
+N0_c = 11.0 * sqrt(fck_beton) * hef**1.5            # N, cône de béton d'une cheville, non fissuré
+k_groupe = ((140 + 3 * hef) / (3 * hef)) ** 2 / 4   # groupe de 4 à 140 mm, loin des bords, par cheville (2 à 80 mm : 0,69 aussi)
+N_Rd_c = k_groupe * N0_c / gM_ch_beton              # arrachement-cône
+N_Rd_s = As_ch * fuk_ch / gM_ch_acier_N             # rupture de l'acier en traction
+V_Rd_s = 0.5 * As_ch * fuk_ch / gM_ch_acier_V       # rupture de l'acier en cisaillement (sans mortier)
+V_Rd_cp = 2 * N_Rd_c                                # effet de levier (k8 = 2)
+
+
+def V_Rd_bord(c1, d=12):
+    """Cisaillement vers un bord à c1 mm, une cheville seule, béton non fissuré (EN 1992-4 §7.2.2.5)."""
+    alpha, beta = 0.1 * sqrt(hef / c1), 0.1 * (d / c1) ** 0.2
+    return 1.7 * d**alpha * hef**beta * sqrt(fck_beton) * c1**1.5 / gM_ch_beton
 # Acier S235 : nuance supposée, elle n'est pas fixée dans CONCEPTION.md
 fy, E_acier, gM0, gM1 = 235, 210000, 1.0, 1.0
 # UPE 220, catalogue EN 10365, flexion autour de l'axe fort

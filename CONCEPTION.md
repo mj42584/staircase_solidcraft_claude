@@ -436,4 +436,4 @@ Liste fixée par l'utilisateur (2026-10-26) :
 | 2026-11-03 | Potelets de volée : 5 par main courante sur V1, 3 sur V2 (D32) ; essai des marches comme traverses dans `portique.py` | branche `marches-traverses` | `cad/escalier.solidcraft`, `calc/portique.py`, `calc/predim.py`, `CONCEPTION.md` |
 | 2026-11-03 | Cornières des marches en 50 × 50 × 5 (D33) | branche `marches-traverses` | `cad/escalier.solidcraft`, `CONCEPTION.md` |
 | 2026-11-03 | Potelets en tube 40 × 40 × 3 et un potelet de plus au fond (D34) | branche `marches-traverses` | `cad/escalier.solidcraft`, `calc/predim.py`, `CONCEPTION.md` |
-| 2026-11-05 | Contre-calcul par éléments finis (FreeCAD / CalculiX) : modèle global, flambement, 3 détails, relecture des formules ; arrêté avant la fin (D41) | branche `verif-fem` | `calc/fem/`, `CONCEPTION.md` |
+| 2026-11-05 | Contre-calcul par éléments finis (FreeCAD / CalculiX) : modèle global, flambement, 3 détails, relecture des formules ; arrêté avant la fin (D41) | [PR #48](https://github.com/mj42584/staircase_solidcraft_claude/pull/48) | `calc/fem/`, `CONCEPTION.md` |

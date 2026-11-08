@@ -147,7 +147,7 @@ Règles appliquées à chaque demande de plan, sauf consigne contraire pour ce p
 1. Exporter la pièce en STEP dans `cad/` (seul dossier autorisé au connecteur), puis supprimer ce fichier une fois le plan généré.
 2. Lancer un script Python avec l'interface FreeCAD sur l'affichage réel : `flatpak run --user --filesystem=<dossier du script> org.freecad.FreeCAD <script.py>`. Le mode `QT_QPA_PLATFORM=offscreen` se bloque (pas de contexte OpenGL). Le script se termine par `os._exit(0)` et écrit son suivi dans un fichier.
 3. Attendre que `view.getVisibleEdges()` soit rempli avant de créer les cotes ; ouvrir la page (`page.ViewObject.doubleClicked()`) avant `TechDrawGui.exportPageAsPdf`.
-4. Livrer `plans/<référence>.pdf` et `plans/<référence>.FCStd`, commités avec la tâche ; supprimer les `*.FCBak`.
+4. Livrer `plans/<référence>.pdf` et `plans/Natif/<référence>.FCStd`, commités avec la tâche ; supprimer les `*.FCBak`.
 
 **Vérification, sur le rendu du PDF (`gs`), avant de livrer**
 

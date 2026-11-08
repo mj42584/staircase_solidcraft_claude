@@ -21,7 +21,7 @@ Valeurs actuelles : voir les paramètres (§3). Ce tableau garde l'origine des d
 | Palier | autoporté sur 4 pieds, sans appui sur le mur du site — voir D11 |
 | Plancher du palier | même matériau et même épaisseur que les marches (`palier_ep` = `marche_epaisseur`) |
 | Mains courantes | chêne carré (`mc_cote`, 45 × 45, choix de l'utilisateur, 2026-10-31), à `mc_h` au-dessus des nez, des deux côtés des deux volées, et autour du palier à `mc_palier_h`, continue avec les mains courantes ext des volées, sur potelets en fer plat fixés aux limons : choix de l'utilisateur (2026-10-30) ; profil et nombre des potelets **supposés** — voir D18 |
-| Matériaux | marches, plancher et mains courantes en **chêne** (« Oak », 0,75 g/cm³) ; tout le reste en **acier** (« Steel », 7,85 g/cm³) — voir D13 |
+| Matériaux | marches, plancher et mains courantes en **chêne** (« Oak », 0,75 g/cm³) ; tout le reste en **acier S235** (nuance confirmée par l'utilisateur, 2026-11-08 ; « Steel », 7,85 g/cm³) — voir D13 |
 
 ## 3. Paramètres du modèle (`cad/escalier.solidcraft`)
 
@@ -308,7 +308,7 @@ Liste fixée par l'utilisateur (2026-10-26) :
 
 1. **Fixation de l'arrivée** : platines du haut de V2 boulonnées à la structure supérieure.
 2. **Garde-corps** : mains courantes des volées et du palier faites (D18) ; reste le remplissage.
-3. **Plans** (mise en plan).
+3. **Plans** (mise en plan) : les 9 tôles en découpe laser sont faites (`plans/`) ; restent les profilés et les ensembles soudés.
 4. **Nomenclature.**
 5. **Vérification par le calcul** (poutre avant en priorité, stabilité / contreventement) : prédimensionnement et modèle en barres faits (D14, D15) ; restent les assemblages et chevilles, le garde-corps dans le modèle et la validation par un bureau d'études.
 
@@ -438,3 +438,4 @@ Liste fixée par l'utilisateur (2026-10-26) :
 | 2026-11-08 | Nomenclature de l'escalier versionnée (tableur, 42 références ; 40 après les fusions ESC-103/104 et ESC-250/251) | [PR #53](https://github.com/mj42584/staircase_solidcraft_claude/pull/53) | `nomenclature_escalier.ods`, `CONCEPTION.md` |
 | 2026-11-08 | Fusion de `ESC-104` dans `ESC-103` : poutres latérales V1 et V2 strictement identiques (contrôle de tous les corps, recalage à 0,05 mm) ; nomenclature : 41 références | [PR #54](https://github.com/mj42584/staircase_solidcraft_claude/pull/54) | `cad/escalier.solidcraft`, `nomenclature_escalier.ods`, `CONCEPTION.md` |
 | 2026-11-08 | Oblongs identiques sur les 6 platines d'about : `ESC-251` fusionnée dans `ESC-250` (6 pièces). `percage_palier_v2_z_haut` et `percage_arrivee_v2_z_haut` calés sur V1 (écart de haut de platine) ; les 4 trous V2 de la poutre avant (ESC-101) montent de 19,15 mm (`trou_poutre_v2_*_z`) ; arrivée V2 : 0,08 mm. 0 erreur, 0 interférence ; essai `limon_dessus` + 7, `boulons_entraxe` 120, `platine_ep` 12 : 6 platines toujours identiques. Plan ESC-250 régénéré, plan ESC-251 supprimé | [PR #55](https://github.com/mj42584/staircase_solidcraft_claude/pull/55) | `cad/escalier.solidcraft`, `nomenclature_escalier.ods`, `plans/`, `CONCEPTION.md` |
+| 2026-11-08 | Plans des 9 tôles en découpe laser (ESC-250, 260, 261, 302, 303, 304, 402, 403, 802) ; acier S235 confirmé par l'utilisateur | PR_A_VENIR | `plans/`, `CONCEPTION.md` |

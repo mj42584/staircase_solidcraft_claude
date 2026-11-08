@@ -66,7 +66,7 @@ Valeurs actuelles : voir les paramètres (§3). Ce tableau garde l'origine des d
 | `mc_palier_h` | 1000 mm | hauteur de la main courante au-dessus du plancher du palier ; limite : `mc_palier_h - mc_h` < `hauteur_marche` (sinon le raccord V2 recule derrière le premier nez de V2) |
 | `nb_potelets_fond` | 4 | potelets du fond du palier, angles compris, 3 validés par l'utilisateur (2026-11-02), 4 depuis D34 ; pilote le pas des trous du fond ; les potelets d'angle sont placés par `potelet_fond_marge` |
 | `potelet_palier_retrait` | 215 mm | axe des potelets latéraux du palier (V1 et V2, face à face) depuis le bord avant du palier, et des potelets arrière depuis le bord arrière (D26) : `potelet_palier_v1_x` = `rive_x + potelet_palier_retrait` (choix de l'utilisateur, 2026-11-01 : 200 mm demandés, 215 pour que la platine haute du potelet V1 passe sous la partie horizontale, minimum ≈ 213 mm ; avant : milieu du palier) |
-| `potelet_fond_marge` | 25 mm | potelets d'angle du fond : du trou extérieur de la platine haute au bout de la main courante du fond, **supposé** ; axe à `potelet_fond_y` = `jour / 2 + emmarchement + limon_b / 2 - mc_cote / 2 - platine_haut_entraxe / 2 - potelet_fond_marge` (1090 mm) du milieu du jour (D24) |
+| `potelet_fond_marge` | 25 mm | potelets d'angle du fond : du trou extérieur de la platine haute au bout de la main courante du fond, **supposé** ; axe à `potelet_fond_y` = `jour / 2 + emmarchement + limon_b / 2 - mc_cote / 2 - platine_haut_entraxe / 2 - potelet_fond_marge` (1140 mm) du milieu du jour (D24) |
 | `pied_limon_ep` | `platine_ep` (15 mm) | pied des limons V1 : épaisseur des platines verticale et au sol, **supposé** (D28) |
 | `pied_limon_l` | 200 mm | pied des limons V1 : longueur de la platine au sol depuis le premier nez (largeur `limon_b`), **supposé** |
 | `pied_limon_entraxe` | 80 mm | pied des limons V1 : entraxe des 2 trous Ø `boulon_d + trou_jeu` (chevilles M12 **supposées**) de la platine au sol, dans le U, centrés sur `pied_limon_l` |
@@ -96,13 +96,13 @@ Valeurs actuelles : voir les paramètres (§3). Ce tableau garde l'origine des d
 | `pas_volee` | `sqrt(giron ^ 2 + hauteur_marche ^ 2)` | 325,07 mm |
 | `jour` | `2 * limon_b + jeu_limons` | 370 mm |
 | `rive_x` | `(nb_volee1 - 1) * giron` | 3836 mm (X de la rive du palier) |
-| `cadre_y` | `jour / 2 + emmarchement + limon_b` | 1220 mm (demi-largeur hors tout du cadre) |
+| `cadre_y` | `jour / 2 + emmarchement + limon_b` | 1270 mm (demi-largeur hors tout du cadre) |
 | `limon_hv` | `limon_h * pas_volee / giron` | 261,0 mm (hauteur d'un limon en coupe verticale) |
 | `pied_h` | `nb_volee1 * hauteur_marche - palier_ep - limon_h - platine_pied_ep` | 2328,6 mm (sol → dessous de la platine de tête ; le tube va de `platine_pied_ep` à `pied_h`) |
 | `platine_pied_l` | `poteau_cote + 2 * platine_pied_marge` | 180 mm (côté des platines des pieds : en tête au ras de l'angle du cadre, au sol centrée sur le tube) |
-| `diag_dy`, `diag_dz` | `2 * (cadre_y - poteau_cote - gousset_trou_l)`, `pied_h - platine_pied_ep - gousset_jeu_tete - gousset_h` | 2100, 2143,6 mm (entraxe des trous d'une diagonale, en travers et en hauteur) |
-| `diag_longueur`, `diag_angle` | `sqrt(diag_dy ^ 2 + diag_dz ^ 2)`, `atan(diag_dz / diag_dy)` | 3000,9 mm, 45,6° |
-| `diag_o_x`, `diag_o_y`, `diag_o_z`, `diag_o_d`, `diag_plan_n` | trou bas depuis l'angle du cadre (X, Y, profondeur), puis le long de la diagonale et distance de son plan à l'angle | 55, 170, 2268,6, 1501,6, 1709,0 mm |
+| `diag_dy`, `diag_dz` | `2 * (cadre_y - poteau_cote - gousset_trou_l)`, `pied_h - platine_pied_ep - gousset_jeu_tete - gousset_h` | 2200, 2143,6 mm (entraxe des trous d'une diagonale, en travers et en hauteur) |
+| `diag_longueur`, `diag_angle` | `sqrt(diag_dy ^ 2 + diag_dz ^ 2)`, `atan(diag_dz / diag_dy)` | 3071,7 mm, 44,26° |
+| `diag_o_x`, `diag_o_y`, `diag_o_z`, `diag_o_d`, `diag_plan_n` | trou bas depuis l'angle du cadre (X, Y, profondeur), puis le long de la diagonale et distance de son plan à l'angle | 55, 170, 2268,6, 1461,5, 1743,5 mm |
 
 **Cotes des esquisses** : préfixes `sqe_` / `sqp_` pour les squelettes d'élévation et de plan (convention de nommage : règles §7).
 

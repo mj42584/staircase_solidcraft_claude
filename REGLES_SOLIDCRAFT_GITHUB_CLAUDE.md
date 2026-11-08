@@ -117,3 +117,44 @@ Il est relu à chaque session : le garder court.
 - Cote `distance_y` entre deux points confondus (origine et début de ligne) refusée (« over-constrain ») → coter l'autre bout de la ligne.
 - Rouvrir un chemin déjà ouvert garde le document en mémoire → `new_design` avant `open`.
 - Lister les commandes de liaison (`list_commands` filtre `joint`) a semblé faire planter l'app (0.22) → `describe_command` ou `skill_reference {skill: solidcraft-mechanisms}` (formes des origines de liaison), sans souci en 0.27.1.
+
+## 9. Plans de pièces (FreeCAD TechDraw)
+
+Règles appliquées à chaque demande de plan, sauf consigne contraire pour ce plan.
+
+**Avant de dessiner**
+
+- Retrouver les pièces de la référence (`assembly.bom {levels: flat}`) et comparer **toutes** les pièces qui la portent : volume, encombrement, et position des trous **par rapport à la pièce** (`body_topology {faces: cylinders}`). Un écart supérieur à la tolérance : le signaler et proposer une référence distincte (§7, Références) ; le plan ne couvre que les pièces réellement identiques.
+- Aucune donnée inventée (§1) : une nuance ou une valeur non confirmée porte la mention « (supposé) » sur le plan.
+
+**Contenu d'un plan de découpe laser**
+
+- Une vue, la plus grande face de la pièce à plat, **cotes hors-tout seulement**, à une décimale.
+- Nota sur le côté, à l'écart du cartouche : `NOTA :`, `Découpe laser`, `Épaisseur : <e> mm`, `Matière : <matière>`, `Tolérance générale : ± 0,2 mm`.
+- Échelle : 1:2 par défaut, à adapter si la vue et ses cotes ne tiennent pas dans la zone libre.
+
+**Cartouche**
+
+- Modèle `A3_Landscape_FR_m52`, dans `/app/share/Mod/TechDraw/Templates/ISO/localized/fr/` (vu de l'hôte : `~/.local/share/flatpak/app/org.freecad.FreeCAD/current/active/files/share/Mod/TechDraw/Templates/ISO/localized/fr/`).
+- `Titre` : nom de la pièce, seul. `Sous_titre` : référence, seule (la quantité reste dans la nomenclature).
+- `NomAuteur` et `NomSuperviseur` : JM JOLY. `DateDeCreation` et `DateVerification` : date du jour, en JJ/MM/AAAA.
+- `A3` : format. `Echelle` : échelle réelle. `Poids` : masse du modèle en kg, à deux décimales. `Feuille` : 1/1.
+- Vider les champs sans valeur, pour ne pas imprimer le texte par défaut : `Societe`, `Version`, `COPYRIGHT`, `A__` à `I__`.
+- Le modèle n'est pas centré d'origine : travailler sur une **copie**, sans modifier le fichier d'origine, avec dans `Titre` et `Sous_titre` (éléments `text` et `tspan`) `x` = 324,835 (milieu de la cellule, 264,95 à 384,85, divisé par l'échelle 1,0002 du modèle), `y` = 240,9 et 247,3, `font-size` = 6 et 4. Réduire encore la police si le texte ne tient pas.
+
+**Génération**
+
+1. Exporter la pièce en STEP dans `cad/` (seul dossier autorisé au connecteur), puis supprimer ce fichier une fois le plan généré.
+2. Lancer un script Python avec l'interface FreeCAD sur l'affichage réel : `flatpak run --user --filesystem=<dossier du script> org.freecad.FreeCAD <script.py>`. Le mode `QT_QPA_PLATFORM=offscreen` se bloque (pas de contexte OpenGL). Le script se termine par `os._exit(0)` et écrit son suivi dans un fichier.
+3. Attendre que `view.getVisibleEdges()` soit rempli avant de créer les cotes ; ouvrir la page (`page.ViewObject.doubleClicked()`) avant `TechDrawGui.exportPageAsPdf`.
+4. Livrer `plans/<référence>.pdf` et `plans/<référence>.FCStd`, commités avec la tâche ; supprimer les `*.FCBak`.
+
+**Vérification, sur le rendu du PDF (`gs`), avant de livrer**
+
+- Format de page et échelle ; cotes égales à celles du modèle (`measure`).
+- Aucun texte ne chevauche le cartouche, la vue ou les cotes, et aucun texte ne déborde de sa case.
+- Nom de la pièce et référence centrés dans leur cellule, en largeur et en hauteur, mesurés par rapport aux traits de la cellule.
+- Champs du cartouche tous remplis ou vides, aucun texte par défaut restant.
+- Contrôler aussi l'affichage dans FreeCAD (capture de la vue de la page, `QGraphicsView.grab()`) : le texte y est parfois plus large que dans le PDF.
+
+**Défauts connus et acceptés** (FreeCAD 1.1.4) : repères de zone du cadre empâtés (A à H, 1 à 4) ; fond gris clair du PDF.

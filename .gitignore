@@ -5,3 +5,4 @@ __pycache__/
 cad/*.json
 cad/*.stl
 cad/*.png
+.claude/settings.local.json

@@ -116,6 +116,10 @@ Il est relu à chaque session : le garder court.
 - Un `batch` dont une commande échoue est entièrement annulé (`rolled_back`) : ne pas mettre un contrôle douteux à la fin d'un lot de construction.
 - Cote `distance_y` entre deux points confondus (origine et début de ligne) refusée (« over-constrain ») → coter l'autre bout de la ligne.
 - Rouvrir un chemin déjà ouvert garde le document en mémoire → `new_design` avant `open`.
+- Symétrie (`solid.mirror`) d'un corps plan de plus de ≈ 810 mm (limon), et parfois plus petit : corps invalide, « invalid B-rep record: flat arrays », sans erreur sur la symétrie mais sur la fonction suivante (0.40.1, tangency-labs/solidcraft#14413) → construire la pièce opposée (Frame Member sur son propre plan) ou, pour une plaque symétrique dans son épaisseur, demi-tour en copie (`solid.move {axis, angle: "180 deg", translate: [expressions], copy: true}`). `timeline.redefine` ne change pas le type d'une fonction : créer la nouvelle avant l'ancienne, puis supprimer l'ancienne (les fonctions suivantes retrouvent le corps par son nom).
+- Changement de version : les liaisons accrochées à un trou peuvent perdre leur face (« no longer exists », noms de faces renouvelés, 0.40.1) → `joint.list`, puis `joint.edit {joint, a: {occurrence, circle: [point du bord du trou]}}`.
+- Enlèvement « à travers tout » sur une esquisse posée sur une face : le sens peut s'inverser d'une version à l'autre, sans erreur (0.40.1) → comparer les volumes à chaque mise à jour.
+- Sans l'app à jour, `solidcraft-cli run <script> --in <modèle>` puis `file.save {path, cache: false, overwrite: true}` dans le script (avec `--filesystem=<dossier>`) modifie et enregistre un modèle ; `--save` écrit le cache (×18).
 - Lister les commandes de liaison (`list_commands` filtre `joint`) a semblé faire planter l'app (0.22) → `describe_command` ou `skill_reference {skill: solidcraft-mechanisms}` (formes des origines de liaison), sans souci en 0.27.1.
 
 ## 9. Plans de pièces (FreeCAD TechDraw)
